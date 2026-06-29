@@ -31,4 +31,5 @@ function setLang(lang) {
     const ss = document.getElementById('screen-stats');
     if (ss && ss.classList.contains('active')) renderStatsScreen();
   }
+  if (typeof renderDailyCard === 'function') renderDailyCard();
 }

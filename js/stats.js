@@ -59,6 +59,21 @@ function renderStatsScreen() {
       <div class="lbl">${esc(t(s.lbl))}</div>
     </div>`).join('');
 
+  // Daily challenge stats block
+  const dailyData = dailyLoad();
+  const dailyAvg  = dailyData.totalAnswered > 0
+    ? Math.round((dailyData.totalCorrect / dailyData.totalAnswered) * 100) : 0;
+  document.getElementById('stats-daily-grid').innerHTML = [
+    { val: dailyData.totalCompleted,  lbl: 'dailyTotalCompleted' },
+    { val: dailyData.currentStreak + ' 🔥', lbl: 'dailyCurrentStreak' },
+    { val: dailyData.longestStreak,  lbl: 'dailyLongestStreak' },
+    { val: dailyAvg + '%',           lbl: 'dailyAvgScore' },
+  ].map(s => `
+    <div class="stat-box">
+      <div class="val">${esc(String(s.val))}</div>
+      <div class="lbl">${esc(t(s.lbl))}</div>
+    </div>`).join('');
+
   const recentEl = document.getElementById('stats-recent-list');
   if (!data.rounds.length) {
     recentEl.innerHTML = `<div class="stats-empty">${esc(t('statsNoData'))}</div>`;

@@ -83,6 +83,25 @@ const LANG_DE = {
   btnChangeCategory:   "Kategorie ändern",
   historyTitle:        "Antworten im Überblick",
 
+  // Daily Challenge
+  dailyChallengeBadge: "Daily Challenge",
+  dailyChallengeLabel: "Daily Challenge",
+  dailyPlayBtn:        "▶ Daily Challenge spielen",
+  dailyPlayAgain:      "▶ Erneut spielen",
+  dailyBestToday:      "Heute beste Punktzahl",
+  dailyResultTitle:    "⭐ Daily Challenge",
+  dailyNewRecord:      "🏆 Neuer Tagesrekord!",
+  dailyPrevBest:       "Vorheriger Tagesrekord",
+  dailyStreakLabel:    "Tage in Folge",
+  dailyCurrentStreak:  "Aktuelle Serie",
+  dailyLongestStreak:  "Längste Serie",
+  dailyTotalCompleted: "Abgeschlossene Tage",
+  dailyAvgScore:       "Ø Daily Score",
+  dailySectionTitle:   "Daily Challenge",
+  shareLabel:          "Ergebnis teilen",
+  shareCopyBtn:        "📋 Kopieren",
+  shareCopied:         "✓ Kopiert!",
+
   // Statistik-Screen
   statsTitle:          "Statistiken",
   statsBtn:            "Statistiken →",

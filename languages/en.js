@@ -83,6 +83,25 @@ const LANG_EN = {
   btnChangeCategory:   "Change Category",
   historyTitle:        "Answers Overview",
 
+  // Daily Challenge
+  dailyChallengeBadge: "Daily Challenge",
+  dailyChallengeLabel: "Daily Challenge",
+  dailyPlayBtn:        "▶ Play Today's Challenge",
+  dailyPlayAgain:      "▶ Play Again",
+  dailyBestToday:      "Best today",
+  dailyResultTitle:    "⭐ Daily Challenge",
+  dailyNewRecord:      "🏆 New Daily Record!",
+  dailyPrevBest:       "Previous best today",
+  dailyStreakLabel:    "day streak",
+  dailyCurrentStreak:  "Current streak",
+  dailyLongestStreak:  "Longest streak",
+  dailyTotalCompleted: "Days completed",
+  dailyAvgScore:       "Avg. daily score",
+  dailySectionTitle:   "Daily Challenge",
+  shareLabel:          "Share your result",
+  shareCopyBtn:        "📋 Copy",
+  shareCopied:         "✓ Copied!",
+
   // Stats screen
   statsTitle:          "Statistics",
   statsBtn:            "Statistics →",

@@ -20,6 +20,7 @@ let history = [];
 let acHighlight = -1;
 let currentStreak = 0;
 let maxStreak = 0;
+let isDailyMode = false;
 
 // ─── UTILS ────────────────────────────────────────────────────────────────────
 function esc(str) {
@@ -149,6 +150,7 @@ function shuffle(arr) {
 }
 
 function startQuiz() {
+  isDailyMode = false;
   correctCount = 0;
   wrongCount = 0;
   history = [];
@@ -416,30 +418,33 @@ function showResults() {
       <span class="hi-given">${esc(h.given)}</span>
     </div>`).join('');
 
-  // Record round and render highscore section
+  // Always record in general stats
   const { isNewRecord, prevBest } = statsRecord({
-    ts: Date.now(),
-    mode: selectedMode,
-    difficulty: selectedDifficulty,
-    categoryKey: selectedCategoryKey,
-    categoryIcon: selectedCategoryIcon,
-    total,
-    correct: correctCount,
-    pct,
-    streak: maxStreak
+    ts: Date.now(), mode: selectedMode, difficulty: selectedDifficulty,
+    categoryKey: selectedCategoryKey, categoryIcon: selectedCategoryIcon,
+    total, correct: correctCount, pct, streak: maxStreak, isDaily: isDailyMode
   });
-  const hsData = statsLoad();
-  const hsRate = statsAllTimeRate(hsData);
+
   let hsHtml = '';
-  if (isNewRecord) {
-    hsHtml += `<div class="result-new-record">${esc(t('resultNewRecord'))}</div>`;
-  } else if (prevBest !== null) {
-    hsHtml += `<div class="result-prev-best">${esc(t('resultPreviousBest'))}: <strong>${prevBest}%</strong></div>`;
+  if (isDailyMode) {
+    const { isNewDayRecord, prevBestPct } = dailyRecord(correctCount, total, pct);
+    const dayData = dailyLoad();
+    hsHtml = buildDailyResultHtml(correctCount, total, pct, isNewDayRecord, prevBestPct, dayData);
+    isDailyMode = false;
+    renderDailyCard();
+  } else {
+    const hsData = statsLoad();
+    const hsRate = statsAllTimeRate(hsData);
+    if (isNewRecord) {
+      hsHtml += `<div class="result-new-record">${esc(t('resultNewRecord'))}</div>`;
+    } else if (prevBest !== null) {
+      hsHtml += `<div class="result-prev-best">${esc(t('resultPreviousBest'))}: <strong>${prevBest}%</strong></div>`;
+    }
+    hsHtml += `<div class="result-mini-stats">
+      <div>${esc(t('resultTotalPlayed'))}: <span>${hsData.totalPlayed}</span></div>
+      <div>${esc(t('resultAllTimeRate'))}: <span>${hsRate}%</span></div>
+    </div>`;
   }
-  hsHtml += `<div class="result-mini-stats">
-    <div>${esc(t('resultTotalPlayed'))}: <span>${hsData.totalPlayed}</span></div>
-    <div>${esc(t('resultAllTimeRate'))}: <span>${hsRate}%</span></div>
-  </div>`;
   document.getElementById('result-hs-section').innerHTML = hsHtml;
 
   showScreen('screen-result');
@@ -454,6 +459,7 @@ function cancelRound() {
   currentIdx = 0;
   currentAirport = null;
   answered = false;
+  isDailyMode = false;
   currentStreak = 0;
   maxStreak = 0;
   updateHeader();

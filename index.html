@@ -47,6 +47,18 @@
       <button class="lp-stats-link" onclick="showStats()" data-i18n="statsBtn">Statistics →</button>
     </div>
 
+    <!-- Daily Challenge Card -->
+    <div class="lp-daily" id="lp-daily">
+      <div class="lp-daily-inner">
+        <div class="lp-daily-left">
+          <div class="lp-daily-badge">⭐ <span data-i18n="dailyChallengeBadge">Daily Challenge</span></div>
+          <div class="lp-daily-date" id="lp-daily-date"></div>
+          <div class="lp-daily-status" id="lp-daily-status"></div>
+        </div>
+        <button class="btn-daily" id="lp-daily-btn" onclick="startDailyChallenge()"></button>
+      </div>
+    </div>
+
     <!-- How it works -->
     <div class="lp-features">
       <div class="lp-section-label" data-i18n="howItWorksTitle">How it works</div>
@@ -272,11 +284,15 @@
 
     <div class="stats-grid" id="stats-overview-grid"></div>
 
+    <div class="section-label" data-i18n="dailySectionTitle">Daily Challenge</div>
+    <div class="stats-grid" id="stats-daily-grid"></div>
+
     <div class="section-label" data-i18n="statsRecentTitle">Recent Rounds</div>
     <div id="stats-recent-list"></div>
 
     <div class="stats-footer-btns">
-      <button class="btn-primary" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
+      <button class="btn-primary" onclick="startDailyChallenge()" data-i18n="dailyPlayBtn">▶ Play Today's Challenge</button>
+      <button class="btn-ghost" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
       <button class="btn-ghost" onclick="showScreen('screen-landing')" data-i18n="statsBack">← Back</button>
     </div>
   </div>
@@ -292,6 +308,7 @@
 <script src="data/categories.js"></script>
 <script src="js/quiz.js"></script>
 <script src="js/stats.js"></script>
+<script src="js/daily.js"></script>
 <script>applyI18n();</script>
 
 <!-- Vercel Analytics -->
