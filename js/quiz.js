@@ -1,12 +1,13 @@
 // RunwayIQ — Quiz Logic
-// Depends on: data/config.js, data/airports.js, data/airport-sizes.js, data/categories.js
+// Depends on: data/config.js, data/airports.js, data/airport-sizes.js, data/categories.js, js/i18n.js
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let selectedMode = 'code';
 let selectedRounds = 10;
 let selectedDifficulty = 'easy';
 let selectedPool = [...AIRPORTS];
-let selectedCategoryLabel = '🌍 Weltweit';
+let selectedCategoryIcon = '🌍';
+let selectedCategoryKey = 'cat.all.label';
 
 let quizQueue = [];
 let currentIdx = 0;
@@ -25,6 +26,10 @@ function esc(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function getCatLabel() {
+  return `${selectedCategoryIcon} ${t(selectedCategoryKey)}`;
 }
 
 // ─── UI HELPERS ───────────────────────────────────────────────────────────────
@@ -47,18 +52,12 @@ function setRounds(n) {
   });
 }
 
-const DIFF_DESCS = {
-  easy:   'Autocomplete hilft beim Tippen',
-  hard:   'Kein Dropdown — exakter Stadtname erforderlich',
-  expert: 'Kein Dropdown — exakter Flughafenname erforderlich',
-};
-
 function setDifficulty(d) {
   selectedDifficulty = d;
   ['easy', 'hard', 'expert'].forEach(level => {
     document.getElementById('dbtn-' + level).classList.toggle('active', level === d);
   });
-  document.getElementById('diff-desc').textContent = DIFF_DESCS[d] ?? DIFF_DESCS.easy;
+  document.getElementById('diff-desc').textContent = t('diffDesc_' + d) ?? t('diffDesc_easy');
 }
 
 function updateHeader() {
@@ -68,7 +67,7 @@ function updateHeader() {
 }
 
 function updateCategoryIndicator() {
-  document.getElementById('cat-indicator-value').textContent = selectedCategoryLabel;
+  document.getElementById('cat-indicator-value').textContent = getCatLabel();
 }
 
 // ─── CATEGORY SCREEN ──────────────────────────────────────────────────────────
@@ -81,10 +80,12 @@ function renderCatGroups() {
   const grid = document.getElementById('cat-group-grid');
   grid.innerHTML = CATEGORY_GROUPS.map(g => {
     const count = g.direct ? g.filter().length : g.items.length;
-    const sub = g.direct ? `${count} Airports` : `${count} Kategorien`;
+    const sub = g.direct
+      ? `${count} ${count === 1 ? t('airport') : t('airports')}`
+      : `${count} ${count === 1 ? t('category') : t('categories')}`;
     return `<div class="cat-group-card" data-gid="${esc(g.id)}">
       <span class="cat-card-icon">${g.icon}</span>
-      <div class="cat-card-label">${esc(g.label)}</div>
+      <div class="cat-card-label">${esc(t(g.labelKey))}</div>
       <div class="cat-card-sub">${sub}</div>
     </div>`;
   }).join('');
@@ -94,7 +95,7 @@ function renderCatGroups() {
     if (!card) return;
     const group = CATEGORY_GROUPS.find(g => g.id === card.dataset.gid);
     if (!group) return;
-    if (group.direct) applyCategory(group.filter, `${group.icon} ${group.label}`);
+    if (group.direct) applyCategory(group.filter, group.icon, group.labelKey);
     else renderCatItems(group);
   };
 
@@ -103,7 +104,7 @@ function renderCatGroups() {
 }
 
 function renderCatItems(group) {
-  document.getElementById('cat-breadcrumb').textContent = group.label;
+  document.getElementById('cat-breadcrumb').textContent = t(group.labelKey);
 
   const grid = document.getElementById('cat-item-grid');
   grid.innerHTML = group.items.map(item => {
@@ -111,8 +112,8 @@ function renderCatItems(group) {
     const empty = count === 0;
     return `<div class="cat-item-card${empty ? ' cat-item-empty' : ''}" data-gid="${esc(group.id)}" data-iid="${esc(item.id)}">
       <span class="cat-card-icon">${item.icon}</span>
-      <div class="cat-card-label">${esc(item.label)}</div>
-      <div class="cat-card-sub">${count} ${count === 1 ? 'Airport' : 'Airports'}</div>
+      <div class="cat-card-label">${esc(t(item.labelKey))}</div>
+      <div class="cat-card-sub">${count} ${count === 1 ? t('airport') : t('airports')}</div>
     </div>`;
   }).join('');
 
@@ -121,18 +122,18 @@ function renderCatItems(group) {
     if (!card) return;
     const g = CATEGORY_GROUPS.find(g => g.id === card.dataset.gid);
     const item = g?.items.find(i => i.id === card.dataset.iid);
-    if (item) applyCategory(item.filter, `${item.icon} ${item.label}`);
+    if (item) applyCategory(item.filter, item.icon, item.labelKey);
   };
 
   document.getElementById('cat-groups-view').hidden = true;
   document.getElementById('cat-items-view').hidden = false;
 }
 
-function applyCategory(filterFn, label) {
+function applyCategory(filterFn, icon, labelKey) {
   selectedPool = filterFn();
-  selectedCategoryLabel = label;
+  selectedCategoryIcon = icon;
+  selectedCategoryKey = labelKey;
   updateCategoryIndicator();
-  document.getElementById('quiz-category-tag').textContent = label;
   showScreen('screen-start');
 }
 
@@ -162,7 +163,7 @@ function startQuiz() {
   });
 
   currentIdx = 0;
-  document.getElementById('quiz-category-tag').textContent = selectedCategoryLabel;
+  document.getElementById('quiz-category-tag').textContent = getCatLabel();
   showScreen('screen-quiz');
   loadQuestion();
 }
@@ -174,37 +175,35 @@ function loadQuestion() {
   currentQuestionMode = q.mode;
   acHighlight = -1;
 
-  document.getElementById('q-counter').textContent = `Frage ${currentIdx + 1} / ${quizQueue.length}`;
-  document.getElementById('q-mode-badge').textContent = q.mode === 'code' ? 'IATA-Code' : 'Satellit';
-  const diffLabels = { easy: 'Easy', hard: 'Hard', expert: 'Expert' };
-  document.getElementById('q-diff-badge').textContent = diffLabels[selectedDifficulty] ?? 'Easy';
+  const counterTpl = t('questionOf');
+  document.getElementById('q-counter').textContent =
+    counterTpl.replace('{n}', currentIdx + 1).replace('{total}', quizQueue.length);
+  document.getElementById('q-mode-badge').textContent =
+    q.mode === 'code' ? t('modeBadge_code') : t('modeBadge_sat');
+  document.getElementById('q-diff-badge').textContent =
+    t('diffBadge_' + selectedDifficulty) ?? 'Easy';
   document.getElementById('progress-fill').style.width = (currentIdx / quizQueue.length * 100) + '%';
 
   const inp = document.getElementById('answer-input');
   inp.value = '';
   inp.className = 'answer-input';
   inp.disabled = false;
-  const placeholders = {
-    easy:   'Flughafenname oder Stadt eingeben…',
-    hard:   'Stadtname eingeben…',
-    expert: 'Vollständigen Flughafennamen eingeben…',
-  };
-  inp.placeholder = placeholders[selectedDifficulty] ?? 'Antwort eingeben…';
+  inp.placeholder = t('placeholder_' + selectedDifficulty);
   inp.focus();
 
   document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('feedback-panel').className = 'feedback-panel';
   document.getElementById('feedback-panel').innerHTML = '';
   document.getElementById('btn-check').disabled = false;
-  document.getElementById('btn-check').textContent = 'Prüfen';
-  document.getElementById('btn-skip').textContent = 'Überspringen';
+  document.getElementById('btn-check').textContent = t('btnCheck');
+  document.getElementById('btn-skip').textContent = t('btnSkip');
 
   const card = document.getElementById('question-card');
   if (q.mode === 'code') {
     card.innerHTML = `
       <div class="code-display">
         <div class="iata-code">${esc(currentAirport[0])}</div>
-        <div class="hint">Welcher Flughafen verbirgt sich hinter diesem IATA-Code?</div>
+        <div class="hint">${esc(t('codeHint'))}</div>
       </div>`;
   } else {
     const [, , , , lat, lon] = currentAirport;
@@ -214,13 +213,13 @@ function loadQuestion() {
       <div class="satellite-display">
         <div class="sat-loading" id="sat-loading">
           <div class="spinner"></div>
-          <span>Satellitenbild wird geladen…</span>
+          <span>${esc(t('satLoading'))}</span>
         </div>
         <img
           src="${esc(imgUrl)}"
-          alt="Satellitenbild des Flughafens"
+          alt="Satellite view"
           onload="document.getElementById('sat-loading').style.display='none'"
-          onerror="document.getElementById('sat-loading').innerHTML='<span>Bild konnte nicht geladen werden</span>'"
+          onerror="document.getElementById('sat-loading').innerHTML='<span>${esc(t('satError'))}</span>'"
         />
         <div class="sat-overlay">🛰️ SATELLITE VIEW</div>
       </div>`;
@@ -281,8 +280,8 @@ function _resolveQuestion(ok, given) {
   const inp = document.getElementById('answer-input');
   inp.disabled = true;
   document.getElementById('autocomplete-list').innerHTML = '';
-  document.getElementById('btn-skip').textContent = 'Nächste Frage →';
-  document.getElementById('btn-check').textContent = 'Weiter';
+  document.getElementById('btn-skip').textContent = t('btnNextQ');
+  document.getElementById('btn-check').textContent = t('btnNext');
 
   const feedback = document.getElementById('feedback-panel');
   const info = `<div class="airport-info">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
@@ -291,15 +290,15 @@ function _resolveQuestion(ok, given) {
     inp.classList.add('correct');
     correctCount++;
     feedback.className = 'feedback-panel correct';
-    feedback.innerHTML = `✓ Richtig! <strong>${esc(currentAirport[1])}</strong>${info}`;
+    feedback.innerHTML = `${esc(t('feedbackCorrect'))}<strong>${esc(currentAirport[1])}</strong>${info}`;
   } else {
     inp.classList.add('wrong');
     wrongCount++;
     feedback.className = 'feedback-panel wrong';
     if (given === '—') {
-      feedback.innerHTML = `→ Übersprungen. Richtige Antwort: <strong>${esc(currentAirport[1])}</strong>${info}`;
+      feedback.innerHTML = `${esc(t('feedbackSkipped'))}<strong>${esc(currentAirport[1])}</strong>${info}`;
     } else {
-      feedback.innerHTML = `✗ Leider falsch. Die richtige Antwort lautet: <strong>${esc(currentAirport[1])}</strong>${info}`;
+      feedback.innerHTML = `${esc(t('feedbackWrong'))}<strong>${esc(currentAirport[1])}</strong>${info}`;
     }
   }
 
@@ -388,19 +387,19 @@ function showResults() {
   const pct = Math.round((correctCount / total) * 100);
 
   let emoji = '😅';
-  let label = 'Nicht schlecht — weiter üben!';
-  if (pct >= 90) { emoji = '🏆'; label = 'Exzellent — du kennst jeden Flughafen!'; }
-  else if (pct >= 70) { emoji = '✈️';  label = 'Solide Leistung — Aviation-Kenner!'; }
-  else if (pct >= 50) { emoji = '🗺️'; label = 'Gut — aber da ist noch Luft nach oben.'; }
-  else if (pct >= 30) { emoji = '📍'; label = 'Nicht schlecht — weiter üben!'; }
+  let labelKey = 'resultLabel_0';
+  if (pct >= 90) { emoji = '🏆'; labelKey = 'resultLabel_90'; }
+  else if (pct >= 70) { emoji = '✈️';  labelKey = 'resultLabel_70'; }
+  else if (pct >= 50) { emoji = '🗺️'; labelKey = 'resultLabel_50'; }
+  else if (pct >= 30) { emoji = '📍'; labelKey = 'resultLabel_30'; }
 
   document.getElementById('result-emoji').textContent = emoji;
   document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
-  document.getElementById('result-label').textContent = label;
+  document.getElementById('result-label').textContent = t(labelKey);
   document.getElementById('stat-correct').textContent = correctCount;
   document.getElementById('stat-wrong').textContent = wrongCount;
   document.getElementById('stat-pct').textContent = pct + '%';
-  document.getElementById('result-category').textContent = selectedCategoryLabel;
+  document.getElementById('result-category').textContent = getCatLabel();
   document.getElementById('progress-fill').style.width = '100%';
 
   document.getElementById('history-list').innerHTML = history.map(h => `
@@ -415,7 +414,7 @@ function showResults() {
 }
 
 function cancelRound() {
-  if (!window.confirm('Möchtest du die aktuelle Runde wirklich abbrechen?')) return;
+  if (!window.confirm(t('cancelConfirm'))) return;
   correctCount = 0;
   wrongCount = 0;
   history = [];
