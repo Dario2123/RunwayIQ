@@ -134,33 +134,61 @@ function dailyRecord(correct, total, pct) {
   return { isNewDayRecord, prevBestPct };
 }
 
-// ── Share text ────────────────────────────────────────────────────────────────
-function dailyShareText(dateStr, correct, total, pct) {
+// ── Share logic ───────────────────────────────────────────────────────────────
+let _dailyShareTextStr = '';
+
+function _buildShareStr(dateStr, correct, total, pct, streak) {
   const lang = localStorage.getItem('riq_lang') || 'en';
   const date = dailyDateLabel(dateStr, lang);
-  return `⭐ RunwayIQ Daily Challenge\n${date}\n${correct}/${total} (${pct}%)\n\nhttps://runway-iq-xi.vercel.app`;
+  const streakPart = streak > 0 ? `\n🔥 ${streak} ${t('dailyStreakLabel')}` : '';
+  return `⭐ RunwayIQ Daily Challenge\n${date}\n${correct}/${total} (${pct}%)${streakPart}\n\nhttps://runway-iq-xi.vercel.app`;
 }
 
-function copyShareText() {
-  const el  = document.getElementById('daily-share-text');
-  const btn = document.getElementById('btn-copy-share');
-  if (!el || !btn) return;
-  const origText = btn.textContent;
-  const text = el.value;
-  const done = () => {
-    btn.textContent = t('shareCopied');
-    setTimeout(() => { btn.textContent = origText; }, 2000);
-  };
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(done).catch(() => { el.select(); document.execCommand('copy'); done(); });
-  } else {
-    el.select(); document.execCommand('copy'); done();
+function doShare() {
+  const text = _dailyShareTextStr;
+  const btn  = document.getElementById('btn-daily-share');
+
+  if (typeof navigator.share === 'function') {
+    const shareText = text.replace(/\n\nhttps:\/\/runway-iq-xi\.vercel\.app$/, '');
+    navigator.share({
+      title: 'RunwayIQ Daily Challenge',
+      text:  shareText,
+      url:   'https://runway-iq-xi.vercel.app'
+    }).catch(() => {});
+    return;
   }
+
+  const origText = btn ? btn.textContent : t('copyResult');
+  const done = () => {
+    if (!btn) return;
+    btn.textContent = t('shareCopied');
+    setTimeout(() => { if (btn) btn.textContent = origText; }, 2000);
+  };
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(() => { _execCommandCopy(text); done(); });
+  } else {
+    _execCommandCopy(text);
+    done();
+  }
+}
+
+function _execCommandCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch {}
+  document.body.removeChild(ta);
 }
 
 // ── Result HTML (injected into result-hs-section in daily mode) ───────────────
 function buildDailyResultHtml(correct, total, pct, isNewDayRecord, prevBestPct, dayData) {
   const dateStr = dailyDateStr();
+
+  _dailyShareTextStr = _buildShareStr(dateStr, correct, total, pct, dayData.currentStreak);
+
   let h = `<div class="result-daily-header">${esc(t('dailyResultTitle'))}</div>`;
 
   if (isNewDayRecord) {
@@ -169,24 +197,42 @@ function buildDailyResultHtml(correct, total, pct, isNewDayRecord, prevBestPct, 
     h += `<div class="result-prev-best">${esc(t('dailyPrevBest'))}: <strong>${prevBestPct}%</strong></div>`;
   }
 
+  const canNativeShare = typeof navigator.share === 'function';
+  const shareBtnLabel  = canNativeShare ? t('shareResult') : t('copyResult');
+
+  h += `<div class="daily-share-card">
+    <div class="daily-share-stats">
+      <div class="daily-share-stat">
+        <span class="daily-share-val">${correct}/${total}</span>
+        <span class="daily-share-lbl">${esc(t('statCorrect'))}</span>
+      </div>
+      <div class="daily-share-stat">
+        <span class="daily-share-val">${pct}%</span>
+        <span class="daily-share-lbl">${esc(t('statPct'))}</span>
+      </div>`;
+
   if (dayData.currentStreak > 0) {
-    h += `<div class="result-daily-streak">🔥 ${dayData.currentStreak} ${esc(t('dailyStreakLabel'))}</div>`;
+    h += `<div class="daily-share-stat">
+        <span class="daily-share-val">🔥 ${dayData.currentStreak}</span>
+        <span class="daily-share-lbl">${esc(t('dailyStreakLabel'))}</span>
+      </div>`;
   }
 
-  h += `<div class="result-mini-stats"><div>${esc(t('dailyTotalCompleted'))}: <span>${dayData.totalCompleted}</span></div></div>`;
-
-  const shareStr = dailyShareText(dateStr, correct, total, pct);
-  h += `<div class="result-share-wrap">
-    <div class="result-share-label">${esc(t('shareLabel'))}</div>
-    <textarea class="result-share-text" id="daily-share-text" readonly rows="4">${esc(shareStr)}</textarea>
-    <button class="btn-share-copy" id="btn-copy-share" onclick="copyShareText()">${esc(t('shareCopyBtn'))}</button>
+  h += `</div>
+    <button class="btn-share-result" id="btn-daily-share" onclick="doShare()">${esc(shareBtnLabel)}</button>
   </div>`;
+
+  h += `<div class="result-mini-stats"><div>${esc(t('dailyTotalCompleted'))}: <span>${dayData.totalCompleted}</span></div></div>`;
 
   return h;
 }
 
 // ── Start daily challenge ─────────────────────────────────────────────────────
 function startDailyChallenge() {
+  // Guard: once completed today, cannot replay
+  const state = dailyGetState();
+  if (state.completed) return;
+
   isDailyMode           = true;
   selectedMode          = 'mixed';
   selectedDifficulty    = 'easy';
@@ -223,14 +269,16 @@ function renderDailyCard() {
 
   if (data.completed) {
     statusEl.className   = 'lp-daily-status done';
-    statusEl.textContent = `${t('dailyBestToday')}: ${data.bestScore}/10`;
+    statusEl.textContent = `${t('dailyTodayScore')}: ${data.bestScore}/10`;
     btn.className        = 'btn-daily completed';
-    btn.textContent      = t('dailyPlayAgain');
+    btn.textContent      = t('dailyCompletedToday');
+    btn.disabled         = true;
   } else {
     statusEl.className   = 'lp-daily-status';
     statusEl.textContent = '';
     btn.className        = 'btn-daily';
     btn.textContent      = t('dailyPlayBtn');
+    btn.disabled         = false;
   }
 }
 

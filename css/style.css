@@ -999,7 +999,7 @@ main {
 }
 .btn-daily:hover { background: rgba(244,162,97,0.18); border-color: rgba(244,162,97,0.6); transform: translateY(-2px); }
 .btn-daily:active { transform: translateY(0); }
-.btn-daily.completed { opacity: 0.78; }
+.btn-daily.completed { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
 
 /* ─── DAILY CHALLENGE — RESULT SECTION ────────────────────────────────────── */
 
@@ -1061,6 +1061,66 @@ main {
   touch-action: manipulation;
 }
 .btn-share-copy:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── DAILY CHALLENGE — SHARE RESULT CARD ─────────────────────────────────── */
+
+.daily-share-card {
+  margin-top: 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.daily-share-stats {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.daily-share-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.daily-share-val {
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.daily-share-lbl {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.btn-share-result {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: rgba(0, 180, 216, 0.1);
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  width: 100%;
+}
+.btn-share-result:hover {
+  background: rgba(0, 180, 216, 0.2);
+  transform: translateY(-1px);
+}
+.btn-share-result:active { transform: translateY(0); }
 
 /* Mobile: daily card stacks */
 @media (max-width: 640px) {
