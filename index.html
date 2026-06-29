@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="RunwayIQ — Teste dein Wissen über die 200 größten Flughäfen der Welt per IATA-Code oder Satellitenbild.">
   <title>RunwayIQ — Airport Quiz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,6 +99,10 @@
           id="answer-input"
           placeholder="Flughafenname eingeben…"
           autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="go"
           oninput="onInputChange()"
           onkeydown="onKeyDown(event)"
         />
