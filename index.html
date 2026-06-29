@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunwayIQ — Airport Quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">RUNWAY<span>IQ</span></div>
+  <div class="score-display">
+    <span>✓ <b id="hdr-correct">0</b></span>
+    <span>✗ <b id="hdr-wrong">0</b></span>
+    <span>∑ <b id="hdr-total">0</b></span>
+  </div>
+</header>
+
+<main>
+
+  <!-- START SCREEN -->
+  <div class="screen active" id="screen-start">
+    <div class="start-hero">
+      <div class="tagline">Aviation Knowledge Quiz</div>
+      <h1>Erkennst du den Flughafen?</h1>
+      <p>Teste dein Wissen über die 200 größten Passagierflughäfen der Welt — über IATA-Codes oder Satellitenbilder.</p>
+    </div>
+
+    <div>
+      <div class="section-label" style="margin-bottom:12px;">Modus wählen</div>
+      <div class="mode-grid">
+        <div class="mode-card selected" data-mode="code" onclick="selectMode('code')">
+          <div class="icon">🔤</div>
+          <h3>Code-Quiz</h3>
+          <p>IATA-Code wird angezeigt — nenne den Flughafen.</p>
+        </div>
+        <div class="mode-card" data-mode="satellite" onclick="selectMode('satellite')">
+          <div class="icon">🛰️</div>
+          <h3>Satellitenbild</h3>
+          <p>Satellitenfoto wird angezeigt — identifiziere den Flughafen.</p>
+        </div>
+        <div class="mode-card" data-mode="mixed" onclick="selectMode('mixed')">
+          <div class="icon">🎲</div>
+          <h3>Gemischt</h3>
+          <p>Abwechselnd Code- und Satellitenbildfragen.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounds-selector">
+      <label>Anzahl Fragen</label>
+      <div class="rounds-btns">
+        <button onclick="setRounds(10)" class="active" id="rbtn-10">10</button>
+        <button onclick="setRounds(20)" id="rbtn-20">20</button>
+        <button onclick="setRounds(50)" id="rbtn-50">50</button>
+      </div>
+    </div>
+
+    <div class="rounds-selector">
+      <div>
+        <label style="display:block;margin-bottom:4px;">Schwierigkeitsgrad</label>
+        <span style="font-size:0.75rem;color:var(--muted)" id="diff-desc">Autocomplete · Teilname reicht</span>
+      </div>
+      <div class="rounds-btns">
+        <button onclick="setDifficulty('easy')" class="active" id="dbtn-easy">Easy</button>
+        <button onclick="setDifficulty('hard')" id="dbtn-hard">Hard</button>
+        <button onclick="setDifficulty('expert')" id="dbtn-expert">Expert</button>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="startQuiz()">Quiz starten →</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="screen" id="screen-quiz">
+    <div class="quiz-meta">
+      <span id="q-counter">Frage 1 / 10</span>
+      <span class="mode-badge" id="q-mode-badge">Code</span>
+      <span class="mode-badge" id="q-diff-badge" style="background:var(--surface2);color:var(--gold);border-color:var(--gold)">Easy</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="question-card" id="question-card">
+      <!-- filled dynamically -->
+    </div>
+
+    <div class="input-area" id="input-area">
+      <div class="answer-input-wrap">
+        <input
+          type="text"
+          class="answer-input"
+          id="answer-input"
+          placeholder="Flughafenname eingeben…"
+          autocomplete="off"
+          oninput="onInputChange()"
+          onkeydown="onKeyDown(event)"
+        />
+        <div class="autocomplete-list" id="autocomplete-list"></div>
+      </div>
+      <div class="feedback-panel" id="feedback-panel"></div>
+      <div class="action-row">
+        <button class="btn-primary" id="btn-check" onclick="checkAnswer()">Prüfen</button>
+        <button class="btn-ghost" id="btn-skip" onclick="skipQuestion()">Überspringen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="screen" id="screen-result">
+    <div class="result-card">
+      <div class="result-emoji" id="result-emoji">🏆</div>
+      <div class="result-score" id="result-score">0 / 10</div>
+      <div class="result-label" id="result-label">Quiz abgeschlossen</div>
+      <div class="result-stats">
+        <div class="stat-box">
+          <div class="val" id="stat-correct">0</div>
+          <div class="lbl">Richtig</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="stat-wrong">0</div>
+          <div class="lbl">Falsch</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="stat-pct">0%</div>
+          <div class="lbl">Trefferquote</div>
+        </div>
+      </div>
+      <div class="result-btns">
+        <button class="btn-primary" onclick="startQuiz()">Nochmal spielen</button>
+        <button class="btn-ghost" onclick="showScreen('screen-start')">Modus ändern</button>
+      </div>
+    </div>
+
+    <div class="section-label">Antworten im Überblick</div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+
+</main>
+
+<!-- Data & config loaded first, then app logic -->
+<script src="data/config.js"></script>
+<script src="data/airports.js"></script>
+<script src="js/quiz.js"></script>
+
+</body>
+</html>
