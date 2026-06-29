@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RunwayIQ — Teste dein Wissen über die 200 größten Flughäfen der Welt per IATA-Code oder Satellitenbild.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src https://api.mapbox.com;">
   <title>RunwayIQ — Airport Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -28,7 +33,7 @@
     </div>
 
     <div>
-      <div class="section-label" style="margin-bottom:12px;">Modus wählen</div>
+      <div class="section-label">Modus wählen</div>
       <div class="mode-grid">
         <div class="mode-card selected" data-mode="code" onclick="selectMode('code')">
           <div class="icon">🔤</div>
@@ -59,8 +64,8 @@
 
     <div class="rounds-selector">
       <div>
-        <label style="display:block;margin-bottom:4px;">Schwierigkeitsgrad</label>
-        <span style="font-size:0.75rem;color:var(--muted)" id="diff-desc">Autocomplete · Teilname reicht</span>
+        <label>Schwierigkeitsgrad</label>
+        <span class="diff-desc" id="diff-desc">Autocomplete hilft beim Tippen</span>
       </div>
       <div class="rounds-btns">
         <button onclick="setDifficulty('easy')" class="active" id="dbtn-easy">Easy</button>
@@ -77,10 +82,10 @@
     <div class="quiz-meta">
       <span id="q-counter">Frage 1 / 10</span>
       <span class="mode-badge" id="q-mode-badge">Code</span>
-      <span class="mode-badge" id="q-diff-badge" style="background:var(--surface2);color:var(--gold);border-color:var(--gold)">Easy</span>
+      <span class="mode-badge mode-badge--diff" id="q-diff-badge">Easy</span>
     </div>
     <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      <div class="progress-fill" id="progress-fill"></div>
     </div>
 
     <div class="question-card" id="question-card">

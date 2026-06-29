@@ -1,9 +1,5 @@
-// RunwayIQ — Quiz Logic
+﻿// RunwayIQ — Quiz Logic
 // Depends on: data/airports.js, data/config.js
-
-// ─── AIRPORT DATA ─────────────────────────────────────────────────────────────
-// Top 200 passenger airports (IATA, Name, City, Country, lat, lon)
-
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let selectedMode = 'code';
@@ -18,6 +14,15 @@ let correctCount = 0;
 let wrongCount = 0;
 let history = [];
 let acHighlight = -1;
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 // ─── UI HELPERS ───────────────────────────────────────────────────────────────
 function showScreen(id) {
@@ -34,18 +39,23 @@ function selectMode(mode) {
 
 function setRounds(n) {
   selectedRounds = n;
-  [10,20,50].forEach(r => {
-    document.getElementById('rbtn-'+r).classList.toggle('active', r === n);
+  [10, 20, 50].forEach(r => {
+    document.getElementById('rbtn-' + r).classList.toggle('active', r === n);
   });
 }
 
+const DIFF_DESCS = {
+  easy:   'Autocomplete hilft beim Tippen',
+  hard:   'Kein Dropdown — exakter Stadtname erforderlich',
+  expert: 'Kein Dropdown — exakter Flughafenname erforderlich',
+};
+
 function setDifficulty(d) {
   selectedDifficulty = d;
-  document.getElementById('dbtn-easy').classList.toggle('active', d === 'easy');
-  document.getElementById('dbtn-hard').classList.toggle('active', d === 'hard');
-  document.getElementById('diff-desc').textContent = d === 'easy'
-    ? 'Autocomplete hilft beim Tippen'
-    : 'Kein Dropdown u2014 exakter Name erforderlich';
+  ['easy', 'hard', 'expert'].forEach(level => {
+    document.getElementById('dbtn-' + level).classList.toggle('active', level === d);
+  });
+  document.getElementById('diff-desc').textContent = DIFF_DESCS[d] ?? DIFF_DESCS.easy;
 }
 
 function updateHeader() {
@@ -90,15 +100,12 @@ function loadQuestion() {
   currentQuestionMode = q.mode;
   acHighlight = -1;
 
-  // meta
   document.getElementById('q-counter').textContent = `Frage ${currentIdx + 1} / ${quizQueue.length}`;
   document.getElementById('q-mode-badge').textContent = q.mode === 'code' ? 'IATA-Code' : 'Satellit';
-  const diffLabels = {easy:'Easy', hard:'Hard', expert:'Expert'};
-  document.getElementById('q-diff-badge').textContent = diffLabels[selectedDifficulty] || 'Easy';
-  const pct = (currentIdx / quizQueue.length) * 100;
-  document.getElementById('progress-fill').style.width = pct + '%';
+  const diffLabels = { easy: 'Easy', hard: 'Hard', expert: 'Expert' };
+  document.getElementById('q-diff-badge').textContent = diffLabels[selectedDifficulty] ?? 'Easy';
+  document.getElementById('progress-fill').style.width = (currentIdx / quizQueue.length * 100) + '%';
 
-  // input reset
   const inp = document.getElementById('answer-input');
   inp.value = '';
   inp.className = 'answer-input';
@@ -106,29 +113,28 @@ function loadQuestion() {
   const placeholders = {
     easy:   'Flughafenname oder Stadt eingeben…',
     hard:   'Stadtname eingeben…',
-    expert: 'Vollständigen Flughafennamen eingeben…'
+    expert: 'Vollständigen Flughafennamen eingeben…',
   };
-  inp.placeholder = placeholders[selectedDifficulty] || 'Antwort eingeben…';
+  inp.placeholder = placeholders[selectedDifficulty] ?? 'Antwort eingeben…';
   inp.focus();
+
   document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('feedback-panel').className = 'feedback-panel';
   document.getElementById('feedback-panel').innerHTML = '';
   document.getElementById('btn-check').disabled = false;
+  document.getElementById('btn-check').textContent = 'Prüfen';
   document.getElementById('btn-skip').textContent = 'Überspringen';
 
-  // question card
   const card = document.getElementById('question-card');
   if (q.mode === 'code') {
     card.innerHTML = `
       <div class="code-display">
-        <div class="iata-code">${currentAirport[0]}</div>
+        <div class="iata-code">${esc(currentAirport[0])}</div>
         <div class="hint">Welcher Flughafen verbirgt sich hinter diesem IATA-Code?</div>
       </div>`;
   } else {
     const [, , , , lat, lon] = currentAirport;
-    const zoom = CONFIG.SATELLITE_ZOOM;
-    const mapboxToken = CONFIG.MAPBOX_TOKEN;
-    const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${zoom},0/${CONFIG.SATELLITE_SIZE}?access_token=${mapboxToken}`;
+    const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${CONFIG.SATELLITE_ZOOM},0/${CONFIG.SATELLITE_SIZE}?access_token=${encodeURIComponent(CONFIG.MAPBOX_TOKEN)}`;
     card.innerHTML = `
       <div class="satellite-display">
         <div class="sat-loading" id="sat-loading">
@@ -136,8 +142,8 @@ function loadQuestion() {
           <span>Satellitenbild wird geladen…</span>
         </div>
         <img
-          src="${imgUrl}"
-          alt="Satellite view"
+          src="${esc(imgUrl)}"
+          alt="Satellitenbild des Flughafens"
           onload="document.getElementById('sat-loading').style.display='none'"
           onerror="document.getElementById('sat-loading').innerHTML='<span>Bild konnte nicht geladen werden</span>'"
         />
@@ -153,22 +159,21 @@ function normalize(str) {
     .trim();
 }
 
-// Levenshtein distance — counts minimum edits between two strings
+// Levenshtein distance
 function levenshtein(a, b) {
   const m = a.length, n = b.length;
-  const dp = Array.from({length: m + 1}, (_, i) => [i]);
+  const dp = Array.from({ length: m + 1 }, (_, i) => [i]);
   for (let j = 1; j <= n; j++) dp[0][j] = j;
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      dp[i][j] = a[i-1] === b[j-1]
-        ? dp[i-1][j-1]
-        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
     }
   }
   return dp[m][n];
 }
 
-// How many typos are allowed based on target word length
 function allowedErrors(target) {
   if (target.length <= 4) return 0;
   if (target.length <= 7) return 1;
@@ -187,15 +192,11 @@ function isCorrect(input, airport) {
   const code = airport[0].toLowerCase();
 
   if (selectedDifficulty === 'expert') {
-    // Must match full airport name, typos allowed
     return fuzzyMatch(n, name);
   }
-
   if (selectedDifficulty === 'hard') {
-    // Must match city name, typos allowed
     return fuzzyMatch(n, city);
   }
-
   // Easy: generous matching
   if (n === code && currentQuestionMode !== 'code') return true;
   if (n === name) return true;
@@ -206,58 +207,47 @@ function isCorrect(input, airport) {
   return false;
 }
 
-function checkAnswer() {
-  if (answered) { nextQuestion(); return; }
-
-  const inp = document.getElementById('answer-input');
-  const val = inp.value.trim();
-  if (!val) return;
-
-  document.getElementById('autocomplete-list').innerHTML = '';
+function _resolveQuestion(ok, given) {
   answered = true;
+  const inp = document.getElementById('answer-input');
   inp.disabled = true;
+  document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('btn-skip').textContent = 'Nächste Frage →';
   document.getElementById('btn-check').textContent = 'Weiter';
 
-  const ok = isCorrect(val, currentAirport);
   const feedback = document.getElementById('feedback-panel');
+  const info = `<div class="airport-info">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
 
   if (ok) {
     inp.classList.add('correct');
     correctCount++;
     feedback.className = 'feedback-panel correct';
-    feedback.innerHTML = `✓ Richtig! <strong>${currentAirport[1]}</strong>
-      <div class="airport-info">${currentAirport[0]} · ${currentAirport[2]}, ${currentAirport[3]}</div>`;
+    feedback.innerHTML = `✓ Richtig! <strong>${esc(currentAirport[1])}</strong>${info}`;
   } else {
     inp.classList.add('wrong');
     wrongCount++;
     feedback.className = 'feedback-panel wrong';
-    feedback.innerHTML = `✗ Leider falsch. Die richtige Antwort lautet: <strong>${currentAirport[1]}</strong>
-      <div class="airport-info">${currentAirport[0]} · ${currentAirport[2]}, ${currentAirport[3]}</div>`;
+    if (given === '—') {
+      feedback.innerHTML = `→ Übersprungen. Richtige Antwort: <strong>${esc(currentAirport[1])}</strong>${info}`;
+    } else {
+      feedback.innerHTML = `✗ Leider falsch. Die richtige Antwort lautet: <strong>${esc(currentAirport[1])}</strong>${info}`;
+    }
   }
 
-  history.push({ airport: currentAirport, correct: ok, given: val, mode: currentQuestionMode });
+  history.push({ airport: currentAirport, correct: ok, given, mode: currentQuestionMode });
   updateHeader();
+}
+
+function checkAnswer() {
+  if (answered) { nextQuestion(); return; }
+  const val = document.getElementById('answer-input').value.trim();
+  if (!val) return;
+  _resolveQuestion(isCorrect(val, currentAirport), val);
 }
 
 function skipQuestion() {
   if (answered) { nextQuestion(); return; }
-  // treat as wrong
-  const inp = document.getElementById('answer-input');
-  inp.disabled = true;
-  answered = true;
-  wrongCount++;
-  document.getElementById('autocomplete-list').innerHTML = '';
-  document.getElementById('btn-skip').textContent = 'Nächste Frage →';
-  document.getElementById('btn-check').textContent = 'Weiter';
-
-  const feedback = document.getElementById('feedback-panel');
-  feedback.className = 'feedback-panel wrong';
-  feedback.innerHTML = `→ Übersprungen. Richtige Antwort: <strong>${currentAirport[1]}</strong>
-    <div class="airport-info">${currentAirport[0]} · ${currentAirport[2]}, ${currentAirport[3]}</div>`;
-
-  history.push({ airport: currentAirport, correct: false, given: '—', mode: currentQuestionMode });
-  updateHeader();
+  _resolveQuestion(false, '—');
 }
 
 function nextQuestion() {
@@ -265,7 +255,6 @@ function nextQuestion() {
   if (currentIdx >= quizQueue.length) {
     showResults();
   } else {
-    document.getElementById('btn-check').textContent = 'Prüfen';
     loadQuestion();
   }
 }
@@ -296,7 +285,6 @@ function onKeyDown(e) {
 
 function onInputChange() {
   if (answered) return;
-  // Hard / Expert mode: no autocomplete
   if (selectedDifficulty === 'hard' || selectedDifficulty === 'expert') {
     document.getElementById('autocomplete-list').innerHTML = '';
     return;
@@ -310,19 +298,16 @@ function onInputChange() {
   const matches = AIRPORTS.filter(ap => {
     const name = ap[1].toLowerCase();
     const city = ap[2].toLowerCase();
-    // In code-mode: never match by IATA code — only name or city
     if (currentQuestionMode === 'code') {
       return name.includes(val) || city.includes(val);
     }
-    const code = ap[0].toLowerCase();
-    return code.startsWith(val) || name.includes(val) || city.includes(val);
+    return ap[0].toLowerCase().startsWith(val) || name.includes(val) || city.includes(val);
   }).slice(0, 8);
 
-  // Never show IATA codes in the dropdown — they give away the answer
   list.innerHTML = matches.map(ap => `
-    <div class="ac-item" data-name="${ap[1]}" onclick="selectAC('${ap[1].replace(/'/g,"\\'")}')">
-      <span class="ac-name">${ap[1]}</span>
-      <span class="ac-country">${ap[2]}, ${ap[3]}</span>
+    <div class="ac-item" data-name="${esc(ap[1])}" onclick="selectAC(this.dataset.name)">
+      <span class="ac-name">${esc(ap[1])}</span>
+      <span class="ac-country">${esc(ap[2])}, ${esc(ap[3])}</span>
     </div>`).join('');
 }
 
@@ -341,7 +326,7 @@ function showResults() {
   let emoji = '😅';
   let label = 'Nicht schlecht — weiter üben!';
   if (pct >= 90) { emoji = '🏆'; label = 'Exzellent — du kennst jeden Flughafen!'; }
-  else if (pct >= 70) { emoji = '✈️'; label = 'Solide Leistung — Aviation-Kenner!'; }
+  else if (pct >= 70) { emoji = '✈️';  label = 'Solide Leistung — Aviation-Kenner!'; }
   else if (pct >= 50) { emoji = '🗺️'; label = 'Gut — aber da ist noch Luft nach oben.'; }
   else if (pct >= 30) { emoji = '📍'; label = 'Nicht schlecht — weiter üben!'; }
 
@@ -353,19 +338,18 @@ function showResults() {
   document.getElementById('stat-pct').textContent = pct + '%';
   document.getElementById('progress-fill').style.width = '100%';
 
-  const hl = document.getElementById('history-list');
-  hl.innerHTML = history.map(h => `
+  document.getElementById('history-list').innerHTML = history.map(h => `
     <div class="history-item ${h.correct ? 'correct-h' : 'wrong-h'}">
       <span class="hi-status">${h.correct ? '✅' : '❌'}</span>
-      <span class="hi-code">${h.airport[0]}</span>
-      <span class="hi-name">${h.airport[1]}</span>
-      <span class="hi-given">${h.given}</span>
+      <span class="hi-code">${esc(h.airport[0])}</span>
+      <span class="hi-name">${esc(h.airport[1])}</span>
+      <span class="hi-given">${esc(h.given)}</span>
     </div>`).join('');
 
   showScreen('screen-result');
 }
 
-// close autocomplete on outside click
+// Close autocomplete on outside click
 document.addEventListener('click', e => {
   if (!e.target.closest('.answer-input-wrap')) {
     document.getElementById('autocomplete-list').innerHTML = '';
