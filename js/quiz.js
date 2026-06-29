@@ -41,6 +41,32 @@ function showScreen(id) {
   document.getElementById(id).classList.add('active');
 }
 
+function showModeScreen() {
+  showScreen('screen-mode');
+}
+
+function selectModeAndContinue(mode) {
+  selectMode(mode);
+  updateModeIndicator();
+  showScreen('screen-start');
+}
+
+function updateModeIndicator() {
+  const el = document.getElementById('mode-indicator-value');
+  if (!el) return;
+  const labels = {
+    code:      t('modeCode_title'),
+    satellite: t('modeSatellite_title'),
+    mixed:     t('modeMixed_title'),
+  };
+  el.textContent = labels[selectedMode] || selectedMode;
+}
+
+function showStartScreen() {
+  updateModeIndicator();
+  showScreen('screen-start');
+}
+
 function selectMode(mode) {
   selectedMode = mode;
   document.querySelectorAll('.mode-card').forEach(c => {
@@ -86,9 +112,12 @@ function renderCatGroups() {
     const sub = g.direct
       ? `${count} ${count === 1 ? t('airport') : t('airports')}`
       : `${count} ${count === 1 ? t('category') : t('categories')}`;
+    const descKey = g.labelKey.replace('.label', '.desc');
+    const desc = t(descKey);
     return `<div class="cat-group-card" data-gid="${esc(g.id)}">
       <span class="cat-card-icon">${g.icon}</span>
       <div class="cat-card-label">${esc(t(g.labelKey))}</div>
+      ${desc !== descKey ? `<div class="cat-card-desc">${esc(desc)}</div>` : ''}
       <div class="cat-card-sub">${sub}</div>
     </div>`;
   }).join('');
@@ -137,6 +166,7 @@ function applyCategory(filterFn, icon, labelKey) {
   selectedCategoryIcon = icon;
   selectedCategoryKey = labelKey;
   updateCategoryIndicator();
+  updateModeIndicator();
   showScreen('screen-start');
 }
 

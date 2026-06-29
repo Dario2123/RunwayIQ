@@ -32,4 +32,5 @@ function setLang(lang) {
     if (ss && ss.classList.contains('active')) renderStatsScreen();
   }
   if (typeof renderDailyCard === 'function') renderDailyCard();
+  if (typeof updateModeIndicator === 'function') updateModeIndicator();
 }

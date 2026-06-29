@@ -13,8 +13,19 @@ const LANG_DE = {
   featureDesc2:    "Spiele weltweit oder filtere nach Land, Kontinent oder Flughafentyp.",
   featureTitle3:   "Score verbessern",
   featureDesc3:    "Erweitere dein Wissen und werde zum RunwayIQ-Experten.",
+  playNow:         "Jetzt spielen",
+  featureStripModes: "Spielmodi",
   howItWorksTitle: "So funktioniert's",
   previewLabel:    "So sieht's aus",
+
+  // Modus-Auswahlscreen
+  chooseChallenge:    "Spielmodus wählen",
+  modeScreenSub:      "Wie möchtest du heute spielen?",
+  modePopular:        "Beliebt",
+  challengeSatDesc:   "Erkenne Flughäfen anhand von Satellitenbildern",
+  challengeCodeDesc:  "Nenne Flughäfen anhand von IATA-Codes",
+  challengeMixedDesc: "Abwechselnd Satellit- und Code-Runden",
+  modeSelectedLabel:  "Modus",
 
   // Kategorien-Screen
   catScreen_tagline:  "Airport Quiz",
@@ -129,6 +140,11 @@ const LANG_DE = {
 
   // Kategorie-Labels
   "cat.all.label":                           "Weltweit",
+  "cat.all.desc":                            "Alle Flughäfen weltweit",
+  "cat.size.desc":                           "Nach Flughafengröße filtern",
+  "cat.continent.desc":                      "Nach Weltregion spielen",
+  "cat.country.desc":                        "Länderspezifisches Quiz",
+  "cat.special.desc":                        "Thematische Sammlungen",
   "cat.size.label":                          "Flughafengröße",
   "cat.size.items.top100.label":             "Top 100",
   "cat.size.items.large.label":              "Große Flughäfen",

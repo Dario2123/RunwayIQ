@@ -34,16 +34,8 @@
     <div class="lp-hero">
       <div class="lp-tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
       <h1 class="lp-title">Runway<span>IQ</span></h1>
-      <p class="lp-claim" data-i18n="landingClaim">Can you identify the world's busiest airports from satellite images?</p>
-      <ul class="lp-bullets">
-        <li data-i18n="landingBullet1">Study satellite views and name the airport</li>
-        <li data-i18n="landingBullet2">Choose your favourite category</li>
-        <li data-i18n="landingBullet3">Challenge yourself and improve your score</li>
-      </ul>
-      <div class="lp-cta">
-        <button class="btn-hero" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
-        <button class="btn-hero-ghost" onclick="showCatScreen()" data-i18n="landingBrowse">Browse Categories</button>
-      </div>
+      <p class="lp-claim" data-i18n="landingClaim">How well do you know the world's busiest airports?</p>
+      <button class="btn-hero" onclick="showModeScreen()" data-i18n="playNow">Play Now</button>
       <button class="lp-stats-link" onclick="showStats()" data-i18n="statsBtn">Statistics →</button>
     </div>
 
@@ -59,62 +51,79 @@
       </div>
     </div>
 
-    <!-- How it works -->
-    <div class="lp-features">
-      <div class="lp-section-label" data-i18n="howItWorksTitle">How it works</div>
-      <div class="lp-feature-grid">
-        <div class="lp-feature-card">
-          <div class="lp-feature-icon">🛰️</div>
-          <h3 data-i18n="featureTitle1">Satellite Images</h3>
-          <p data-i18n="featureDesc1">Recognize airports only from aerial satellite imagery.</p>
-        </div>
-        <div class="lp-feature-card">
-          <div class="lp-feature-icon">🌍</div>
-          <h3 data-i18n="featureTitle2">Choose a Category</h3>
-          <p data-i18n="featureDesc2">Play worldwide or filter by country, continent or airport type.</p>
-        </div>
-        <div class="lp-feature-card">
-          <div class="lp-feature-icon">🏆</div>
-          <h3 data-i18n="featureTitle3">Beat Your Score</h3>
-          <p data-i18n="featureDesc3">Improve your knowledge and become a RunwayIQ expert.</p>
-        </div>
+    <!-- Feature strip -->
+    <div class="lp-feature-strip">
+      <div class="lp-fsi">
+        <div class="lp-fsi-num">202</div>
+        <div class="lp-fsi-lbl" data-i18n="airports">Airports</div>
       </div>
-    </div>
-
-    <!-- Quiz preview mockup -->
-    <div class="lp-preview">
-      <div class="lp-section-label" data-i18n="previewLabel">See it in action</div>
-      <div class="lp-preview-card">
-        <div class="lp-prev-badges">
-          <span class="lp-prev-badge">🔤 IATA Code</span>
-          <span class="lp-prev-badge lp-prev-badge--diff">Easy</span>
-        </div>
-        <div class="lp-prev-progress">
-          <div class="lp-prev-progress-fill"></div>
-        </div>
-        <div class="lp-prev-code-wrap">
-          <div class="lp-prev-iata">FRA</div>
-          <div class="lp-prev-hint">Which airport is behind this IATA code?</div>
-        </div>
-        <div class="lp-prev-input">
-          Frankfurt Airport<span class="lp-prev-cursor">|</span>
-        </div>
-        <div class="lp-prev-feedback">
-          ✓ Correct! <strong>Frankfurt Airport</strong>
-          <div class="lp-prev-info">FRA · Frankfurt, Germany</div>
-        </div>
-        <div class="lp-prev-actions">
-          <div class="lp-prev-btn-primary">Next</div>
-          <div class="lp-prev-btn-ghost">Skip</div>
-        </div>
-        <div class="lp-prev-meta">
-          <span>Question 7 / 10</span>
-          <span>✓ 5 &nbsp; ✗ 1</span>
-        </div>
+      <div class="lp-fsi-sep"></div>
+      <div class="lp-fsi">
+        <div class="lp-fsi-num">25+</div>
+        <div class="lp-fsi-lbl" data-i18n="categories">Categories</div>
+      </div>
+      <div class="lp-fsi-sep"></div>
+      <div class="lp-fsi">
+        <div class="lp-fsi-num">3</div>
+        <div class="lp-fsi-lbl" data-i18n="featureStripModes">Quiz Modes</div>
       </div>
     </div>
 
   </div><!-- /screen-landing -->
+
+  <!-- MODE SELECTION SCREEN -->
+  <div class="screen" id="screen-mode">
+    <div class="mode-screen-nav">
+      <button class="btn-nav-back" onclick="showScreen('screen-landing')" data-i18n="catBack">← Back</button>
+    </div>
+    <div class="mode-screen-hero">
+      <h2 class="mode-screen-title" data-i18n="chooseChallenge">Choose Your Challenge</h2>
+      <p class="mode-screen-sub" data-i18n="modeScreenSub">How do you want to play today?</p>
+    </div>
+    <div class="challenge-grid">
+
+      <div class="challenge-card challenge-card--featured" data-mode="satellite" onclick="selectModeAndContinue('satellite')">
+        <div class="challenge-badge" data-i18n="modePopular">Popular</div>
+        <div class="challenge-icon-wrap">
+          <svg class="challenge-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="3"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
+          </svg>
+        </div>
+        <div class="challenge-body">
+          <h3 class="challenge-title" data-i18n="modeSatellite_title">Satellite Image</h3>
+          <p class="challenge-desc" data-i18n="challengeSatDesc">Recognize airports from aerial imagery</p>
+        </div>
+      </div>
+
+      <div class="challenge-card" data-mode="code" onclick="selectModeAndContinue('code')">
+        <div class="challenge-icon-wrap">
+          <svg class="challenge-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="challenge-body">
+          <h3 class="challenge-title" data-i18n="modeCode_title">Code Quiz</h3>
+          <p class="challenge-desc" data-i18n="challengeCodeDesc">Name airports from IATA codes</p>
+        </div>
+      </div>
+
+      <div class="challenge-card" data-mode="mixed" onclick="selectModeAndContinue('mixed')">
+        <div class="challenge-icon-wrap">
+          <svg class="challenge-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16H3M21 16l-4-4M21 16l-4 4M3 8h18M3 8l4-4M3 8l4 4"/>
+          </svg>
+        </div>
+        <div class="challenge-body">
+          <h3 class="challenge-title" data-i18n="modeMixed_title">Mixed</h3>
+          <p class="challenge-desc" data-i18n="challengeMixedDesc">Alternating satellite and code rounds</p>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /screen-mode -->
 
   <!-- CATEGORY SCREEN -->
   <div class="screen" id="screen-category">
@@ -138,9 +147,21 @@
 
   <!-- START SCREEN -->
   <div class="screen" id="screen-start">
+    <div class="start-nav">
+      <button class="btn-nav-back" onclick="showModeScreen()" data-i18n="catBack">← Back</button>
+    </div>
     <div class="start-hero">
       <div class="tagline" data-i18n="startTagline">Aviation Knowledge Quiz</div>
       <h1 data-i18n="startTitle">Ready to fly?</h1>
+    </div>
+
+    <!-- Mode indicator -->
+    <div class="cat-indicator" id="mode-indicator">
+      <div class="cat-indicator-inner">
+        <div class="cat-indicator-label" data-i18n="modeSelectedLabel">Mode</div>
+        <div class="cat-indicator-value" id="mode-indicator-value"></div>
+      </div>
+      <button class="btn-ghost cat-change-btn" onclick="showModeScreen()" data-i18n="catChange">Change →</button>
     </div>
 
     <!-- Category indicator -->
@@ -152,36 +173,6 @@
       <button class="btn-ghost cat-change-btn" onclick="showCatScreen()" data-i18n="catChange">Change →</button>
     </div>
 
-    <div>
-      <div class="section-label" data-i18n="modeLabel">Select Mode</div>
-      <div class="mode-grid">
-        <div class="mode-card selected" data-mode="code" onclick="selectMode('code')">
-          <div class="icon">🔤</div>
-          <h3 data-i18n="modeCode_title">Code Quiz</h3>
-          <p data-i18n="modeCode_desc">IATA code is shown — name the airport.</p>
-        </div>
-        <div class="mode-card" data-mode="satellite" onclick="selectMode('satellite')">
-          <div class="icon">🛰️</div>
-          <h3 data-i18n="modeSatellite_title">Satellite Image</h3>
-          <p data-i18n="modeSatellite_desc">Satellite photo shown — identify the airport.</p>
-        </div>
-        <div class="mode-card" data-mode="mixed" onclick="selectMode('mixed')">
-          <div class="icon">🎲</div>
-          <h3 data-i18n="modeMixed_title">Mixed</h3>
-          <p data-i18n="modeMixed_desc">Alternating code and satellite questions.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="rounds-selector">
-      <label data-i18n="roundsLabel">Number of Questions</label>
-      <div class="rounds-btns">
-        <button onclick="setRounds(10)" class="active" id="rbtn-10">10</button>
-        <button onclick="setRounds(20)" id="rbtn-20">20</button>
-        <button onclick="setRounds(50)" id="rbtn-50">50</button>
-      </div>
-    </div>
-
     <div class="rounds-selector">
       <div>
         <label data-i18n="diffLabel">Difficulty</label>
@@ -191,6 +182,15 @@
         <button onclick="setDifficulty('easy')" class="active" id="dbtn-easy">Easy</button>
         <button onclick="setDifficulty('hard')" id="dbtn-hard">Hard</button>
         <button onclick="setDifficulty('expert')" id="dbtn-expert">Expert</button>
+      </div>
+    </div>
+
+    <div class="rounds-selector">
+      <label data-i18n="roundsLabel">Number of Questions</label>
+      <div class="rounds-btns">
+        <button onclick="setRounds(10)" class="active" id="rbtn-10">10</button>
+        <button onclick="setRounds(20)" id="rbtn-20">20</button>
+        <button onclick="setRounds(50)" id="rbtn-50">50</button>
       </div>
     </div>
 
@@ -266,7 +266,7 @@
       <div class="result-btns">
         <button class="btn-primary" onclick="startQuiz()" data-i18n="btnPlayAgain">Play Again</button>
         <button class="btn-ghost" onclick="showStats()" data-i18n="btnViewStats">📊 Stats</button>
-        <button class="btn-ghost" onclick="showScreen('screen-start')" data-i18n="btnSettings">Settings</button>
+        <button class="btn-ghost" onclick="showStartScreen()" data-i18n="btnSettings">Settings</button>
         <button class="btn-ghost" onclick="showCatScreen()" data-i18n="btnChangeCategory">Change Category</button>
       </div>
     </div>
@@ -292,7 +292,7 @@
 
     <div class="stats-footer-btns">
       <button class="btn-primary" onclick="startDailyChallenge()" data-i18n="dailyPlayBtn">▶ Play Today's Challenge</button>
-      <button class="btn-ghost" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
+      <button class="btn-ghost" onclick="showModeScreen()" data-i18n="playNow">Play Now</button>
       <button class="btn-ghost" onclick="showScreen('screen-landing')" data-i18n="statsBack">← Back</button>
     </div>
   </div>

@@ -13,8 +13,19 @@ const LANG_EN = {
   featureDesc2:    "Play worldwide or filter by country, continent or airport type.",
   featureTitle3:   "Beat Your Score",
   featureDesc3:    "Improve your knowledge and become a RunwayIQ expert.",
+  playNow:         "Play Now",
+  featureStripModes: "Quiz Modes",
   howItWorksTitle: "How it works",
   previewLabel:    "See it in action",
+
+  // Mode selection screen
+  chooseChallenge:    "Choose Your Challenge",
+  modeScreenSub:      "How do you want to play today?",
+  modePopular:        "Popular",
+  challengeSatDesc:   "Recognize airports from aerial imagery",
+  challengeCodeDesc:  "Name airports from IATA codes",
+  challengeMixedDesc: "Alternating satellite and code rounds",
+  modeSelectedLabel:  "Mode",
 
   // Category screen
   catScreen_tagline:  "Airport Quiz",
@@ -129,6 +140,11 @@ const LANG_EN = {
 
   // Category labels
   "cat.all.label":                           "Worldwide",
+  "cat.all.desc":                            "All airports worldwide",
+  "cat.size.desc":                           "Filter by airport size",
+  "cat.continent.desc":                      "Play by world region",
+  "cat.country.desc":                        "Single-country challenge",
+  "cat.special.desc":                        "Themed collections",
   "cat.size.label":                          "Airport Size",
   "cat.size.items.top100.label":             "Top 100",
   "cat.size.items.large.label":              "Large Airports",
