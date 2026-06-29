@@ -13,6 +13,8 @@ const LANG_DE = {
   featureDesc2:    "Spiele weltweit oder filtere nach Land, Kontinent oder Flughafentyp.",
   featureTitle3:   "Score verbessern",
   featureDesc3:    "Erweitere dein Wissen und werde zum RunwayIQ-Experten.",
+  howItWorksTitle: "So funktioniert's",
+  previewLabel:    "So sieht's aus",
 
   // Kategorien-Screen
   catScreen_tagline:  "Airport Quiz",

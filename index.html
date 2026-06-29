@@ -27,8 +27,84 @@
 
 <main>
 
+  <!-- LANDING SCREEN -->
+  <div class="screen active" id="screen-landing">
+
+    <!-- Hero -->
+    <div class="lp-hero">
+      <div class="lp-tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
+      <h1 class="lp-title">Runway<span>IQ</span></h1>
+      <p class="lp-claim" data-i18n="landingClaim">Can you identify the world's busiest airports from satellite images?</p>
+      <ul class="lp-bullets">
+        <li data-i18n="landingBullet1">Study satellite views and name the airport</li>
+        <li data-i18n="landingBullet2">Choose your favourite category</li>
+        <li data-i18n="landingBullet3">Challenge yourself and improve your score</li>
+      </ul>
+      <div class="lp-cta">
+        <button class="btn-hero" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
+        <button class="btn-hero-ghost" onclick="showCatScreen()" data-i18n="landingBrowse">Browse Categories</button>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="lp-features">
+      <div class="lp-section-label" data-i18n="howItWorksTitle">How it works</div>
+      <div class="lp-feature-grid">
+        <div class="lp-feature-card">
+          <div class="lp-feature-icon">🛰️</div>
+          <h3 data-i18n="featureTitle1">Satellite Images</h3>
+          <p data-i18n="featureDesc1">Recognize airports only from aerial satellite imagery.</p>
+        </div>
+        <div class="lp-feature-card">
+          <div class="lp-feature-icon">🌍</div>
+          <h3 data-i18n="featureTitle2">Choose a Category</h3>
+          <p data-i18n="featureDesc2">Play worldwide or filter by country, continent or airport type.</p>
+        </div>
+        <div class="lp-feature-card">
+          <div class="lp-feature-icon">🏆</div>
+          <h3 data-i18n="featureTitle3">Beat Your Score</h3>
+          <p data-i18n="featureDesc3">Improve your knowledge and become a RunwayIQ expert.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz preview mockup -->
+    <div class="lp-preview">
+      <div class="lp-section-label" data-i18n="previewLabel">See it in action</div>
+      <div class="lp-preview-card">
+        <div class="lp-prev-badges">
+          <span class="lp-prev-badge">🔤 IATA Code</span>
+          <span class="lp-prev-badge lp-prev-badge--diff">Easy</span>
+        </div>
+        <div class="lp-prev-progress">
+          <div class="lp-prev-progress-fill"></div>
+        </div>
+        <div class="lp-prev-code-wrap">
+          <div class="lp-prev-iata">FRA</div>
+          <div class="lp-prev-hint">Which airport is behind this IATA code?</div>
+        </div>
+        <div class="lp-prev-input">
+          Frankfurt Airport<span class="lp-prev-cursor">|</span>
+        </div>
+        <div class="lp-prev-feedback">
+          ✓ Correct! <strong>Frankfurt Airport</strong>
+          <div class="lp-prev-info">FRA · Frankfurt, Germany</div>
+        </div>
+        <div class="lp-prev-actions">
+          <div class="lp-prev-btn-primary">Next</div>
+          <div class="lp-prev-btn-ghost">Skip</div>
+        </div>
+        <div class="lp-prev-meta">
+          <span>Question 7 / 10</span>
+          <span>✓ 5 &nbsp; ✗ 1</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /screen-landing -->
+
   <!-- CATEGORY SCREEN -->
-  <div class="screen active" id="screen-category">
+  <div class="screen" id="screen-category">
     <div id="cat-groups-view">
       <div class="start-hero" style="padding:28px 0 16px">
         <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>

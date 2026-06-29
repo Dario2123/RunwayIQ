@@ -423,7 +423,7 @@ function cancelRound() {
   currentAirport = null;
   answered = false;
   updateHeader();
-  showScreen('screen-start');
+  showScreen('screen-landing');
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
