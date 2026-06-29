@@ -83,6 +83,24 @@ const LANG_DE = {
   btnChangeCategory:   "Kategorie ändern",
   historyTitle:        "Antworten im Überblick",
 
+  // Statistik-Screen
+  statsTitle:          "Statistiken",
+  statsBtn:            "Statistiken →",
+  btnViewStats:        "📊 Stats",
+  statsBestScore:      "Bester Score",
+  statsTotalRounds:    "Gespielte Runden",
+  statsHitRate:        "Trefferquote",
+  statsLongestStreak:  "Längste Serie",
+  statsRecentTitle:    "Letzte Runden",
+  statsNoData:         "Noch keine Runden gespielt. Starte ein Quiz, um deine Stats zu sehen!",
+  statsBack:           "← Zurück",
+
+  // Ergebnis-Screen — Highscore-Bereich
+  resultNewRecord:     "🏆 Neuer persönlicher Rekord!",
+  resultPreviousBest:  "Vorheriger Bestwert",
+  resultTotalPlayed:   "Gespielte Runden",
+  resultAllTimeRate:   "Gesamt-Trefferquote",
+
   // Dialog
   cancelConfirm: "Möchtest du die aktuelle Runde wirklich abbrechen?",
 

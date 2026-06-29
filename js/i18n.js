@@ -27,4 +27,8 @@ function setLang(lang) {
   if (typeof setDifficulty === 'function' && typeof selectedDifficulty !== 'undefined') {
     setDifficulty(selectedDifficulty);
   }
+  if (typeof renderStatsScreen === 'function') {
+    const ss = document.getElementById('screen-stats');
+    if (ss && ss.classList.contains('active')) renderStatsScreen();
+  }
 }

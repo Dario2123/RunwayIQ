@@ -83,6 +83,24 @@ const LANG_EN = {
   btnChangeCategory:   "Change Category",
   historyTitle:        "Answers Overview",
 
+  // Stats screen
+  statsTitle:          "Statistics",
+  statsBtn:            "Statistics →",
+  btnViewStats:        "📊 Stats",
+  statsBestScore:      "Best Score",
+  statsTotalRounds:    "Rounds Played",
+  statsHitRate:        "Hit Rate",
+  statsLongestStreak:  "Longest Streak",
+  statsRecentTitle:    "Recent Rounds",
+  statsNoData:         "No rounds yet. Start a quiz to begin tracking your stats!",
+  statsBack:           "← Back",
+
+  // Result screen — highscore section
+  resultNewRecord:     "🏆 New Personal Record!",
+  resultPreviousBest:  "Previous Best",
+  resultTotalPlayed:   "Rounds Played",
+  resultAllTimeRate:   "All-Time Rate",
+
   // Dialog
   cancelConfirm: "Do you really want to abort the current round?",
 

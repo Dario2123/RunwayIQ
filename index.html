@@ -44,6 +44,7 @@
         <button class="btn-hero" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
         <button class="btn-hero-ghost" onclick="showCatScreen()" data-i18n="landingBrowse">Browse Categories</button>
       </div>
+      <button class="lp-stats-link" onclick="showStats()" data-i18n="statsBtn">Statistics →</button>
     </div>
 
     <!-- How it works -->
@@ -249,8 +250,10 @@
           <div class="lbl" data-i18n="statPct">Hit Rate</div>
         </div>
       </div>
+      <div id="result-hs-section"></div>
       <div class="result-btns">
         <button class="btn-primary" onclick="startQuiz()" data-i18n="btnPlayAgain">Play Again</button>
+        <button class="btn-ghost" onclick="showStats()" data-i18n="btnViewStats">📊 Stats</button>
         <button class="btn-ghost" onclick="showScreen('screen-start')" data-i18n="btnSettings">Settings</button>
         <button class="btn-ghost" onclick="showCatScreen()" data-i18n="btnChangeCategory">Change Category</button>
       </div>
@@ -258,6 +261,24 @@
 
     <div class="section-label" data-i18n="historyTitle">Answers Overview</div>
     <div class="history-list" id="history-list"></div>
+  </div>
+
+  <!-- STATS SCREEN -->
+  <div class="screen" id="screen-stats">
+    <div class="start-hero" style="padding: 28px 0 16px">
+      <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
+      <h1 data-i18n="statsTitle">Statistics</h1>
+    </div>
+
+    <div class="stats-grid" id="stats-overview-grid"></div>
+
+    <div class="section-label" data-i18n="statsRecentTitle">Recent Rounds</div>
+    <div id="stats-recent-list"></div>
+
+    <div class="stats-footer-btns">
+      <button class="btn-primary" onclick="startQuiz()" data-i18n="landingCTA">▶  Start Quiz</button>
+      <button class="btn-ghost" onclick="showScreen('screen-landing')" data-i18n="statsBack">← Back</button>
+    </div>
   </div>
 
 </main>
@@ -270,6 +291,7 @@
 <script src="data/airport-sizes.js"></script>
 <script src="data/categories.js"></script>
 <script src="js/quiz.js"></script>
+<script src="js/stats.js"></script>
 <script>applyI18n();</script>
 
 <!-- Vercel Analytics -->
