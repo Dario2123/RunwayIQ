@@ -13,7 +13,7 @@ if (!token) {
 const output = `// Auto-generated at build time — do not edit manually.
 const CONFIG = {
   MAPBOX_TOKEN: '${token}',
-  SATELLITE_ZOOM: 11,
+  SATELLITE_ZOOM: 12,
   SATELLITE_SIZE: '800x450',
 };
 `;
