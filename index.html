@@ -23,12 +23,40 @@
 
 <main>
 
+  <!-- CATEGORY SCREEN -->
+  <div class="screen active" id="screen-category">
+    <div id="cat-groups-view">
+      <div class="start-hero" style="padding:28px 0 16px">
+        <div class="tagline">Airport Quiz</div>
+        <h1>Kategorie wählen</h1>
+        <p>Welche Flughäfen sollen im Quiz erscheinen?</p>
+      </div>
+      <div class="cat-group-grid" id="cat-group-grid"></div>
+    </div>
+
+    <div id="cat-items-view" hidden>
+      <div class="cat-nav">
+        <button class="btn-ghost cat-back-btn" onclick="renderCatGroups()">← Zurück</button>
+        <span class="cat-breadcrumb" id="cat-breadcrumb"></span>
+      </div>
+      <div class="cat-item-grid" id="cat-item-grid"></div>
+    </div>
+  </div>
+
   <!-- START SCREEN -->
-  <div class="screen active" id="screen-start">
+  <div class="screen" id="screen-start">
     <div class="start-hero">
       <div class="tagline">Aviation Knowledge Quiz</div>
       <h1>Erkennst du den Flughafen?</h1>
-      <p>Teste dein Wissen über die 200 größten Passagierflughäfen der Welt — über IATA-Codes oder Satellitenbilder.</p>
+    </div>
+
+    <!-- Category indicator -->
+    <div class="cat-indicator">
+      <div class="cat-indicator-inner">
+        <div class="cat-indicator-label">Kategorie</div>
+        <div class="cat-indicator-value" id="cat-indicator-value">🌍 Weltweit</div>
+      </div>
+      <button class="btn-ghost cat-change-btn" onclick="showCatScreen()">Ändern →</button>
     </div>
 
     <div>
@@ -83,6 +111,7 @@
       <span class="mode-badge" id="q-mode-badge">Code</span>
       <span class="mode-badge mode-badge--diff" id="q-diff-badge">Easy</span>
     </div>
+    <div class="quiz-category-tag" id="quiz-category-tag"></div>
     <div class="progress-bar">
       <div class="progress-fill" id="progress-fill"></div>
     </div>
@@ -125,6 +154,7 @@
       <div class="result-emoji" id="result-emoji">🏆</div>
       <div class="result-score" id="result-score">0 / 10</div>
       <div class="result-label" id="result-label">Quiz abgeschlossen</div>
+      <div class="result-category-badge" id="result-category"></div>
       <div class="result-stats">
         <div class="stat-box">
           <div class="val" id="stat-correct">0</div>
@@ -141,7 +171,8 @@
       </div>
       <div class="result-btns">
         <button class="btn-primary" onclick="startQuiz()">Nochmal spielen</button>
-        <button class="btn-ghost" onclick="showScreen('screen-start')">Modus ändern</button>
+        <button class="btn-ghost" onclick="showScreen('screen-start')">Einstellungen</button>
+        <button class="btn-ghost" onclick="showCatScreen()">Kategorie ändern</button>
       </div>
     </div>
 
@@ -151,10 +182,10 @@
 
 </main>
 
-<!-- Data & config loaded first, then app logic -->
 <script src="data/config.js"></script>
 <script src="data/airports.js"></script>
 <script src="data/airport-sizes.js"></script>
+<script src="data/categories.js"></script>
 <script src="js/quiz.js"></script>
 
 </body>

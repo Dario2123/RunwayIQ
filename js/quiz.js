@@ -1,10 +1,13 @@
-﻿// RunwayIQ — Quiz Logic
-// Depends on: data/airports.js, data/config.js
+// RunwayIQ — Quiz Logic
+// Depends on: data/config.js, data/airports.js, data/airport-sizes.js, data/categories.js
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let selectedMode = 'code';
 let selectedRounds = 10;
 let selectedDifficulty = 'easy';
+let selectedPool = [...AIRPORTS];
+let selectedCategoryLabel = '🌍 Weltweit';
+
 let quizQueue = [];
 let currentIdx = 0;
 let currentAirport = null;
@@ -64,6 +67,75 @@ function updateHeader() {
   document.getElementById('hdr-total').textContent = correctCount + wrongCount;
 }
 
+function updateCategoryIndicator() {
+  document.getElementById('cat-indicator-value').textContent = selectedCategoryLabel;
+}
+
+// ─── CATEGORY SCREEN ──────────────────────────────────────────────────────────
+function showCatScreen() {
+  renderCatGroups();
+  showScreen('screen-category');
+}
+
+function renderCatGroups() {
+  const grid = document.getElementById('cat-group-grid');
+  grid.innerHTML = CATEGORY_GROUPS.map(g => {
+    const count = g.direct ? g.filter().length : g.items.length;
+    const sub = g.direct ? `${count} Airports` : `${count} Kategorien`;
+    return `<div class="cat-group-card" data-gid="${esc(g.id)}">
+      <span class="cat-card-icon">${g.icon}</span>
+      <div class="cat-card-label">${esc(g.label)}</div>
+      <div class="cat-card-sub">${sub}</div>
+    </div>`;
+  }).join('');
+
+  grid.onclick = e => {
+    const card = e.target.closest('.cat-group-card');
+    if (!card) return;
+    const group = CATEGORY_GROUPS.find(g => g.id === card.dataset.gid);
+    if (!group) return;
+    if (group.direct) applyCategory(group.filter, `${group.icon} ${group.label}`);
+    else renderCatItems(group);
+  };
+
+  document.getElementById('cat-groups-view').hidden = false;
+  document.getElementById('cat-items-view').hidden = true;
+}
+
+function renderCatItems(group) {
+  document.getElementById('cat-breadcrumb').textContent = group.label;
+
+  const grid = document.getElementById('cat-item-grid');
+  grid.innerHTML = group.items.map(item => {
+    const count = item.filter().length;
+    const empty = count === 0;
+    return `<div class="cat-item-card${empty ? ' cat-item-empty' : ''}" data-gid="${esc(group.id)}" data-iid="${esc(item.id)}">
+      <span class="cat-card-icon">${item.icon}</span>
+      <div class="cat-card-label">${esc(item.label)}</div>
+      <div class="cat-card-sub">${count} ${count === 1 ? 'Airport' : 'Airports'}</div>
+    </div>`;
+  }).join('');
+
+  grid.onclick = e => {
+    const card = e.target.closest('.cat-item-card:not(.cat-item-empty)');
+    if (!card) return;
+    const g = CATEGORY_GROUPS.find(g => g.id === card.dataset.gid);
+    const item = g?.items.find(i => i.id === card.dataset.iid);
+    if (item) applyCategory(item.filter, `${item.icon} ${item.label}`);
+  };
+
+  document.getElementById('cat-groups-view').hidden = true;
+  document.getElementById('cat-items-view').hidden = false;
+}
+
+function applyCategory(filterFn, label) {
+  selectedPool = filterFn();
+  selectedCategoryLabel = label;
+  updateCategoryIndicator();
+  document.getElementById('quiz-category-tag').textContent = label;
+  showScreen('screen-start');
+}
+
 // ─── QUIZ LOGIC ───────────────────────────────────────────────────────────────
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -79,7 +151,8 @@ function startQuiz() {
   history = [];
   updateHeader();
 
-  const pool = shuffle([...AIRPORTS]).slice(0, selectedRounds);
+  const rounds = Math.min(selectedRounds, selectedPool.length);
+  const pool = shuffle([...selectedPool]).slice(0, rounds);
   quizQueue = pool.map((ap, i) => {
     let qMode;
     if (selectedMode === 'code') qMode = 'code';
@@ -89,6 +162,7 @@ function startQuiz() {
   });
 
   currentIdx = 0;
+  document.getElementById('quiz-category-tag').textContent = selectedCategoryLabel;
   showScreen('screen-quiz');
   loadQuestion();
 }
@@ -155,12 +229,11 @@ function loadQuestion() {
 
 function normalize(str) {
   return str.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9 ]/g, '')
     .trim();
 }
 
-// Levenshtein distance
 function levenshtein(a, b) {
   const m = a.length, n = b.length;
   const dp = Array.from({ length: m + 1 }, (_, i) => [i]);
@@ -192,13 +265,8 @@ function isCorrect(input, airport) {
   const city = normalize(airport[2]);
   const code = airport[0].toLowerCase();
 
-  if (selectedDifficulty === 'expert') {
-    return fuzzyMatch(n, name);
-  }
-  if (selectedDifficulty === 'hard') {
-    return fuzzyMatch(n, city);
-  }
-  // Easy: generous matching
+  if (selectedDifficulty === 'expert') return fuzzyMatch(n, name);
+  if (selectedDifficulty === 'hard') return fuzzyMatch(n, city);
   if (n === code && currentQuestionMode !== 'code') return true;
   if (n === name) return true;
   if (n === city) return true;
@@ -253,11 +321,8 @@ function skipQuestion() {
 
 function nextQuestion() {
   currentIdx++;
-  if (currentIdx >= quizQueue.length) {
-    showResults();
-  } else {
-    loadQuestion();
-  }
+  if (currentIdx >= quizQueue.length) showResults();
+  else loadQuestion();
 }
 
 function onKeyDown(e) {
@@ -296,12 +361,10 @@ function onInputChange() {
 
   if (val.length < 2) { list.innerHTML = ''; return; }
 
-  const matches = AIRPORTS.filter(ap => {
+  const matches = selectedPool.filter(ap => {
     const name = ap[1].toLowerCase();
     const city = ap[2].toLowerCase();
-    if (currentQuestionMode === 'code') {
-      return name.includes(val) || city.includes(val);
-    }
+    if (currentQuestionMode === 'code') return name.includes(val) || city.includes(val);
     return ap[0].toLowerCase().startsWith(val) || name.includes(val) || city.includes(val);
   }).slice(0, 8);
 
@@ -337,6 +400,7 @@ function showResults() {
   document.getElementById('stat-correct').textContent = correctCount;
   document.getElementById('stat-wrong').textContent = wrongCount;
   document.getElementById('stat-pct').textContent = pct + '%';
+  document.getElementById('result-category').textContent = selectedCategoryLabel;
   document.getElementById('progress-fill').style.width = '100%';
 
   document.getElementById('history-list').innerHTML = history.map(h => `
@@ -363,9 +427,12 @@ function cancelRound() {
   showScreen('screen-start');
 }
 
-// Close autocomplete on outside click
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('click', e => {
   if (!e.target.closest('.answer-input-wrap')) {
     document.getElementById('autocomplete-list').innerHTML = '';
   }
 });
+
+renderCatGroups();
+updateCategoryIndicator();

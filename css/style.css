@@ -460,6 +460,92 @@ main {
   border-color: rgba(230,57,70,0.45);
 }
 
+/* ─── CATEGORY SCREEN ──────────────────────────────────────────────────────── */
+
+.cat-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.cat-item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.cat-group-card, .cat-item-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.18s, background 0.18s, transform 0.1s;
+  user-select: none;
+}
+.cat-group-card:hover, .cat-item-card:hover:not(.cat-item-empty) {
+  border-color: var(--accent);
+  background: var(--surface2);
+}
+.cat-group-card:active, .cat-item-card:active:not(.cat-item-empty) { transform: scale(0.96); }
+
+.cat-card-icon { display: block; font-size: 1.9rem; margin-bottom: 8px; }
+.cat-card-label { font-size: 0.86rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.cat-card-sub { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
+
+.cat-item-empty { opacity: 0.38; cursor: default; }
+
+.cat-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+.cat-back-btn { padding: 8px 14px; font-size: 0.82rem; }
+.cat-breadcrumb { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); }
+
+/* Category indicator on start screen */
+.cat-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  gap: 12px;
+}
+.cat-indicator-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 3px;
+}
+.cat-indicator-value { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+.cat-change-btn { padding: 7px 14px; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; }
+
+/* Category tag shown in quiz screen */
+.quiz-category-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-align: right;
+  letter-spacing: 0.06em;
+  margin-top: -8px;
+}
+
+/* Result screen category badge */
+.result-category-badge {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+  letter-spacing: 0.06em;
+}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -478,6 +564,15 @@ button, input, .mode-card, .ac-item {
 
 /* ── ≤640px: smartphones ───────────────────────────────────────────────────── */
 @media (max-width: 640px) {
+  /* Category grids */
+  .cat-group-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .cat-item-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .cat-group-card, .cat-item-card { padding: 16px 10px; }
+  .cat-card-icon  { font-size: 1.5rem; margin-bottom: 6px; }
+  .cat-card-label { font-size: 0.82rem; }
+  .cat-indicator  { flex-wrap: wrap; gap: 8px; }
+  .cat-change-btn { padding: 7px 12px; }
+
   /* Header */
   header { padding: 12px 16px; }
   .logo { font-size: 1.1rem; }
