@@ -134,7 +134,8 @@ function loadQuestion() {
       </div>`;
   } else {
     const [, , , , lat, lon] = currentAirport;
-    const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${CONFIG.SATELLITE_ZOOM},0/${CONFIG.SATELLITE_SIZE}?access_token=${encodeURIComponent(CONFIG.MAPBOX_TOKEN)}`;
+    const zoom = getSatelliteZoom(currentAirport);
+    const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${zoom},0/${CONFIG.SATELLITE_SIZE}?access_token=${encodeURIComponent(CONFIG.MAPBOX_TOKEN)}`;
     card.innerHTML = `
       <div class="satellite-display">
         <div class="sat-loading" id="sat-loading">
@@ -347,6 +348,19 @@ function showResults() {
     </div>`).join('');
 
   showScreen('screen-result');
+}
+
+function cancelRound() {
+  if (!window.confirm('Möchtest du die aktuelle Runde wirklich abbrechen?')) return;
+  correctCount = 0;
+  wrongCount = 0;
+  history = [];
+  quizQueue = [];
+  currentIdx = 0;
+  currentAirport = null;
+  answered = false;
+  updateHeader();
+  showScreen('screen-start');
 }
 
 // Close autocomplete on outside click

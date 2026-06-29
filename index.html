@@ -109,6 +109,9 @@
         <button class="btn-primary" id="btn-check" onclick="checkAnswer()">Prüfen</button>
         <button class="btn-ghost" id="btn-skip" onclick="skipQuestion()">Überspringen</button>
       </div>
+      <div class="cancel-row">
+        <button class="btn-cancel" onclick="cancelRound()">Runde abbrechen</button>
+      </div>
     </div>
   </div>
 
@@ -147,6 +150,7 @@
 <!-- Data & config loaded first, then app logic -->
 <script src="data/config.js"></script>
 <script src="data/airports.js"></script>
+<script src="data/airport-sizes.js"></script>
 <script src="js/quiz.js"></script>
 
 </body>
