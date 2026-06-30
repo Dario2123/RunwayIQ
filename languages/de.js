@@ -78,9 +78,11 @@ const LANG_DE = {
   satError:          "Bild konnte nicht geladen werden",
 
   // Feedback
-  feedbackCorrect: "✓ Richtig! ",
-  feedbackSkipped: "→ Übersprungen. Richtige Antwort: ",
-  feedbackWrong:   "✗ Leider falsch. Die richtige Antwort lautet: ",
+  feedbackCorrect:       "Richtig",
+  feedbackWrong:         "Falsch",
+  feedbackSkipped:       "Übersprungen",
+  feedbackCorrectAnswer: "Richtige Antwort",
+  feedbackYourAnswer:    "Deine Antwort",
 
   // Ergebnis
   resultLabel_90: "Exzellent — du kennst jeden Flughafen!",

@@ -417,27 +417,56 @@ main {
 
 /* ─── FEEDBACK ───────────────────────────────────────────────────────────────── */
 .feedback-panel {
-  margin-top: 0;
-  padding: 13px 16px;
+  padding: 10px 14px;
   border-radius: var(--radius-btn);
-  font-size: 0.87rem;
+  font-size: 0.85rem;
   display: none;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 .feedback-panel.correct {
   background: rgba(34,197,94,0.06);
   border: 1px solid rgba(34,197,94,0.2);
-  color: var(--green);
   display: block;
 }
 .feedback-panel.wrong {
   background: rgba(239,68,68,0.06);
   border: 1px solid rgba(239,68,68,0.18);
-  color: var(--red);
   display: block;
 }
-.feedback-panel strong { color: inherit; }
-.feedback-panel .airport-info { margin-top: 5px; color: var(--muted); font-size: 0.78rem; }
+.fb-main {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  line-height: 1.4;
+}
+.fb-label {
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.feedback-panel.correct .fb-label { color: var(--green); }
+.feedback-panel.wrong   .fb-label { color: var(--red); }
+.fb-dash {
+  margin: 0 7px;
+  color: var(--muted);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+.fb-name {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.fb-name strong { font-weight: 600; }
+.fb-sub {
+  margin-top: 3px;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+.fb-sub em { font-style: normal; color: var(--text); opacity: 0.85; }
 
 /* ─── RESULT SCREEN ──────────────────────────────────────────────────────────── */
 .result-card {
@@ -1563,7 +1592,8 @@ button, input, .mode-card, .ac-item {
   .btn-cancel { padding: 10px 20px; font-size: 0.78rem; min-height: 40px; }
 
   /* Feedback */
-  .feedback-panel { padding: 12px 14px; font-size: 0.84rem; }
+  .feedback-panel { padding: 9px 12px; font-size: 0.83rem; }
+  .fb-sub { font-size: 0.72rem; }
 
   /* Result card */
   .result-card { padding: 32px 18px 28px; }

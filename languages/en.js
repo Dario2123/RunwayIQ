@@ -78,9 +78,11 @@ const LANG_EN = {
   satError:          "Image could not be loaded",
 
   // Feedback
-  feedbackCorrect: "✓ Correct! ",
-  feedbackSkipped: "→ Skipped. Correct answer: ",
-  feedbackWrong:   "✗ Wrong. The correct answer is: ",
+  feedbackCorrect:       "Correct",
+  feedbackWrong:         "Wrong",
+  feedbackSkipped:       "Skipped",
+  feedbackCorrectAnswer: "Correct answer",
+  feedbackYourAnswer:    "Your answer",
 
   // Results
   resultLabel_90: "Excellent — you know every airport!",

@@ -501,21 +501,34 @@ function _resolveQuestion(ok, given) {
   document.getElementById('answer-input-wrap').style.display = 'none';
 
   const feedback = document.getElementById('feedback-panel');
-  const info = `<div class="airport-info">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
+  const metaSub = `<div class="fb-sub">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
 
   if (ok) {
     inp.classList.add('correct');
     correctCount++;
     feedback.className = 'feedback-panel correct';
-    feedback.innerHTML = `${esc(t('feedbackCorrect'))}<strong>${esc(currentAirport[1])}</strong>${info}`;
+    feedback.innerHTML =
+      `<div class="fb-main"><span class="fb-label">${esc(t('feedbackCorrect'))}</span>` +
+      `<span class="fb-dash"> — </span>` +
+      `<span class="fb-name">${esc(currentAirport[1])}</span></div>` +
+      metaSub;
   } else {
     inp.classList.add('wrong');
     wrongCount++;
     feedback.className = 'feedback-panel wrong';
     if (given === '—') {
-      feedback.innerHTML = `${esc(t('feedbackSkipped'))}<strong>${esc(currentAirport[1])}</strong>${info}`;
+      feedback.innerHTML =
+        `<div class="fb-main"><span class="fb-label">${esc(t('feedbackSkipped'))}</span>` +
+        `<span class="fb-dash"> — </span>` +
+        `<span class="fb-name">${esc(t('feedbackCorrectAnswer'))}: <strong>${esc(currentAirport[1])}</strong></span></div>` +
+        metaSub;
     } else {
-      feedback.innerHTML = `${esc(t('feedbackWrong'))}<strong>${esc(currentAirport[1])}</strong>${info}`;
+      const givenSub = `<div class="fb-sub">${esc(t('feedbackYourAnswer'))}: <em>${esc(given)}</em></div>`;
+      feedback.innerHTML =
+        `<div class="fb-main"><span class="fb-label">${esc(t('feedbackWrong'))}</span>` +
+        `<span class="fb-dash"> — </span>` +
+        `<span class="fb-name">${esc(t('feedbackCorrectAnswer'))}: <strong>${esc(currentAirport[1])}</strong></span></div>` +
+        givenSub;
     }
   }
 
@@ -706,12 +719,12 @@ document.addEventListener('click', e => {
   }
 });
 
-// Enter advances to next question only after the detail card is revealed
+// Enter advances to next question once answered (whether detail is shown or not)
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
-  if (!answered || !detailVisible) return;
+  if (!answered) return;
   if (!document.getElementById('screen-quiz').classList.contains('active')) return;
-  // Skip when focus is on a button — the button's own click handler already calls nextQuestion
+  // Skip when a button is focused — its own click handler fires instead
   if (e.target && e.target.tagName === 'BUTTON') return;
   e.preventDefault();
   nextQuestion();
