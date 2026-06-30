@@ -41,6 +41,7 @@ document.getElementById('rbtn-50').addEventListener('click', () => setRounds(50)
 document.getElementById('btn-start-quiz').addEventListener('click', startQuiz);
 
 // ── Quiz screen ───────────────────────────────────────────────────────────────
+document.getElementById('btn-reveal').addEventListener('click', revealAnswer);
 document.getElementById('btn-skip').addEventListener('click', skipQuestion);
 document.getElementById('btn-cancel').addEventListener('click', cancelRound);
 

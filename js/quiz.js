@@ -23,6 +23,8 @@ let acHighlight = -1;
 let currentStreak = 0;
 let maxStreak = 0;
 let isDailyMode = false;
+let _toastTimer = null;
+let _toastFadeTimer = null;
 
 // ─── UTILS ────────────────────────────────────────────────────────────────────
 function esc(str) {
@@ -208,6 +210,7 @@ function startQuiz() {
 }
 
 function loadQuestion() {
+  _hideToast();
   answered = false;
   detailVisible = false;
   const q = quizQueue[currentIdx];
@@ -235,10 +238,13 @@ function loadQuestion() {
   document.getElementById('feedback-panel').className = 'feedback-panel';
   document.getElementById('feedback-panel').innerHTML = '';
   document.getElementById('airport-detail-panel').hidden = true;
-  document.getElementById('btn-check').disabled = false;
+  document.getElementById('btn-reveal').hidden   = false;
+  document.getElementById('btn-reveal').disabled = false;
+  document.getElementById('btn-check').disabled  = false;
   document.getElementById('btn-check').textContent = t('btnCheck');
   document.getElementById('btn-check').onclick = checkAnswer;
-  document.getElementById('btn-skip').hidden = false;
+  document.getElementById('btn-skip').hidden   = false;
+  document.getElementById('btn-skip').disabled = false;
   document.getElementById('btn-skip').textContent = t('btnSkip');
   document.getElementById('question-card').style.display = '';
   document.getElementById('answer-input-wrap').style.display = '';
@@ -488,75 +494,98 @@ function showAirportDetail(airport, ok) {
   btnCheck.onclick = nextQuestion;
 }
 
-function _resolveQuestion(ok, given) {
-  answered = true;
-  detailVisible = false;
-  lastAnswerOk = ok;
-
-  const inp = document.getElementById('answer-input');
-  inp.disabled = true;
-  document.getElementById('autocomplete-list').innerHTML = '';
-  document.getElementById('btn-skip').hidden = true;
-  document.getElementById('question-card').style.display = 'none';
-  document.getElementById('answer-input-wrap').style.display = 'none';
-
-  const feedback = document.getElementById('feedback-panel');
-  const metaSub = `<div class="fb-sub">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
-
-  if (ok) {
-    inp.classList.add('correct');
-    correctCount++;
-    feedback.className = 'feedback-panel correct';
-    feedback.innerHTML =
-      `<div class="fb-main"><span class="fb-label">${esc(t('feedbackCorrect'))}</span>` +
-      `<span class="fb-dash"> — </span>` +
-      `<span class="fb-name">${esc(currentAirport[1])}</span></div>` +
-      metaSub;
-  } else {
-    inp.classList.add('wrong');
-    wrongCount++;
-    feedback.className = 'feedback-panel wrong';
-    if (given === '—') {
-      feedback.innerHTML =
-        `<div class="fb-main"><span class="fb-label">${esc(t('feedbackSkipped'))}</span>` +
-        `<span class="fb-dash"> — </span>` +
-        `<span class="fb-name">${esc(t('feedbackCorrectAnswer'))}: <strong>${esc(currentAirport[1])}</strong></span></div>` +
-        metaSub;
-    } else {
-      const givenSub = `<div class="fb-sub">${esc(t('feedbackYourAnswer'))}: <em>${esc(given)}</em></div>`;
-      feedback.innerHTML =
-        `<div class="fb-main"><span class="fb-label">${esc(t('feedbackWrong'))}</span>` +
-        `<span class="fb-dash"> — </span>` +
-        `<span class="fb-name">${esc(t('feedbackCorrectAnswer'))}: <strong>${esc(currentAirport[1])}</strong></span></div>` +
-        givenSub;
-    }
-  }
-
-  if (ok) { currentStreak++; maxStreak = Math.max(maxStreak, currentStreak); }
-  else { currentStreak = 0; }
-  history.push({ airport: currentAirport, correct: ok, given, mode: currentQuestionMode });
-  updateHeader();
-
-  const btnCheck = document.getElementById('btn-check');
-  btnCheck.textContent = t('btnRevealAnswer');
-  btnCheck.onclick = revealDetail;
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function _clearToastTimers() {
+  if (_toastTimer)     { clearTimeout(_toastTimer);     _toastTimer = null; }
+  if (_toastFadeTimer) { clearTimeout(_toastFadeTimer); _toastFadeTimer = null; }
 }
 
-function revealDetail() {
-  detailVisible = true;
-  showAirportDetail(currentAirport, lastAnswerOk);
+function _hideToast() {
+  _clearToastTimers();
+  const el = document.getElementById('quiz-toast');
+  if (el) { el.hidden = true; el.className = 'quiz-toast'; }
+}
+
+function _showToast(ok, given) {
+  _clearToastTimers();
+  const el = document.getElementById('quiz-toast');
+  if (!el) return;
+  const isSkipped = (given === '—');
+  let html;
+  if (ok) {
+    html = `<div class="qt-label qt-correct">${esc(t('feedbackCorrect'))}</div>` +
+           `<div class="qt-name">${esc(currentAirport[1])}</div>`;
+  } else {
+    const lbl = isSkipped ? t('feedbackSkipped') : t('feedbackWrong');
+    html = `<div class="qt-label qt-wrong">${esc(lbl)}</div>` +
+           `<div class="qt-answer">${esc(t('feedbackCorrectAnswer'))}:</div>` +
+           `<div class="qt-name">${esc(currentAirport[1])}</div>`;
+  }
+  el.innerHTML = html;
+  el.className = 'quiz-toast qt-in' + (ok ? ' qt-type-correct' : ' qt-type-wrong');
+  el.hidden = false;
+  _toastFadeTimer = setTimeout(() => { el.classList.add('qt-out'); }, 1300);
+  _toastTimer     = setTimeout(() => {
+    el.hidden = true; el.className = 'quiz-toast';
+    nextQuestion();
+  }, 1800);
+}
+
+// ─── ANSWER LOGIC ─────────────────────────────────────────────────────────────
+function _recordAnswer(ok, given) {
+  answered = true;
+  lastAnswerOk = ok;
+  if (ok) { correctCount++; currentStreak++; maxStreak = Math.max(maxStreak, currentStreak); }
+  else    { wrongCount++; currentStreak = 0; }
+  history.push({ airport: currentAirport, correct: ok, given, mode: currentQuestionMode });
+  updateHeader();
 }
 
 function checkAnswer() {
   if (answered) return;
   const val = document.getElementById('answer-input').value.trim();
   if (!val) return;
-  _resolveQuestion(isCorrect(val, currentAirport), val);
+  const ok = isCorrect(val, currentAirport);
+  const inp = document.getElementById('answer-input');
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  inp.disabled = true;
+  document.getElementById('autocomplete-list').innerHTML = '';
+  document.getElementById('btn-check').disabled = true;
+  document.getElementById('btn-skip').disabled  = true;
+  _recordAnswer(ok, val);
+  _showToast(ok, val);
 }
 
 function skipQuestion() {
-  if (answered) { nextQuestion(); return; }
-  _resolveQuestion(false, '—');
+  if (answered) { _hideToast(); nextQuestion(); return; }
+  const inp = document.getElementById('answer-input');
+  inp.classList.add('wrong');
+  inp.disabled = true;
+  document.getElementById('autocomplete-list').innerHTML = '';
+  document.getElementById('btn-check').disabled = true;
+  document.getElementById('btn-skip').disabled  = true;
+  _recordAnswer(false, '—');
+  _showToast(false, '—');
+}
+
+function revealAnswer() {
+  if (detailVisible) return;
+  _hideToast();
+  if (!answered) {
+    const val = document.getElementById('answer-input').value.trim();
+    const ok  = val ? isCorrect(val, currentAirport) : false;
+    const inp = document.getElementById('answer-input');
+    inp.classList.add(ok ? 'correct' : 'wrong');
+    inp.disabled = true;
+    document.getElementById('autocomplete-list').innerHTML = '';
+    _recordAnswer(ok, val || '—');
+  }
+  detailVisible = true;
+  document.getElementById('question-card').style.display = 'none';
+  document.getElementById('answer-input-wrap').style.display = 'none';
+  document.getElementById('btn-skip').hidden   = true;
+  document.getElementById('btn-reveal').hidden = true;
+  showAirportDetail(currentAirport, lastAnswerOk);
 }
 
 function nextQuestion() {
@@ -698,6 +727,8 @@ function showResults() {
 
 function cancelRound() {
   if (!window.confirm(t('cancelConfirm'))) return;
+  _clearToastTimers();
+  _hideToast();
   correctCount = 0;
   wrongCount = 0;
   history = [];
@@ -719,12 +750,11 @@ document.addEventListener('click', e => {
   }
 });
 
-// Enter advances to next question once answered (whether detail is shown or not)
+// Enter advances to next question only when detail view is open
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
-  if (!answered) return;
+  if (!detailVisible) return;
   if (!document.getElementById('screen-quiz').classList.contains('active')) return;
-  // Skip when a button is focused — its own click handler fires instead
   if (e.target && e.target.tagName === 'BUTTON') return;
   e.preventDefault();
   nextQuestion();
