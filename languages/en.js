@@ -135,6 +135,17 @@ const LANG_EN = {
   resultTotalPlayed:   "Rounds Played",
   resultAllTimeRate:   "All-Time Rate",
 
+  // Airport detail card (post-answer)
+  btnNextAirport:    "Next Airport",
+  btnShowResults:    "Show Results",
+  detailSize_large:  "Large Hub",
+  detailSize_medium: "Medium",
+  detailSize_small:  "Regional",
+  detailTagCapital:  "Capital Airport",
+  detailTagIsland:   "Island Airport",
+  detailTagHighAlt:  "High Altitude",
+  detailTagExtreme:  "Extreme Airport",
+
   // Dialog
   cancelConfirm: "Do you really want to abort the current round?",
 

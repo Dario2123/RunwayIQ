@@ -230,8 +230,10 @@ function loadQuestion() {
   document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('feedback-panel').className = 'feedback-panel';
   document.getElementById('feedback-panel').innerHTML = '';
+  document.getElementById('airport-detail-panel').hidden = true;
   document.getElementById('btn-check').disabled = false;
   document.getElementById('btn-check').textContent = t('btnCheck');
+  document.getElementById('btn-skip').hidden = false;
   document.getElementById('btn-skip').textContent = t('btnSkip');
 
   const card = document.getElementById('question-card');
@@ -311,13 +313,89 @@ function isCorrect(input, airport) {
   return false;
 }
 
+// ─── AIRPORT DETAIL CARD ──────────────────────────────────────────────────────
+const _CONTINENT_KEYS = {
+  europe:        'cat.continent.items.europe.label',
+  north_america: 'cat.continent.items.north_america.label',
+  south_america: 'cat.continent.items.south_america.label',
+  africa:        'cat.continent.items.africa.label',
+  asia:          'cat.continent.items.asia.label',
+  oceania:       'cat.continent.items.oceania.label',
+};
+
+function showAirportDetail(airport, ok) {
+  const panel = document.getElementById('airport-detail-panel');
+  if (!panel) return;
+
+  const [iata, name, city, country, lat, lon] = airport;
+  const isLast = (currentIdx + 1) >= quizQueue.length;
+
+  // Build satellite visual
+  const hasMapbox = typeof CONFIG !== 'undefined' && CONFIG.MAPBOX_TOKEN;
+  let visualHtml;
+  if (hasMapbox) {
+    const zoom = getSatelliteZoom(airport);
+    const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${zoom},0/${CONFIG.SATELLITE_SIZE}?access_token=${encodeURIComponent(CONFIG.MAPBOX_TOKEN)}`;
+    visualHtml = `
+      <div class="ap-detail-visual">
+        <div class="ap-detail-loading" id="ap-det-loading"><div class="spinner"></div></div>
+        <img class="ap-detail-img" src="${esc(imgUrl)}" alt="${esc(name)}"
+          onload="document.getElementById('ap-det-loading').style.display='none'"
+          onerror="this.style.display='none';document.getElementById('ap-det-loading').innerHTML='<span>${esc(t('satError'))}</span>'"
+        />
+        <div class="ap-detail-sat-tag">SAT VIEW</div>
+      </div>`;
+  } else {
+    visualHtml = `
+      <div class="ap-detail-visual">
+        <div class="ap-detail-fallback">
+          <div class="ap-detail-fallback-iata">${esc(iata)}</div>
+        </div>
+      </div>`;
+  }
+
+  // Chips: continent, size, special tags
+  const chips = [];
+  const continentId = typeof CONTINENT_MAP !== 'undefined' ? CONTINENT_MAP[country] : null;
+  const continentLabel = continentId && _CONTINENT_KEYS[continentId] ? t(_CONTINENT_KEYS[continentId]) : '';
+  if (continentLabel) chips.push(`<span class="ap-chip">${esc(continentLabel)}</span>`);
+
+  let sizeKey = 'detailSize_medium';
+  if (typeof AIRPORT_SIZE !== 'undefined') {
+    if (AIRPORT_SIZE.large.has(iata)) sizeKey = 'detailSize_large';
+    else if (AIRPORT_SIZE.small.has(iata)) sizeKey = 'detailSize_small';
+  }
+  chips.push(`<span class="ap-chip ap-chip--size">${esc(t(sizeKey))}</span>`);
+
+  if (typeof CAPITAL_AIRPORTS !== 'undefined' && CAPITAL_AIRPORTS.has(iata))
+    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagCapital'))}</span>`);
+  if (typeof ISLAND_AIRPORTS !== 'undefined' && ISLAND_AIRPORTS.has(iata))
+    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagIsland'))}</span>`);
+  if (typeof HIGH_ALTITUDE_AIRPORTS !== 'undefined' && HIGH_ALTITUDE_AIRPORTS.has(iata))
+    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagHighAlt'))}</span>`);
+  if (typeof EXTREME_AIRPORTS !== 'undefined' && EXTREME_AIRPORTS.has(iata))
+    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagExtreme'))}</span>`);
+
+  panel.innerHTML = `
+    <div class="ap-detail-card${ok ? ' ap-detail-card--correct' : ' ap-detail-card--wrong'}">
+      ${visualHtml}
+      <div class="ap-detail-body">
+        <div class="ap-detail-name">${esc(name)}</div>
+        <div class="ap-detail-meta">${esc(iata)} · ${esc(city)} · ${esc(country)}</div>
+        <div class="ap-detail-chips">${chips.join('')}</div>
+      </div>
+    </div>`;
+  panel.hidden = false;
+
+  document.getElementById('btn-check').textContent = isLast ? t('btnShowResults') : t('btnNextAirport');
+}
+
 function _resolveQuestion(ok, given) {
   answered = true;
   const inp = document.getElementById('answer-input');
   inp.disabled = true;
   document.getElementById('autocomplete-list').innerHTML = '';
-  document.getElementById('btn-skip').textContent = t('btnNextQ');
-  document.getElementById('btn-check').textContent = t('btnNext');
+  document.getElementById('btn-skip').hidden = true;
 
   const feedback = document.getElementById('feedback-panel');
   const info = `<div class="airport-info">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
@@ -342,6 +420,7 @@ function _resolveQuestion(ok, given) {
   else { currentStreak = 0; }
   history.push({ airport: currentAirport, correct: ok, given, mode: currentQuestionMode });
   updateHeader();
+  showAirportDetail(currentAirport, ok);
 }
 
 function checkAnswer() {
@@ -510,6 +589,15 @@ function cancelRound() {
 document.addEventListener('click', e => {
   if (!e.target.closest('.answer-input-wrap')) {
     document.getElementById('autocomplete-list').innerHTML = '';
+  }
+});
+
+// Enter after answering (input is disabled, so we need a document-level handler)
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && answered &&
+      document.getElementById('screen-quiz').classList.contains('active')) {
+    e.preventDefault();
+    nextQuestion();
   }
 });
 

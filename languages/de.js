@@ -135,6 +135,17 @@ const LANG_DE = {
   resultTotalPlayed:   "Gespielte Runden",
   resultAllTimeRate:   "Gesamt-Trefferquote",
 
+  // Airport-Detailkarte (nach Antwort)
+  btnNextAirport:    "Nächster Flughafen",
+  btnShowResults:    "Ergebnisse anzeigen",
+  detailSize_large:  "Großflughafen",
+  detailSize_medium: "Mittelgroß",
+  detailSize_small:  "Regional",
+  detailTagCapital:  "Hauptstadtflughafen",
+  detailTagIsland:   "Inselflughafen",
+  detailTagHighAlt:  "Hochgelegen",
+  detailTagExtreme:  "Extremer Flughafen",
+
   // Dialog
   cancelConfirm: "Möchtest du die aktuelle Runde wirklich abbrechen?",
 
