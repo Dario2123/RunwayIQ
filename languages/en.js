@@ -146,6 +146,19 @@ const LANG_EN = {
   detailTagHighAlt:  "High Altitude",
   detailTagExtreme:  "Extreme Airport",
 
+  // Detail card — extended sections
+  detailSection_ops:      "Operations",
+  detailSection_airlines: "Hub Airlines",
+  detailSection_facts:    "Did You Know",
+  detailStat_opened:      "Opened",
+  detailStat_operator:    "Operator",
+  detailStat_pax:         "Passengers / year",
+  detailStat_movements:   "Movements / year",
+  detailStat_cargo:       "Cargo / year",
+  detailStat_runways:     "Runways",
+  detailStat_longestRunway: "Longest runway",
+  detailStat_elevation:   "Elevation",
+
   // Dialog
   cancelConfirm: "Do you really want to abort the current round?",
 

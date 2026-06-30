@@ -146,6 +146,19 @@ const LANG_DE = {
   detailTagHighAlt:  "Hochgelegen",
   detailTagExtreme:  "Extremer Flughafen",
 
+  // Detailkarte — erweiterte Bereiche
+  detailSection_ops:      "Betrieb",
+  detailSection_airlines: "Hub-Airlines",
+  detailSection_facts:    "Wusstest du das?",
+  detailStat_opened:      "Eröffnet",
+  detailStat_operator:    "Betreiber",
+  detailStat_pax:         "Passagiere / Jahr",
+  detailStat_movements:   "Flugbewegungen / Jahr",
+  detailStat_cargo:       "Fracht / Jahr",
+  detailStat_runways:     "Start-/Landebahnen",
+  detailStat_longestRunway: "Längste Bahn",
+  detailStat_elevation:   "Höhe ü. NN",
+
   // Dialog
   cancelConfirm: "Möchtest du die aktuelle Runde wirklich abbrechen?",
 

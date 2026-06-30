@@ -323,14 +323,28 @@ const _CONTINENT_KEYS = {
   oceania:       'cat.continent.items.oceania.label',
 };
 
+function _fmtPax(n) {
+  return n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : Math.round(n / 1e3) + 'k';
+}
+function _fmtMov(n) {
+  return n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : Math.round(n / 1e3) + 'k';
+}
+function _fmtCargo(n) {
+  return n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M t' : Math.round(n / 1e3) + 'k t';
+}
+function _fmtLen(m) {
+  return Number(m).toLocaleString('en') + ' m';
+}
+
 function showAirportDetail(airport, ok) {
   const panel = document.getElementById('airport-detail-panel');
   if (!panel) return;
 
   const [iata, name, city, country, lat, lon] = airport;
   const isLast = (currentIdx + 1) >= quizQueue.length;
+  const detail = (typeof AIRPORT_DETAILS !== 'undefined') ? AIRPORT_DETAILS[iata] : null;
 
-  // Build satellite visual
+  // ── Satellite visual ─────────────────────────────────────────────────────────
   const hasMapbox = typeof CONFIG !== 'undefined' && CONFIG.MAPBOX_TOKEN;
   let visualHtml;
   if (hasMapbox) {
@@ -354,7 +368,26 @@ function showAirportDetail(airport, ok) {
       </div>`;
   }
 
-  // Chips: continent, size, special tags
+  // ── Meta line: IATA · ICAO · City · Country ──────────────────────────────────
+  const metaParts = [iata];
+  if (detail && detail.icao) metaParts.push(detail.icao);
+  metaParts.push(city, country);
+  const metaLine = metaParts.map(p => esc(p)).join(' · ');
+
+  // ── Overview pills: Opened · Operator ────────────────────────────────────────
+  let overviewHtml = '';
+  if (detail) {
+    const pills = [];
+    if (detail.opened) pills.push(esc(t('detailStat_opened')) + ' ' + detail.opened);
+    if (detail.operator) pills.push(esc(detail.operator));
+    if (pills.length) {
+      overviewHtml = '<div class="ap-overview-pills">' +
+        pills.map(p => '<span class="ap-overview-pill">' + p + '</span>').join('') +
+        '</div>';
+    }
+  }
+
+  // ── Chips: continent, size, special tags ─────────────────────────────────────
   const chips = [];
   const continentId = typeof CONTINENT_MAP !== 'undefined' ? CONTINENT_MAP[country] : null;
   const continentLabel = continentId && _CONTINENT_KEYS[continentId] ? t(_CONTINENT_KEYS[continentId]) : '';
@@ -376,13 +409,53 @@ function showAirportDetail(airport, ok) {
   if (typeof EXTREME_AIRPORTS !== 'undefined' && EXTREME_AIRPORTS.has(iata))
     chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagExtreme'))}</span>`);
 
+  // ── Extended sections (only when AIRPORT_DETAILS entry exists) ───────────────
+  let sectionsHtml = '';
+  if (detail) {
+    const ops = [];
+    if (detail.pax)                   ops.push({ v: _fmtPax(detail.pax),            l: t('detailStat_pax') });
+    if (detail.movements)             ops.push({ v: _fmtMov(detail.movements),       l: t('detailStat_movements') });
+    if (detail.cargo)                 ops.push({ v: _fmtCargo(detail.cargo),         l: t('detailStat_cargo') });
+    if (detail.runways)               ops.push({ v: String(detail.runways),          l: t('detailStat_runways') });
+    if (detail.longestRunway)         ops.push({ v: _fmtLen(detail.longestRunway),   l: t('detailStat_longestRunway') });
+    if (detail.elevation !== undefined) ops.push({ v: _fmtLen(detail.elevation),     l: t('detailStat_elevation') });
+
+    const opsHtml = ops.length
+      ? '<div class="ap-section"><div class="ap-section-title">' + esc(t('detailSection_ops')) + '</div>' +
+        '<div class="ap-stats-grid">' +
+        ops.map(o => '<div class="ap-stat"><div class="ap-stat-value">' + esc(o.v) +
+          '</div><div class="ap-stat-label">' + esc(o.l) + '</div></div>').join('') +
+        '</div></div>'
+      : '';
+
+    const airlinesHtml = detail.hubAirlines && detail.hubAirlines.length
+      ? '<div class="ap-section"><div class="ap-section-title">' + esc(t('detailSection_airlines')) + '</div>' +
+        '<div class="ap-hub-list">' +
+        detail.hubAirlines.map(a => '<span class="ap-hub-item">' + esc(a) + '</span>').join('') +
+        '</div></div>'
+      : '';
+
+    const factsHtml = detail.facts && detail.facts.length
+      ? '<div class="ap-section"><div class="ap-section-title">' + esc(t('detailSection_facts')) + '</div>' +
+        '<div class="ap-facts-grid">' +
+        detail.facts.map(f => '<div class="ap-fact">' + esc(f) + '</div>').join('') +
+        '</div></div>'
+      : '';
+
+    if (opsHtml || airlinesHtml || factsHtml) {
+      sectionsHtml = '<div class="ap-detail-sections">' + opsHtml + airlinesHtml + factsHtml + '</div>';
+    }
+  }
+
   panel.innerHTML = `
     <div class="ap-detail-card${ok ? ' ap-detail-card--correct' : ' ap-detail-card--wrong'}">
       ${visualHtml}
       <div class="ap-detail-body">
         <div class="ap-detail-name">${esc(name)}</div>
-        <div class="ap-detail-meta">${esc(iata)} · ${esc(city)} · ${esc(country)}</div>
+        <div class="ap-detail-meta">${metaLine}</div>
+        ${overviewHtml}
         <div class="ap-detail-chips">${chips.join('')}</div>
+        ${sectionsHtml}
       </div>
     </div>`;
   panel.hidden = false;
