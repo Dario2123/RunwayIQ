@@ -139,6 +139,7 @@ const LANG_EN = {
   resultAllTimeRate:   "All-Time Rate",
 
   // Airport detail card (post-answer)
+  btnRevealAnswer:   "Reveal Answer",
   btnNextAirport:    "Next Airport",
   btnShowResults:    "Show Results",
   detailSize_large:  "Large Hub",

@@ -14,6 +14,8 @@ let currentIdx = 0;
 let currentAirport = null;
 let currentQuestionMode = 'code';
 let answered = false;
+let detailVisible = false;
+let lastAnswerOk = false;
 let correctCount = 0;
 let wrongCount = 0;
 let history = [];
@@ -207,6 +209,7 @@ function startQuiz() {
 
 function loadQuestion() {
   answered = false;
+  detailVisible = false;
   const q = quizQueue[currentIdx];
   currentAirport = q.airport;
   currentQuestionMode = q.mode;
@@ -471,6 +474,9 @@ function showAirportDetail(airport, ok) {
 
 function _resolveQuestion(ok, given) {
   answered = true;
+  detailVisible = false;
+  lastAnswerOk = ok;
+
   const inp = document.getElementById('answer-input');
   inp.disabled = true;
   document.getElementById('autocomplete-list').innerHTML = '';
@@ -501,7 +507,15 @@ function _resolveQuestion(ok, given) {
   else { currentStreak = 0; }
   history.push({ airport: currentAirport, correct: ok, given, mode: currentQuestionMode });
   updateHeader();
-  showAirportDetail(currentAirport, ok);
+
+  const btnCheck = document.getElementById('btn-check');
+  btnCheck.textContent = t('btnRevealAnswer');
+  btnCheck.onclick = revealDetail;
+}
+
+function revealDetail() {
+  detailVisible = true;
+  showAirportDetail(currentAirport, lastAnswerOk);
 }
 
 function checkAnswer() {
@@ -676,10 +690,10 @@ document.addEventListener('click', e => {
   }
 });
 
-// Enter after answering (input is disabled, so we need a document-level handler)
+// Enter advances to next question only after the detail card is revealed
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
-  if (!answered) return;
+  if (!answered || !detailVisible) return;
   if (!document.getElementById('screen-quiz').classList.contains('active')) return;
   // Skip when focus is on a button — the button's own click handler already calls nextQuestion
   if (e.target && e.target.tagName === 'BUTTON') return;

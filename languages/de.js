@@ -139,6 +139,7 @@ const LANG_DE = {
   resultAllTimeRate:   "Gesamt-Trefferquote",
 
   // Airport-Detailkarte (nach Antwort)
+  btnRevealAnswer:   "Auflösen",
   btnNextAirport:    "Nächster Flughafen",
   btnShowResults:    "Ergebnisse anzeigen",
   detailSize_large:  "Großflughafen",
