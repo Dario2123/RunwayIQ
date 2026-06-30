@@ -257,7 +257,7 @@ function loadQuestion() {
           onload="document.getElementById('sat-loading').style.display='none'"
           onerror="document.getElementById('sat-loading').innerHTML='<span>${esc(t('satError'))}</span>'"
         />
-        <div class="sat-overlay">🛰️ SATELLITE VIEW</div>
+        <div class="sat-overlay">SAT VIEW</div>
       </div>`;
   }
 }
@@ -419,20 +419,30 @@ function selectAC(name) {
   document.getElementById('answer-input').focus();
 }
 
+// ─── RESULT ICON SVGS ─────────────────────────────────────────────────────────
+const _SVG_TROPHY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><path d="M6 9H4a2 2 0 0 0-2 2v1a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5v-1a2 2 0 0 0-2-2h-2"/><rect x="6" y="2" width="12" height="11" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>`;
+const _SVG_CHECK  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>`;
+
 // ─── RESULTS ──────────────────────────────────────────────────────────────────
 function showResults() {
   const total = quizQueue.length;
   const pct = Math.round((correctCount / total) * 100);
 
-  let emoji = '😅';
   let labelKey = 'resultLabel_0';
-  if (pct >= 90) { emoji = '🏆'; labelKey = 'resultLabel_90'; }
-  else if (pct >= 70) { emoji = '✈️';  labelKey = 'resultLabel_70'; }
-  else if (pct >= 50) { emoji = '🗺️'; labelKey = 'resultLabel_50'; }
-  else if (pct >= 30) { emoji = '📍'; labelKey = 'resultLabel_30'; }
+  if (pct >= 90) labelKey = 'resultLabel_90';
+  else if (pct >= 70) labelKey = 'resultLabel_70';
+  else if (pct >= 50) labelKey = 'resultLabel_50';
+  else if (pct >= 30) labelKey = 'resultLabel_30';
 
-  document.getElementById('result-emoji').textContent = emoji;
-  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  const iconEl = document.getElementById('result-icon');
+  iconEl.innerHTML = pct >= 90 ? _SVG_TROPHY : pct >= 70 ? _SVG_CHECK : '';
+
+  const scoreEl = document.getElementById('result-score');
+  scoreEl.textContent = `${correctCount} / ${total}`;
+  scoreEl.className = 'result-score';
+  if (pct >= 90) scoreEl.classList.add('result-score--gold');
+  else if (pct >= 70) scoreEl.classList.add('result-score--accent');
+
   document.getElementById('result-label').textContent = t(labelKey);
   document.getElementById('stat-correct').textContent = correctCount;
   document.getElementById('stat-wrong').textContent = wrongCount;
@@ -442,7 +452,7 @@ function showResults() {
 
   document.getElementById('history-list').innerHTML = history.map(h => `
     <div class="history-item ${h.correct ? 'correct-h' : 'wrong-h'}">
-      <span class="hi-status">${h.correct ? '✅' : '❌'}</span>
+      <span class="hi-status ${h.correct ? 'hi-status--correct' : 'hi-status--wrong'}"></span>
       <span class="hi-code">${esc(h.airport[0])}</span>
       <span class="hi-name">${esc(h.airport[1])}</span>
       <span class="hi-given">${esc(h.given)}</span>

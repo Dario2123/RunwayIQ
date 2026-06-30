@@ -97,11 +97,11 @@ const LANG_EN = {
   // Daily Challenge
   dailyChallengeBadge: "Daily Challenge",
   dailyChallengeLabel: "Daily Challenge",
-  dailyPlayBtn:        "▶ Play Today's Challenge",
+  dailyPlayBtn:        "Play Today's Challenge",
   dailyPlayAgain:      "▶ Play Again",
   dailyBestToday:      "Best today",
-  dailyResultTitle:    "⭐ Daily Challenge",
-  dailyNewRecord:      "🏆 New Daily Record!",
+  dailyResultTitle:    "Daily Challenge",
+  dailyNewRecord:      "New Daily Record",
   dailyPrevBest:       "Previous best today",
   dailyStreakLabel:    "day streak",
   dailyCurrentStreak:  "Current streak",
@@ -114,13 +114,13 @@ const LANG_EN = {
   shareResult:         "Share Result",
   copyResult:          "Copy Result",
   shareLabel:          "Share your result",
-  shareCopyBtn:        "📋 Copy",
+  shareCopyBtn:        "Copy",
   shareCopied:         "✓ Copied!",
 
   // Stats screen
   statsTitle:          "Statistics",
   statsBtn:            "Statistics →",
-  btnViewStats:        "📊 Stats",
+  btnViewStats:        "Stats",
   statsBestScore:      "Best Score",
   statsTotalRounds:    "Rounds Played",
   statsHitRate:        "Hit Rate",
@@ -130,7 +130,7 @@ const LANG_EN = {
   statsBack:           "← Back",
 
   // Result screen — highscore section
-  resultNewRecord:     "🏆 New Personal Record!",
+  resultNewRecord:     "New Personal Record",
   resultPreviousBest:  "Previous Best",
   resultTotalPlayed:   "Rounds Played",
   resultAllTimeRate:   "All-Time Rate",

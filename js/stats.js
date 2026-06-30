@@ -65,7 +65,7 @@ function renderStatsScreen() {
     ? Math.round((dailyData.totalCorrect / dailyData.totalAnswered) * 100) : 0;
   document.getElementById('stats-daily-grid').innerHTML = [
     { val: dailyData.totalCompleted,  lbl: 'dailyTotalCompleted' },
-    { val: dailyData.currentStreak + ' 🔥', lbl: 'dailyCurrentStreak' },
+    { val: dailyData.currentStreak, lbl: 'dailyCurrentStreak' },
     { val: dailyData.longestStreak,  lbl: 'dailyLongestStreak' },
     { val: dailyAvg + '%',           lbl: 'dailyAvgScore' },
   ].map(s => `
@@ -83,12 +83,13 @@ function renderStatsScreen() {
   const locale = lang === 'de' ? 'de-DE' : 'en-US';
   recentEl.innerHTML = data.rounds.slice(0, 5).map(r => {
     const dateStr = new Date(r.ts).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
-    const modeIcon = r.mode === 'code' ? '🔤' : r.mode === 'satellite' ? '🛰️' : '🎲';
+    const modeBadgeClass = r.mode === 'code' ? 'srr-mode-code' : r.mode === 'satellite' ? 'srr-mode-satellite' : 'srr-mode-mixed';
+    const modeBadgeLabel = r.mode === 'code' ? t('modeBadge_code') : r.mode === 'satellite' ? t('modeBadge_sat') : t('modeMixed_title');
     const pctClass = r.pct >= 80 ? 'srr-gold' : r.pct >= 55 ? 'srr-green' : 'srr-red';
     return `
       <div class="stats-round-row">
         <span class="srr-pct ${pctClass}">${r.pct}%</span>
-        <span class="srr-icon">${modeIcon}</span>
+        <span class="srr-mode-badge ${modeBadgeClass}">${esc(modeBadgeLabel)}</span>
         <span class="srr-cat">${esc(r.categoryIcon)} ${esc(t(r.categoryKey))}</span>
         <span class="srr-detail">${r.correct}/${r.total} · ${esc(t('diffBadge_' + r.difficulty))}</span>
         <span class="srr-date">${dateStr}</span>

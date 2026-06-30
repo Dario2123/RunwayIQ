@@ -43,7 +43,7 @@
     <div class="lp-daily" id="lp-daily">
       <div class="lp-daily-inner">
         <div class="lp-daily-left">
-          <div class="lp-daily-badge">⭐ <span data-i18n="dailyChallengeBadge">Daily Challenge</span></div>
+          <div class="lp-daily-badge"><span data-i18n="dailyChallengeBadge">Daily Challenge</span></div>
           <div class="lp-daily-date" id="lp-daily-date"></div>
           <div class="lp-daily-status" id="lp-daily-status"></div>
         </div>
@@ -128,7 +128,7 @@
   <!-- CATEGORY SCREEN -->
   <div class="screen" id="screen-category">
     <div id="cat-groups-view">
-      <div class="start-hero" style="padding:28px 0 16px">
+      <div class="start-hero" style="padding:24px 0 12px">
         <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
         <h1 data-i18n="catScreen_title">Choose a Category</h1>
         <p data-i18n="catScreen_subtitle">Which airports should appear in the quiz?</p>
@@ -244,7 +244,7 @@
   <!-- RESULT SCREEN -->
   <div class="screen" id="screen-result">
     <div class="result-card">
-      <div class="result-emoji" id="result-emoji">🏆</div>
+      <div class="result-icon" id="result-icon"></div>
       <div class="result-score" id="result-score">0 / 10</div>
       <div class="result-label" id="result-label">Quiz complete</div>
       <div class="result-category-badge" id="result-category"></div>
@@ -265,7 +265,7 @@
       <div id="result-hs-section"></div>
       <div class="result-btns">
         <button class="btn-primary" onclick="startQuiz()" data-i18n="btnPlayAgain">Play Again</button>
-        <button class="btn-ghost" onclick="showStats()" data-i18n="btnViewStats">📊 Stats</button>
+        <button class="btn-ghost" onclick="showStats()" data-i18n="btnViewStats">Stats</button>
         <button class="btn-ghost" onclick="showStartScreen()" data-i18n="btnSettings">Settings</button>
         <button class="btn-ghost" onclick="showCatScreen()" data-i18n="btnChangeCategory">Change Category</button>
       </div>
@@ -277,7 +277,7 @@
 
   <!-- STATS SCREEN -->
   <div class="screen" id="screen-stats">
-    <div class="start-hero" style="padding: 28px 0 16px">
+    <div class="start-hero" style="padding: 24px 0 12px">
       <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
       <h1 data-i18n="statsTitle">Statistics</h1>
     </div>
@@ -291,7 +291,7 @@
     <div id="stats-recent-list"></div>
 
     <div class="stats-footer-btns">
-      <button class="btn-primary" onclick="startDailyChallenge()" data-i18n="dailyPlayBtn">▶ Play Today's Challenge</button>
+      <button class="btn-primary" onclick="startDailyChallenge()" data-i18n="dailyPlayBtn">Play Today's Challenge</button>
       <button class="btn-ghost" onclick="showModeScreen()" data-i18n="playNow">Play Now</button>
       <button class="btn-ghost" onclick="showScreen('screen-landing')" data-i18n="statsBack">← Back</button>
     </div>

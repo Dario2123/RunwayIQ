@@ -213,7 +213,7 @@ function buildDailyResultHtml(correct, total, pct, isNewDayRecord, prevBestPct, 
 
   if (dayData.currentStreak > 0) {
     h += `<div class="daily-share-stat">
-        <span class="daily-share-val">🔥 ${dayData.currentStreak}</span>
+        <span class="daily-share-val">${dayData.currentStreak}</span>
         <span class="daily-share-lbl">${esc(t('dailyStreakLabel'))}</span>
       </div>`;
   }
