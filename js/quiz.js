@@ -238,8 +238,10 @@ function loadQuestion() {
   document.getElementById('feedback-panel').className = 'feedback-panel';
   document.getElementById('feedback-panel').innerHTML = '';
   document.getElementById('airport-detail-panel').hidden = true;
-  document.getElementById('btn-reveal').hidden   = false;
-  document.getElementById('btn-reveal').disabled = false;
+  const revBtn = document.getElementById('btn-reveal');
+  revBtn.hidden = false;
+  revBtn.disabled = false;
+  revBtn.innerHTML = `${esc(t('btnRevealAnswer'))} <kbd class="kbd">R</kbd>`;
   document.getElementById('btn-check').disabled  = false;
   document.getElementById('btn-check').textContent = t('btnCheck');
   document.getElementById('btn-check').onclick = checkAnswer;
@@ -750,14 +752,30 @@ document.addEventListener('click', e => {
   }
 });
 
-// Enter advances to next question only when detail view is open
+// Global quiz shortcuts: Enter advances after reveal; R opens airport detail
 document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  if (!detailVisible) return;
   if (!document.getElementById('screen-quiz').classList.contains('active')) return;
-  if (e.target && e.target.tagName === 'BUTTON') return;
-  e.preventDefault();
-  nextQuestion();
+
+  if (e.key === 'Enter') {
+    if (!detailVisible) return;
+    if (e.target && e.target.tagName === 'BUTTON') return;
+    e.preventDefault();
+    nextQuestion();
+    return;
+  }
+
+  if (e.key === 'r' || e.key === 'R') {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (detailVisible) return;
+    // Don't trigger while typing in the input
+    const inp = document.getElementById('answer-input');
+    if (document.activeElement === inp && !inp.disabled) return;
+    // Don't trigger while autocomplete dropdown is open
+    const acList = document.getElementById('autocomplete-list');
+    if (acList && acList.children.length > 0) return;
+    e.preventDefault();
+    revealAnswer();
+  }
 });
 
 renderCatGroups();

@@ -236,9 +236,20 @@
       <div class="feedback-panel" id="feedback-panel"></div>
       <div id="airport-detail-panel" hidden></div>
       <div class="action-row">
-        <button class="btn-ghost btn-reveal" id="btn-reveal" data-i18n="btnRevealAnswer">Reveal Answer</button>
+        <button class="btn-ghost btn-reveal" id="btn-reveal"></button>
         <button class="btn-primary" id="btn-check" data-i18n="btnCheck">Check</button>
         <button class="btn-ghost" id="btn-skip" data-i18n="btnSkip">Skip</button>
+      </div>
+      <div class="kbd-hints" id="kbd-hints">
+        <div class="kbd-hints-title" data-i18n="kbdHintsTitle"></div>
+        <div class="kbd-hint-row">
+          <kbd class="kbd">Enter</kbd>
+          <span data-i18n="kbdEnterHint"></span>
+        </div>
+        <div class="kbd-hint-row">
+          <kbd class="kbd">R</kbd>
+          <span data-i18n="kbdRHint"></span>
+        </div>
       </div>
       <div class="cancel-row">
         <button class="btn-cancel" id="btn-cancel" data-i18n="btnCancel">Abort Round</button>

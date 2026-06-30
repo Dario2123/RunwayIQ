@@ -140,8 +140,13 @@ const LANG_DE = {
   resultTotalPlayed:   "Gespielte Runden",
   resultAllTimeRate:   "Gesamt-Trefferquote",
 
+  // Tastaturhinweise
+  kbdHintsTitle:   "Tastatur",
+  kbdEnterHint:    "Prüfen & Weiter",
+  kbdRHint:        "Flughafen ansehen",
+
   // Airport-Detailkarte (nach Antwort)
-  btnRevealAnswer:   "Auflösen",
+  btnRevealAnswer:   "Flughafen ansehen",
   btnNextAirport:    "Nächster Flughafen",
   btnShowResults:    "Ergebnisse anzeigen",
   detailSize_large:  "Großflughafen",

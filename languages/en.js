@@ -140,8 +140,13 @@ const LANG_EN = {
   resultTotalPlayed:   "Rounds Played",
   resultAllTimeRate:   "All-Time Rate",
 
+  // Keyboard hints
+  kbdHintsTitle:   "Keyboard Shortcuts",
+  kbdEnterHint:    "Check & Next",
+  kbdRHint:        "Explore Airport",
+
   // Airport detail card (post-answer)
-  btnRevealAnswer:   "Reveal Answer",
+  btnRevealAnswer:   "Explore Airport",
   btnNextAirport:    "Next Airport",
   btnShowResults:    "Show Results",
   detailSize_large:  "Large Hub",
