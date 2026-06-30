@@ -619,6 +619,14 @@ main {
   opacity: 0.8;
 }
 .cat-indicator-value { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+.cat-indicator-hint {
+  font-size: 0.63rem;
+  color: var(--accent);
+  opacity: 0.65;
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+}
+.cat-indicator--discover { border-color: rgba(0, 180, 216, 0.22); }
 .cat-change-btn { padding: 8px 14px; font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; }
 
 /* Category tag shown in quiz screen */
@@ -898,6 +906,17 @@ main {
   box-shadow: var(--shadow-md);
 }
 .challenge-card:active { transform: translateY(0); }
+
+.challenge-card.selected {
+  border-color: var(--accent);
+  background: var(--surface2);
+  box-shadow: 0 0 0 1px rgba(0,180,216,0.15) inset;
+}
+.challenge-card--featured.selected {
+  border-color: var(--accent);
+  background: linear-gradient(145deg, rgba(0, 180, 216, 0.13) 0%, var(--surface2) 65%);
+  box-shadow: 0 4px 28px rgba(0,180,216,0.12), 0 0 0 1px rgba(0,180,216,0.15) inset;
+}
 
 .challenge-card--featured {
   border-color: rgba(0, 180, 216, 0.35);

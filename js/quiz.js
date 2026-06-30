@@ -43,6 +43,7 @@ function showScreen(id) {
 
 function showModeScreen() {
   showScreen('screen-mode');
+  selectMode(selectedMode);
 }
 
 function selectModeAndContinue(mode) {
@@ -69,7 +70,7 @@ function showStartScreen() {
 
 function selectMode(mode) {
   selectedMode = mode;
-  document.querySelectorAll('.mode-card').forEach(c => {
+  document.querySelectorAll('.challenge-card').forEach(c => {
     c.classList.toggle('selected', c.dataset.mode === mode);
   });
 }

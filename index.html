@@ -128,6 +128,9 @@
   <!-- CATEGORY SCREEN -->
   <div class="screen" id="screen-category">
     <div id="cat-groups-view">
+      <div class="cat-nav">
+        <button class="btn-ghost cat-back-btn" onclick="showStartScreen()" data-i18n="catBack">← Back</button>
+      </div>
       <div class="start-hero" style="padding:24px 0 12px">
         <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
         <h1 data-i18n="catScreen_title">Choose a Category</h1>
@@ -165,12 +168,13 @@
     </div>
 
     <!-- Category indicator -->
-    <div class="cat-indicator">
+    <div class="cat-indicator cat-indicator--discover">
       <div class="cat-indicator-inner">
         <div class="cat-indicator-label" data-i18n="catLabel">Category</div>
         <div class="cat-indicator-value" id="cat-indicator-value">🌍 Worldwide</div>
+        <div class="cat-indicator-hint" data-i18n="catHint">25+ categories to explore</div>
       </div>
-      <button class="btn-ghost cat-change-btn" onclick="showCatScreen()" data-i18n="catChange">Change →</button>
+      <button class="btn-ghost cat-change-btn" onclick="showCatScreen()" data-i18n="catChooseBtn">Choose →</button>
     </div>
 
     <div class="rounds-selector">
@@ -267,7 +271,7 @@
       <div class="result-btns">
         <button class="btn-primary" onclick="startQuiz()" data-i18n="btnPlayAgain">Play Again</button>
         <button class="btn-ghost" onclick="showStats()" data-i18n="btnViewStats">Stats</button>
-        <button class="btn-ghost" onclick="showStartScreen()" data-i18n="btnSettings">Settings</button>
+        <button class="btn-ghost" onclick="showStartScreen()" data-i18n="btnChangeSetup">Change Setup</button>
         <button class="btn-ghost" onclick="showCatScreen()" data-i18n="btnChangeCategory">Change Category</button>
       </div>
     </div>
