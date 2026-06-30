@@ -32,3 +32,7 @@ function getSatelliteZoom(airport) {
   if (AIRPORT_SIZE.small.has(iata)) return AIRPORT_ZOOM.small;
   return AIRPORT_ZOOM.medium ?? CONFIG.SATELLITE_ZOOM ?? 12;
 }
+
+function getDetailZoom(airport) {
+  return getSatelliteZoom(airport) - 1.2;
+}

@@ -234,8 +234,11 @@ function loadQuestion() {
   document.getElementById('airport-detail-panel').hidden = true;
   document.getElementById('btn-check').disabled = false;
   document.getElementById('btn-check').textContent = t('btnCheck');
+  document.getElementById('btn-check').onclick = checkAnswer;
   document.getElementById('btn-skip').hidden = false;
   document.getElementById('btn-skip').textContent = t('btnSkip');
+  document.getElementById('question-card').style.display = '';
+  document.getElementById('answer-input-wrap').style.display = '';
 
   const card = document.getElementById('question-card');
   if (q.mode === 'code') {
@@ -349,7 +352,7 @@ function showAirportDetail(airport, ok) {
   const hasMapbox = typeof CONFIG !== 'undefined' && CONFIG.MAPBOX_TOKEN;
   let visualHtml;
   if (hasMapbox) {
-    const zoom = getSatelliteZoom(airport);
+    const zoom = getDetailZoom(airport);
     const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${zoom},0/${CONFIG.SATELLITE_SIZE}?access_token=${encodeURIComponent(CONFIG.MAPBOX_TOKEN)}`;
     visualHtml = `
       <div class="ap-detail-visual">
@@ -461,7 +464,9 @@ function showAirportDetail(airport, ok) {
     </div>`;
   panel.hidden = false;
 
-  document.getElementById('btn-check').textContent = isLast ? t('btnShowResults') : t('btnNextAirport');
+  const btnCheck = document.getElementById('btn-check');
+  btnCheck.textContent = isLast ? t('btnShowResults') : t('btnNextAirport');
+  btnCheck.onclick = nextQuestion;
 }
 
 function _resolveQuestion(ok, given) {
@@ -470,6 +475,8 @@ function _resolveQuestion(ok, given) {
   inp.disabled = true;
   document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('btn-skip').hidden = true;
+  document.getElementById('question-card').style.display = 'none';
+  document.getElementById('answer-input-wrap').style.display = 'none';
 
   const feedback = document.getElementById('feedback-panel');
   const info = `<div class="airport-info">${esc(currentAirport[0])} · ${esc(currentAirport[2])}, ${esc(currentAirport[3])}</div>`;
@@ -498,7 +505,7 @@ function _resolveQuestion(ok, given) {
 }
 
 function checkAnswer() {
-  if (answered) { nextQuestion(); return; }
+  if (answered) return;
   const val = document.getElementById('answer-input').value.trim();
   if (!val) return;
   _resolveQuestion(isCorrect(val, currentAirport), val);
@@ -527,11 +534,14 @@ function onKeyDown(e) {
     acHighlight = Math.max(acHighlight - 1, 0);
     items.forEach((it, i) => it.classList.toggle('highlighted', i === acHighlight));
   } else if (e.key === 'Enter') {
-    if (acHighlight >= 0 && items[acHighlight]) {
+    e.preventDefault();
+    if (items.length > 0 && acHighlight >= 0 && items[acHighlight]) {
       document.getElementById('answer-input').value = items[acHighlight].dataset.name;
       document.getElementById('autocomplete-list').innerHTML = '';
       acHighlight = -1;
     } else {
+      document.getElementById('autocomplete-list').innerHTML = '';
+      acHighlight = -1;
       checkAnswer();
     }
   } else if (e.key === 'Escape') {
@@ -668,11 +678,13 @@ document.addEventListener('click', e => {
 
 // Enter after answering (input is disabled, so we need a document-level handler)
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && answered &&
-      document.getElementById('screen-quiz').classList.contains('active')) {
-    e.preventDefault();
-    nextQuestion();
-  }
+  if (e.key !== 'Enter') return;
+  if (!answered) return;
+  if (!document.getElementById('screen-quiz').classList.contains('active')) return;
+  // Skip when focus is on a button — the button's own click handler already calls nextQuestion
+  if (e.target && e.target.tagName === 'BUTTON') return;
+  e.preventDefault();
+  nextQuestion();
 });
 
 renderCatGroups();
