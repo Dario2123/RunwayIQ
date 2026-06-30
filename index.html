@@ -15,8 +15,8 @@
 <header>
   <div class="logo">RUNWAY<span>IQ</span></div>
   <div class="lang-switcher">
-    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" data-lang="de" onclick="setLang('de')">DE</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="de">DE</button>
   </div>
   <div class="score-display">
     <span>✓ <b id="hdr-correct">0</b></span>
@@ -35,8 +35,8 @@
       <div class="lp-tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
       <h1 class="lp-title">Runway<span>IQ</span></h1>
       <p class="lp-claim" data-i18n="landingClaim">How well do you know the world's busiest airports?</p>
-      <button class="btn-hero" onclick="showModeScreen()" data-i18n="playNow">Play Now</button>
-      <button class="lp-stats-link" onclick="showStats()" data-i18n="statsBtn">Statistics →</button>
+      <button class="btn-hero" id="btn-hero" data-i18n="playNow">Play Now</button>
+      <button class="lp-stats-link" id="btn-landing-stats" data-i18n="statsBtn">Statistics →</button>
     </div>
 
     <!-- Daily Challenge Card -->
@@ -47,7 +47,7 @@
           <div class="lp-daily-date" id="lp-daily-date"></div>
           <div class="lp-daily-status" id="lp-daily-status"></div>
         </div>
-        <button class="btn-daily" id="lp-daily-btn" onclick="startDailyChallenge()"></button>
+        <button class="btn-daily" id="lp-daily-btn"></button>
       </div>
     </div>
 
@@ -74,7 +74,7 @@
   <!-- MODE SELECTION SCREEN -->
   <div class="screen" id="screen-mode">
     <div class="mode-screen-nav">
-      <button class="btn-nav-back" onclick="showScreen('screen-landing')" data-i18n="catBack">← Back</button>
+      <button class="btn-nav-back" id="btn-mode-back" data-i18n="catBack">← Back</button>
     </div>
     <div class="mode-screen-hero">
       <h2 class="mode-screen-title" data-i18n="chooseChallenge">Choose Your Challenge</h2>
@@ -82,7 +82,7 @@
     </div>
     <div class="challenge-grid">
 
-      <div class="challenge-card challenge-card--featured" data-mode="satellite" onclick="selectModeAndContinue('satellite')">
+      <div class="challenge-card challenge-card--featured" data-mode="satellite">
         <div class="challenge-badge" data-i18n="modePopular">Popular</div>
         <div class="challenge-icon-wrap">
           <svg class="challenge-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <div class="challenge-card" data-mode="code" onclick="selectModeAndContinue('code')">
+      <div class="challenge-card" data-mode="code">
         <div class="challenge-icon-wrap">
           <svg class="challenge-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="16 18 22 12 16 6"/>
@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <div class="challenge-card" data-mode="mixed" onclick="selectModeAndContinue('mixed')">
+      <div class="challenge-card" data-mode="mixed">
         <div class="challenge-icon-wrap">
           <svg class="challenge-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 16H3M21 16l-4-4M21 16l-4 4M3 8h18M3 8l4-4M3 8l4 4"/>
@@ -129,9 +129,9 @@
   <div class="screen" id="screen-category">
     <div id="cat-groups-view">
       <div class="cat-nav">
-        <button class="btn-ghost cat-back-btn" onclick="showStartScreen()" data-i18n="catBack">← Back</button>
+        <button class="btn-ghost cat-back-btn" id="btn-cat-groups-back" data-i18n="catBack">← Back</button>
       </div>
-      <div class="start-hero" style="padding:24px 0 12px">
+      <div class="start-hero start-hero--sub">
         <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
         <h1 data-i18n="catScreen_title">Choose a Category</h1>
         <p data-i18n="catScreen_subtitle">Which airports should appear in the quiz?</p>
@@ -141,7 +141,7 @@
 
     <div id="cat-items-view" hidden>
       <div class="cat-nav">
-        <button class="btn-ghost cat-back-btn" onclick="renderCatGroups()" data-i18n="catBack">← Back</button>
+        <button class="btn-ghost cat-back-btn" id="btn-cat-items-back" data-i18n="catBack">← Back</button>
         <span class="cat-breadcrumb" id="cat-breadcrumb"></span>
       </div>
       <div class="cat-item-grid" id="cat-item-grid"></div>
@@ -151,7 +151,7 @@
   <!-- START SCREEN -->
   <div class="screen" id="screen-start">
     <div class="start-nav">
-      <button class="btn-nav-back" onclick="showModeScreen()" data-i18n="catBack">← Back</button>
+      <button class="btn-nav-back" id="btn-start-back" data-i18n="catBack">← Back</button>
     </div>
     <div class="start-hero">
       <div class="tagline" data-i18n="startTagline">Aviation Knowledge Quiz</div>
@@ -164,7 +164,7 @@
         <div class="cat-indicator-label" data-i18n="modeSelectedLabel">Mode</div>
         <div class="cat-indicator-value" id="mode-indicator-value"></div>
       </div>
-      <button class="btn-ghost cat-change-btn" onclick="showModeScreen()" data-i18n="catChange">Change →</button>
+      <button class="btn-ghost cat-change-btn" id="btn-mode-change" data-i18n="catChange">Change →</button>
     </div>
 
     <!-- Category indicator -->
@@ -174,7 +174,7 @@
         <div class="cat-indicator-value" id="cat-indicator-value">🌍 Worldwide</div>
         <div class="cat-indicator-hint" data-i18n="catHint">25+ categories to explore</div>
       </div>
-      <button class="btn-ghost cat-change-btn" onclick="showCatScreen()" data-i18n="catChooseBtn">Choose →</button>
+      <button class="btn-ghost cat-change-btn" id="btn-cat-choose" data-i18n="catChooseBtn">Choose →</button>
     </div>
 
     <div class="rounds-selector">
@@ -183,22 +183,22 @@
         <span class="diff-desc" id="diff-desc" data-i18n="diffDesc_easy">Autocomplete helps while typing</span>
       </div>
       <div class="rounds-btns">
-        <button onclick="setDifficulty('easy')" class="active" id="dbtn-easy">Easy</button>
-        <button onclick="setDifficulty('hard')" id="dbtn-hard">Hard</button>
-        <button onclick="setDifficulty('expert')" id="dbtn-expert">Expert</button>
+        <button class="active" id="dbtn-easy">Easy</button>
+        <button id="dbtn-hard">Hard</button>
+        <button id="dbtn-expert">Expert</button>
       </div>
     </div>
 
     <div class="rounds-selector">
       <label data-i18n="roundsLabel">Number of Questions</label>
       <div class="rounds-btns">
-        <button onclick="setRounds(10)" class="active" id="rbtn-10">10</button>
-        <button onclick="setRounds(20)" id="rbtn-20">20</button>
-        <button onclick="setRounds(50)" id="rbtn-50">50</button>
+        <button class="active" id="rbtn-10">10</button>
+        <button id="rbtn-20">20</button>
+        <button id="rbtn-50">50</button>
       </div>
     </div>
 
-    <button class="btn-primary" onclick="startQuiz()" data-i18n="startBtn">Start Quiz →</button>
+    <button class="btn-primary" id="btn-start-quiz" data-i18n="startBtn">Start Quiz →</button>
   </div>
 
   <!-- QUIZ SCREEN -->
@@ -229,19 +229,17 @@
           autocapitalize="off"
           spellcheck="false"
           enterkeyhint="go"
-          oninput="onInputChange()"
-          onkeydown="onKeyDown(event)"
         />
         <div class="autocomplete-list" id="autocomplete-list"></div>
       </div>
       <div class="feedback-panel" id="feedback-panel"></div>
       <div id="airport-detail-panel" hidden></div>
       <div class="action-row">
-        <button class="btn-primary" id="btn-check" onclick="checkAnswer()" data-i18n="btnCheck">Check</button>
-        <button class="btn-ghost" id="btn-skip" onclick="skipQuestion()" data-i18n="btnSkip">Skip</button>
+        <button class="btn-primary" id="btn-check" data-i18n="btnCheck">Check</button>
+        <button class="btn-ghost" id="btn-skip" data-i18n="btnSkip">Skip</button>
       </div>
       <div class="cancel-row">
-        <button class="btn-cancel" onclick="cancelRound()" data-i18n="btnCancel">Abort Round</button>
+        <button class="btn-cancel" id="btn-cancel" data-i18n="btnCancel">Abort Round</button>
       </div>
     </div>
   </div>
@@ -269,10 +267,10 @@
       </div>
       <div id="result-hs-section"></div>
       <div class="result-btns">
-        <button class="btn-primary" onclick="startQuiz()" data-i18n="btnPlayAgain">Play Again</button>
-        <button class="btn-ghost" onclick="showStats()" data-i18n="btnViewStats">Stats</button>
-        <button class="btn-ghost" onclick="showStartScreen()" data-i18n="btnChangeSetup">Change Setup</button>
-        <button class="btn-ghost" onclick="showCatScreen()" data-i18n="btnChangeCategory">Change Category</button>
+        <button class="btn-primary" id="btn-result-play-again" data-i18n="btnPlayAgain">Play Again</button>
+        <button class="btn-ghost" id="btn-result-stats" data-i18n="btnViewStats">Stats</button>
+        <button class="btn-ghost" id="btn-result-change-setup" data-i18n="btnChangeSetup">Change Setup</button>
+        <button class="btn-ghost" id="btn-result-change-cat" data-i18n="btnChangeCategory">Change Category</button>
       </div>
     </div>
 
@@ -282,7 +280,7 @@
 
   <!-- STATS SCREEN -->
   <div class="screen" id="screen-stats">
-    <div class="start-hero" style="padding: 24px 0 12px">
+    <div class="start-hero start-hero--sub">
       <div class="tagline" data-i18n="catScreen_tagline">Airport Quiz</div>
       <h1 data-i18n="statsTitle">Statistics</h1>
     </div>
@@ -296,9 +294,9 @@
     <div id="stats-recent-list"></div>
 
     <div class="stats-footer-btns">
-      <button class="btn-primary" onclick="startDailyChallenge()" data-i18n="dailyPlayBtn">Play Today's Challenge</button>
-      <button class="btn-ghost" onclick="showModeScreen()" data-i18n="playNow">Play Now</button>
-      <button class="btn-ghost" onclick="showScreen('screen-landing')" data-i18n="statsBack">← Back</button>
+      <button class="btn-primary" id="btn-stats-daily-play" data-i18n="dailyPlayBtn">Play Today's Challenge</button>
+      <button class="btn-ghost" id="btn-stats-play-now" data-i18n="playNow">Play Now</button>
+      <button class="btn-ghost" id="btn-stats-back" data-i18n="statsBack">← Back</button>
     </div>
   </div>
 
@@ -315,14 +313,12 @@
 <script src="js/quiz.js"></script>
 <script src="js/stats.js"></script>
 <script src="js/daily.js"></script>
-<script>applyI18n();</script>
+<script src="js/init.js"></script>
 
 <!-- Vercel Analytics -->
-<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 
 <!-- Vercel Speed Insights -->
-<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
 </body>

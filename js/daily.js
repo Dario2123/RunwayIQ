@@ -200,29 +200,32 @@ function buildDailyResultHtml(correct, total, pct, isNewDayRecord, prevBestPct, 
   const canNativeShare = typeof navigator.share === 'function';
   const shareBtnLabel  = canNativeShare ? t('shareResult') : t('copyResult');
 
+  const streak    = Number(dayData.currentStreak)  || 0;
+  const completed = Number(dayData.totalCompleted) || 0;
+
   h += `<div class="daily-share-card">
     <div class="daily-share-stats">
       <div class="daily-share-stat">
-        <span class="daily-share-val">${correct}/${total}</span>
+        <span class="daily-share-val">${Number(correct)}/${Number(total)}</span>
         <span class="daily-share-lbl">${esc(t('statCorrect'))}</span>
       </div>
       <div class="daily-share-stat">
-        <span class="daily-share-val">${pct}%</span>
+        <span class="daily-share-val">${Number(pct)}%</span>
         <span class="daily-share-lbl">${esc(t('statPct'))}</span>
       </div>`;
 
-  if (dayData.currentStreak > 0) {
+  if (streak > 0) {
     h += `<div class="daily-share-stat">
-        <span class="daily-share-val">${dayData.currentStreak}</span>
+        <span class="daily-share-val">${streak}</span>
         <span class="daily-share-lbl">${esc(t('dailyStreakLabel'))}</span>
       </div>`;
   }
 
   h += `</div>
-    <button class="btn-share-result" id="btn-daily-share" onclick="doShare()">${esc(shareBtnLabel)}</button>
+    <button class="btn-share-result" id="btn-daily-share">${esc(shareBtnLabel)}</button>
   </div>`;
 
-  h += `<div class="result-mini-stats"><div>${esc(t('dailyTotalCompleted'))}: <span>${dayData.totalCompleted}</span></div></div>`;
+  h += `<div class="result-mini-stats"><div>${esc(t('dailyTotalCompleted'))}: <span>${completed}</span></div></div>`;
 
   return h;
 }

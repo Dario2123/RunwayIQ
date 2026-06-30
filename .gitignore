@@ -1,4 +1,12 @@
-﻿.DS_Store
+.DS_Store
 *.log
 node_modules/
 data/config.js
+.env
+.env.*
+*.local
+secrets.*
+config.local.*
+credentials.*
+*.pem
+*.key

@@ -101,6 +101,9 @@ main {
   text-align: center;
   padding: 32px 0 12px;
 }
+.start-hero--sub {
+  padding-top: 24px;
+}
 .start-hero .tagline {
   font-family: var(--mono);
   font-size: 0.64rem;

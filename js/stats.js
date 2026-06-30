@@ -82,17 +82,21 @@ function renderStatsScreen() {
 
   const locale = lang === 'de' ? 'de-DE' : 'en-US';
   recentEl.innerHTML = data.rounds.slice(0, 5).map(r => {
-    const dateStr = new Date(r.ts).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
-    const modeBadgeClass = r.mode === 'code' ? 'srr-mode-code' : r.mode === 'satellite' ? 'srr-mode-satellite' : 'srr-mode-mixed';
-    const modeBadgeLabel = r.mode === 'code' ? t('modeBadge_code') : r.mode === 'satellite' ? t('modeBadge_sat') : t('modeMixed_title');
-    const pctClass = r.pct >= 80 ? 'srr-gold' : r.pct >= 55 ? 'srr-green' : 'srr-red';
+    const pct     = Number(r.pct)     || 0;
+    const correct = Number(r.correct) || 0;
+    const total   = Number(r.total)   || 0;
+    const dateStr = new Date(Number(r.ts) || 0).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+    const mode    = ['code', 'satellite', 'mixed'].includes(r.mode) ? r.mode : 'mixed';
+    const modeBadgeClass = mode === 'code' ? 'srr-mode-code' : mode === 'satellite' ? 'srr-mode-satellite' : 'srr-mode-mixed';
+    const modeBadgeLabel = mode === 'code' ? t('modeBadge_code') : mode === 'satellite' ? t('modeBadge_sat') : t('modeMixed_title');
+    const pctClass = pct >= 80 ? 'srr-gold' : pct >= 55 ? 'srr-green' : 'srr-red';
     return `
       <div class="stats-round-row">
-        <span class="srr-pct ${pctClass}">${r.pct}%</span>
+        <span class="srr-pct ${pctClass}">${pct}%</span>
         <span class="srr-mode-badge ${modeBadgeClass}">${esc(modeBadgeLabel)}</span>
         <span class="srr-cat">${esc(r.categoryIcon)} ${esc(t(r.categoryKey))}</span>
-        <span class="srr-detail">${r.correct}/${r.total} · ${esc(t('diffBadge_' + r.difficulty))}</span>
-        <span class="srr-date">${dateStr}</span>
+        <span class="srr-detail">${correct}/${total} · ${esc(t('diffBadge_' + r.difficulty))}</span>
+        <span class="srr-date">${esc(dateStr)}</span>
       </div>`;
   }).join('');
 }

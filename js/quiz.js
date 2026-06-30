@@ -260,14 +260,18 @@ function loadQuestion() {
           <div class="spinner"></div>
           <span>${esc(t('satLoading'))}</span>
         </div>
-        <img
-          src="${esc(imgUrl)}"
-          alt="Satellite view"
-          onload="document.getElementById('sat-loading').style.display='none'"
-          onerror="document.getElementById('sat-loading').innerHTML='<span>${esc(t('satError'))}</span>'"
-        />
+        <img class="sat-img" src="${esc(imgUrl)}" alt="Satellite view" />
         <div class="sat-overlay">SAT VIEW</div>
       </div>`;
+    const satImg = card.querySelector('.sat-img');
+    satImg.addEventListener('load', () => {
+      const el = document.getElementById('sat-loading');
+      if (el) el.style.display = 'none';
+    });
+    satImg.addEventListener('error', () => {
+      const el = document.getElementById('sat-loading');
+      if (el) el.textContent = t('satError');
+    });
   }
 }
 
@@ -360,10 +364,7 @@ function showAirportDetail(airport, ok) {
     visualHtml = `
       <div class="ap-detail-visual">
         <div class="ap-detail-loading" id="ap-det-loading"><div class="spinner"></div></div>
-        <img class="ap-detail-img" src="${esc(imgUrl)}" alt="${esc(name)}"
-          onload="document.getElementById('ap-det-loading').style.display='none'"
-          onerror="this.style.display='none';document.getElementById('ap-det-loading').innerHTML='<span>${esc(t('satError'))}</span>'"
-        />
+        <img class="ap-detail-img" src="${esc(imgUrl)}" alt="${esc(name)}" />
         <div class="ap-detail-sat-tag">SAT VIEW</div>
       </div>`;
   } else {
@@ -466,6 +467,21 @@ function showAirportDetail(airport, ok) {
       </div>
     </div>`;
   panel.hidden = false;
+
+  if (hasMapbox) {
+    const detImg = panel.querySelector('.ap-detail-img');
+    if (detImg) {
+      detImg.addEventListener('load', () => {
+        const loading = document.getElementById('ap-det-loading');
+        if (loading) loading.style.display = 'none';
+      });
+      detImg.addEventListener('error', () => {
+        const loading = document.getElementById('ap-det-loading');
+        if (loading) loading.textContent = t('satError');
+        detImg.style.display = 'none';
+      });
+    }
+  }
 
   const btnCheck = document.getElementById('btn-check');
   btnCheck.textContent = isLast ? t('btnShowResults') : t('btnNextAirport');
@@ -583,7 +599,7 @@ function onInputChange() {
   }).slice(0, 8);
 
   list.innerHTML = matches.map(ap => `
-    <div class="ac-item" data-name="${esc(ap[1])}" onclick="selectAC(this.dataset.name)">
+    <div class="ac-item" data-name="${esc(ap[1])}">
       <span class="ac-name">${esc(ap[1])}</span>
       <span class="ac-country">${esc(ap[2])}, ${esc(ap[3])}</span>
     </div>`).join('');
@@ -685,7 +701,7 @@ function cancelRound() {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('click', e => {
-  if (!e.target.closest('.answer-input-wrap')) {
+  if (!e.target.closest('.answer-input-wrap') && !e.target.closest('#autocomplete-list')) {
     document.getElementById('autocomplete-list').innerHTML = '';
   }
 });
