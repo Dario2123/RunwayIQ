@@ -207,4 +207,360 @@ const AIRPORTS = [
   { iata:"SDF", name:"Louisville Muhammad Ali International", city:"Louisville", country:"USA", continent:"north_america", lat:38.1744, lon:-85.7360, size:"small", difficulty:4, tags:["hub","international","cargo"] },
   { iata:"DAY", name:"Dayton International", city:"Dayton", country:"USA", continent:"north_america", lat:39.9024, lon:-84.2194, size:"small", difficulty:5, tags:["hub","domestic","military-history"] },
   { iata:"GEG", name:"Spokane International", city:"Spokane", country:"USA", continent:"north_america", lat:47.6199, lon:-117.5338, size:"small", difficulty:5, tags:["hub","domestic"] },
+
+  // ── EUROPE EXPANSION ─────────────────────────────────────────────────────
+
+  // UK
+  { iata:"STN", name:"London Stansted Airport", city:"London", country:"UK", continent:"europe", lat:51.8850, lon:0.2350, size:"medium", difficulty:2, tags:["hub","international","low-cost","cargo","military-history"] },
+  { iata:"LTN", name:"London Luton Airport", city:"London", country:"UK", continent:"europe", lat:51.8747, lon:-0.3683, size:"small", difficulty:3, tags:["international","low-cost"] },
+  { iata:"BHX", name:"Birmingham Airport", city:"Birmingham", country:"UK", continent:"europe", lat:52.4539, lon:-1.7480, size:"medium", difficulty:3, tags:["hub","international"] },
+  { iata:"EDI", name:"Edinburgh Airport", city:"Edinburgh", country:"UK", continent:"europe", lat:55.9500, lon:-3.3725, size:"medium", difficulty:3, tags:["hub","international","capital"] },
+  { iata:"GLA", name:"Glasgow Airport", city:"Glasgow", country:"UK", continent:"europe", lat:55.8642, lon:-4.4331, size:"medium", difficulty:3, tags:["hub","international"] },
+  { iata:"BRS", name:"Bristol Airport", city:"Bristol", country:"UK", continent:"europe", lat:51.3827, lon:-2.7191, size:"small", difficulty:4, tags:["international","low-cost"] },
+  { iata:"NCL", name:"Newcastle Airport", city:"Newcastle", country:"UK", continent:"europe", lat:54.8636, lon:-1.7074, size:"small", difficulty:4, tags:["international"] },
+  { iata:"BFS", name:"Belfast International Airport", city:"Belfast", country:"UK", continent:"europe", lat:54.6575, lon:-6.2158, size:"small", difficulty:4, tags:["hub","international","military-history"] },
+  { iata:"ABZ", name:"Aberdeen Airport", city:"Aberdeen", country:"UK", continent:"europe", lat:57.2019, lon:-2.1978, size:"small", difficulty:4, tags:["hub","international"] },
+  { iata:"EMA", name:"East Midlands Airport", city:"Castle Donington", country:"UK", continent:"europe", lat:52.8311, lon:-1.3281, size:"small", difficulty:4, tags:["international","cargo"] },
+  { iata:"LBA", name:"Leeds Bradford Airport", city:"Leeds", country:"UK", continent:"europe", lat:53.8659, lon:-1.6602, size:"small", difficulty:4, tags:["international"] },
+
+  // Germany
+  { iata:"STR", name:"Stuttgart Airport", city:"Stuttgart", country:"Germany", continent:"europe", lat:48.6899, lon:9.2220, size:"medium", difficulty:3, tags:["hub","international"] },
+  { iata:"NUE", name:"Nuremberg Airport", city:"Nuremberg", country:"Germany", continent:"europe", lat:49.4987, lon:11.0669, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"HAJ", name:"Hannover Airport", city:"Hannover", country:"Germany", continent:"europe", lat:52.4611, lon:9.6850, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"LEJ", name:"Leipzig/Halle Airport", city:"Leipzig", country:"Germany", continent:"europe", lat:51.4324, lon:12.2416, size:"medium", difficulty:4, tags:["hub","international","cargo","low-cost"] },
+  { iata:"FMO", name:"Münster Osnabrück Airport", city:"Münster", country:"Germany", continent:"europe", lat:52.1346, lon:7.6848, size:"small", difficulty:5, tags:["international"] },
+  { iata:"BRE", name:"Bremen Airport", city:"Bremen", country:"Germany", continent:"europe", lat:53.0475, lon:8.7867, size:"small", difficulty:4, tags:["hub","international"] },
+
+  // France
+  { iata:"TLS", name:"Toulouse-Blagnac Airport", city:"Toulouse", country:"France", continent:"europe", lat:43.6293, lon:1.3638, size:"medium", difficulty:3, tags:["hub","international"] },
+  { iata:"BOD", name:"Bordeaux-Mérignac Airport", city:"Bordeaux", country:"France", continent:"europe", lat:44.8283, lon:-0.7156, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"NTE", name:"Nantes Atlantique Airport", city:"Nantes", country:"France", continent:"europe", lat:47.1532, lon:-1.6111, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"LIL", name:"Lille-Lesquin Airport", city:"Lille", country:"France", continent:"europe", lat:50.5619, lon:3.0894, size:"small", difficulty:4, tags:["international"] },
+  { iata:"SXB", name:"Strasbourg Airport", city:"Strasbourg", country:"France", continent:"europe", lat:48.5383, lon:7.6283, size:"small", difficulty:4, tags:["international"] },
+  { iata:"MPL", name:"Montpellier Mediterranean Airport", city:"Montpellier", country:"France", continent:"europe", lat:43.5762, lon:3.9630, size:"small", difficulty:4, tags:["international","coastal"] },
+
+  // Spain
+  { iata:"AGP", name:"Málaga Airport", city:"Málaga", country:"Spain", continent:"europe", lat:36.6749, lon:-4.4991, size:"large", difficulty:2, tags:["hub","international","holiday","coastal"] },
+  { iata:"PMI", name:"Palma de Mallorca Airport", city:"Palma", country:"Spain", continent:"europe", lat:39.5517, lon:2.7388, size:"large", difficulty:2, tags:["hub","international","holiday","island","featured"] },
+  { iata:"VLC", name:"Valencia Airport", city:"Valencia", country:"Spain", continent:"europe", lat:39.4893, lon:-0.4816, size:"medium", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"SVQ", name:"Seville Airport", city:"Seville", country:"Spain", continent:"europe", lat:37.4180, lon:-5.8931, size:"medium", difficulty:3, tags:["hub","international"] },
+  { iata:"BIO", name:"Bilbao Airport", city:"Bilbao", country:"Spain", continent:"europe", lat:43.3011, lon:-2.9106, size:"medium", difficulty:4, tags:["hub","international","featured"] },
+  { iata:"ALC", name:"Alicante-Elche Airport", city:"Alicante", country:"Spain", continent:"europe", lat:38.2822, lon:-0.5582, size:"medium", difficulty:3, tags:["hub","international","holiday","coastal"] },
+  { iata:"TFN", name:"Tenerife Norte Airport", city:"Tenerife", country:"Spain", continent:"europe", lat:28.4827, lon:-16.3414, size:"small", difficulty:4, tags:["hub","international","island"] },
+  { iata:"TFS", name:"Tenerife Sur Airport", city:"Tenerife", country:"Spain", continent:"europe", lat:28.0445, lon:-16.5725, size:"medium", difficulty:3, tags:["hub","international","holiday","island","featured"] },
+  { iata:"LPA", name:"Gran Canaria Airport", city:"Las Palmas", country:"Spain", continent:"europe", lat:27.9319, lon:-15.3866, size:"medium", difficulty:3, tags:["hub","international","holiday","island"] },
+  { iata:"ACE", name:"Lanzarote Airport", city:"Arrecife", country:"Spain", continent:"europe", lat:28.9455, lon:-13.6052, size:"small", difficulty:4, tags:["international","holiday","island"] },
+  { iata:"FUE", name:"Fuerteventura Airport", city:"Puerto del Rosario", country:"Spain", continent:"europe", lat:28.4497, lon:-13.8638, size:"small", difficulty:4, tags:["international","holiday","island","coastal"] },
+  { iata:"IBZ", name:"Ibiza Airport", city:"Ibiza", country:"Spain", continent:"europe", lat:38.8729, lon:1.3731, size:"small", difficulty:3, tags:["international","holiday","island","featured"] },
+  { iata:"SDR", name:"Santander Airport", city:"Santander", country:"Spain", continent:"europe", lat:43.4271, lon:-3.8200, size:"small", difficulty:5, tags:["international","coastal"] },
+
+  // Italy
+  { iata:"VCE", name:"Venice Marco Polo Airport", city:"Venice", country:"Italy", continent:"europe", lat:45.5053, lon:12.3519, size:"medium", difficulty:2, tags:["hub","international","featured","coastal"] },
+  { iata:"NAP", name:"Naples International Airport", city:"Naples", country:"Italy", continent:"europe", lat:40.8860, lon:14.2908, size:"medium", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"CTA", name:"Catania-Fontanarossa Airport", city:"Catania", country:"Italy", continent:"europe", lat:37.4668, lon:15.0664, size:"medium", difficulty:3, tags:["hub","international","island","coastal"] },
+  { iata:"PMO", name:"Falcone-Borsellino Airport", city:"Palermo", country:"Italy", continent:"europe", lat:38.1759, lon:13.0910, size:"medium", difficulty:4, tags:["hub","international","island","coastal"] },
+  { iata:"BLQ", name:"Bologna Guglielmo Marconi Airport", city:"Bologna", country:"Italy", continent:"europe", lat:44.5354, lon:11.2887, size:"medium", difficulty:3, tags:["hub","international","featured"] },
+  { iata:"BGY", name:"Milan Bergamo Airport", city:"Bergamo", country:"Italy", continent:"europe", lat:45.6739, lon:9.7042, size:"medium", difficulty:3, tags:["international","low-cost","cargo"] },
+  { iata:"CIA", name:"Rome Ciampino Airport", city:"Rome", country:"Italy", continent:"europe", lat:41.7994, lon:12.5949, size:"small", difficulty:4, tags:["international","low-cost","capital"] },
+  { iata:"PSA", name:"Pisa Galileo Galilei Airport", city:"Pisa", country:"Italy", continent:"europe", lat:43.6839, lon:10.3927, size:"small", difficulty:4, tags:["international","low-cost"] },
+  { iata:"BRI", name:"Bari Karol Wojtyla Airport", city:"Bari", country:"Italy", continent:"europe", lat:41.1389, lon:16.7606, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"TRN", name:"Turin Airport", city:"Turin", country:"Italy", continent:"europe", lat:45.2008, lon:7.6497, size:"medium", difficulty:4, tags:["hub","international"] },
+
+  // Greece
+  { iata:"SKG", name:"Thessaloniki Macedonia Airport", city:"Thessaloniki", country:"Greece", continent:"europe", lat:40.5197, lon:22.9709, size:"medium", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"HER", name:"Heraklion International Airport", city:"Heraklion", country:"Greece", continent:"europe", lat:35.3397, lon:25.1803, size:"medium", difficulty:3, tags:["hub","international","holiday","island","coastal","featured"] },
+  { iata:"RHO", name:"Rhodes Diagoras Airport", city:"Rhodes", country:"Greece", continent:"europe", lat:36.4054, lon:28.0862, size:"medium", difficulty:3, tags:["hub","international","holiday","island","coastal"] },
+  { iata:"CFU", name:"Corfu Airport", city:"Corfu", country:"Greece", continent:"europe", lat:39.6019, lon:19.9117, size:"small", difficulty:4, tags:["international","holiday","island","coastal"] },
+  { iata:"CHQ", name:"Chania International Airport", city:"Chania", country:"Greece", continent:"europe", lat:35.5317, lon:24.1497, size:"small", difficulty:4, tags:["international","holiday","island"] },
+
+  // Portugal
+  { iata:"OPO", name:"Francisco Sá Carneiro Airport", city:"Porto", country:"Portugal", continent:"europe", lat:41.2481, lon:-8.6814, size:"medium", difficulty:2, tags:["hub","international","coastal","featured"] },
+  { iata:"FAO", name:"Faro Airport", city:"Faro", country:"Portugal", continent:"europe", lat:37.0144, lon:-7.9659, size:"medium", difficulty:3, tags:["hub","international","holiday","coastal"] },
+
+  // Ireland
+  { iata:"ORK", name:"Cork Airport", city:"Cork", country:"Ireland", continent:"europe", lat:51.8413, lon:-8.4911, size:"small", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"SNN", name:"Shannon Airport", city:"Shannon", country:"Ireland", continent:"europe", lat:52.7020, lon:-8.9248, size:"small", difficulty:4, tags:["hub","international","featured"] },
+
+  // Netherlands
+  { iata:"EIN", name:"Eindhoven Airport", city:"Eindhoven", country:"Netherlands", continent:"europe", lat:51.4501, lon:5.3746, size:"small", difficulty:4, tags:["international","low-cost","military-history"] },
+
+  // Belgium
+  { iata:"CRL", name:"Brussels South Charleroi Airport", city:"Charleroi", country:"Belgium", continent:"europe", lat:50.4592, lon:4.4538, size:"small", difficulty:4, tags:["international","low-cost"] },
+
+  // Austria
+  { iata:"INN", name:"Innsbruck Airport", city:"Innsbruck", country:"Austria", continent:"europe", lat:47.2602, lon:11.3440, size:"small", difficulty:4, tags:["international","mountain","difficult-approach","featured"] },
+  { iata:"SZG", name:"Salzburg Airport", city:"Salzburg", country:"Austria", continent:"europe", lat:47.7933, lon:13.0043, size:"small", difficulty:4, tags:["international","holiday"] },
+
+  // Switzerland
+  { iata:"BSL", name:"EuroAirport Basel-Mulhouse-Freiburg", city:"Basel", country:"Switzerland", continent:"europe", lat:47.5896, lon:7.5290, size:"medium", difficulty:4, tags:["hub","international"] },
+
+  // Scandinavia
+  { iata:"GOT", name:"Gothenburg Landvetter Airport", city:"Gothenburg", country:"Sweden", continent:"europe", lat:57.6628, lon:12.2798, size:"medium", difficulty:3, tags:["hub","international","featured"] },
+  { iata:"MMX", name:"Malmö Airport", city:"Malmö", country:"Sweden", continent:"europe", lat:55.5363, lon:13.3762, size:"small", difficulty:5, tags:["international"] },
+  { iata:"BGO", name:"Bergen Airport Flesland", city:"Bergen", country:"Norway", continent:"europe", lat:60.2934, lon:5.2181, size:"medium", difficulty:4, tags:["hub","international","coastal","featured"] },
+  { iata:"TRD", name:"Trondheim Vaernes Airport", city:"Trondheim", country:"Norway", continent:"europe", lat:63.4578, lon:10.9259, size:"small", difficulty:4, tags:["hub","international"] },
+  { iata:"SVG", name:"Stavanger Airport Sola", city:"Stavanger", country:"Norway", continent:"europe", lat:58.8767, lon:5.6378, size:"small", difficulty:4, tags:["hub","international","coastal","military-history"] },
+  { iata:"TOS", name:"Tromsø Airport", city:"Tromsø", country:"Norway", continent:"europe", lat:69.6833, lon:18.9189, size:"small", difficulty:4, tags:["hub","international","featured","remote"] },
+  { iata:"BLL", name:"Billund Airport", city:"Billund", country:"Denmark", continent:"europe", lat:55.7403, lon:9.1519, size:"small", difficulty:4, tags:["hub","international","featured"] },
+  { iata:"AAL", name:"Aalborg Airport", city:"Aalborg", country:"Denmark", continent:"europe", lat:57.0927, lon:9.8492, size:"small", difficulty:5, tags:["hub","international"] },
+  { iata:"TRF", name:"Sandefjord Torp Airport", city:"Sandefjord", country:"Norway", continent:"europe", lat:59.1868, lon:10.2586, size:"small", difficulty:5, tags:["international","low-cost"] },
+
+  // Eastern Europe
+  { iata:"BEG", name:"Belgrade Nikola Tesla Airport", city:"Belgrade", country:"Serbia", continent:"europe", lat:44.8184, lon:20.3091, size:"medium", difficulty:3, tags:["hub","international","capital"] },
+  { iata:"ZAG", name:"Zagreb Franjo Tuđman Airport", city:"Zagreb", country:"Croatia", continent:"europe", lat:45.7429, lon:16.0688, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"DBV", name:"Dubrovnik Airport", city:"Dubrovnik", country:"Croatia", continent:"europe", lat:42.5614, lon:18.2682, size:"small", difficulty:3, tags:["international","holiday","coastal","featured"] },
+  { iata:"SPU", name:"Split Airport", city:"Split", country:"Croatia", continent:"europe", lat:43.5390, lon:16.2980, size:"small", difficulty:4, tags:["international","holiday","coastal"] },
+  { iata:"TIA", name:"Tirana Nënë Tereza International Airport", city:"Tirana", country:"Albania", continent:"europe", lat:41.4147, lon:19.7206, size:"small", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"SKP", name:"Skopje Alexander the Great Airport", city:"Skopje", country:"North Macedonia", continent:"europe", lat:41.9614, lon:21.6214, size:"small", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"BTS", name:"Bratislava Airport", city:"Bratislava", country:"Slovakia", continent:"europe", lat:48.1702, lon:17.2127, size:"small", difficulty:4, tags:["hub","international","capital","featured"] },
+  { iata:"KIV", name:"Chișinău International Airport", city:"Chisinau", country:"Moldova", continent:"europe", lat:46.9278, lon:28.9309, size:"small", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"MSQ", name:"Minsk National Airport", city:"Minsk", country:"Belarus", continent:"europe", lat:53.8825, lon:28.0325, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"WRO", name:"Wrocław Airport", city:"Wrocław", country:"Poland", continent:"europe", lat:51.1027, lon:16.8858, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"KTW", name:"Katowice International Airport", city:"Katowice", country:"Poland", continent:"europe", lat:50.4743, lon:19.0800, size:"medium", difficulty:4, tags:["hub","international","low-cost"] },
+  { iata:"GDN", name:"Gdańsk Lech Wałęsa Airport", city:"Gdańsk", country:"Poland", continent:"europe", lat:54.3776, lon:18.4662, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"POZ", name:"Poznań-Ławica Airport", city:"Poznań", country:"Poland", continent:"europe", lat:52.4210, lon:16.8263, size:"small", difficulty:4, tags:["hub","international"] },
+  { iata:"CLJ", name:"Cluj-Napoca International Airport", city:"Cluj-Napoca", country:"Romania", continent:"europe", lat:46.7852, lon:23.6862, size:"small", difficulty:5, tags:["hub","international"] },
+  { iata:"TSR", name:"Timișoara Traian Vuia Airport", city:"Timișoara", country:"Romania", continent:"europe", lat:45.8099, lon:21.3378, size:"small", difficulty:5, tags:["hub","international"] },
+  { iata:"BOJ", name:"Burgas Airport", city:"Burgas", country:"Bulgaria", continent:"europe", lat:42.5696, lon:27.5150, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"VAR", name:"Varna Airport", city:"Varna", country:"Bulgaria", continent:"europe", lat:43.2322, lon:27.8251, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"PRN", name:"Pristina Adem Jashari International Airport", city:"Pristina", country:"Kosovo", continent:"europe", lat:42.5728, lon:21.0358, size:"small", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"TGD", name:"Podgorica Airport", city:"Podgorica", country:"Montenegro", continent:"europe", lat:42.3597, lon:19.2519, size:"small", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"SJJ", name:"Sarajevo International Airport", city:"Sarajevo", country:"Bosnia & Herzegovina", continent:"europe", lat:43.8246, lon:18.3315, size:"small", difficulty:5, tags:["hub","international","capital"] },
+
+  // Russia (additional)
+  { iata:"VKO", name:"Moscow Vnukovo International Airport", city:"Moscow", country:"Russia", continent:"europe", lat:55.5915, lon:37.2815, size:"large", difficulty:2, tags:["hub","international","capital"] },
+  { iata:"SVX", name:"Koltsovo Airport", city:"Ekaterinburg", country:"Russia", continent:"europe", lat:56.8431, lon:60.8028, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"OVB", name:"Tolmachevo Airport", city:"Novosibirsk", country:"Russia", continent:"europe", lat:54.9703, lon:82.6508, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"VVO", name:"Vladivostok International Airport", city:"Vladivostok", country:"Russia", continent:"europe", lat:43.3990, lon:132.1480, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"KJA", name:"Krasnoyarsk Airport", city:"Krasnoyarsk", country:"Russia", continent:"europe", lat:56.1730, lon:92.4934, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"UFA", name:"Ufa International Airport", city:"Ufa", country:"Russia", continent:"europe", lat:54.5572, lon:55.8744, size:"medium", difficulty:5, tags:["hub","international"] },
+
+  // Turkey
+  { iata:"ADB", name:"Izmir Adnan Menderes Airport", city:"Izmir", country:"Turkey", continent:"europe", lat:38.2924, lon:27.1570, size:"large", difficulty:2, tags:["hub","international","coastal"] },
+  { iata:"AYT", name:"Antalya Airport", city:"Antalya", country:"Turkey", continent:"europe", lat:36.8987, lon:30.8005, size:"large", difficulty:2, tags:["hub","international","holiday","coastal","featured"] },
+  { iata:"ESB", name:"Ankara Esenboğa Airport", city:"Ankara", country:"Turkey", continent:"europe", lat:40.1281, lon:32.9951, size:"medium", difficulty:3, tags:["hub","international","capital"] },
+  { iata:"SAW", name:"Istanbul Sabiha Gökçen Airport", city:"Istanbul", country:"Turkey", continent:"europe", lat:40.8985, lon:29.3092, size:"large", difficulty:2, tags:["hub","international","low-cost"] },
+  { iata:"DLM", name:"Dalaman Airport", city:"Dalaman", country:"Turkey", continent:"europe", lat:36.7133, lon:28.7925, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"BJV", name:"Bodrum Milas Airport", city:"Bodrum", country:"Turkey", continent:"europe", lat:37.2506, lon:27.6643, size:"small", difficulty:4, tags:["international","holiday","coastal"] },
+
+  // Caucasus
+  { iata:"TBS", name:"Tbilisi International Airport", city:"Tbilisi", country:"Georgia", continent:"europe", lat:41.6693, lon:44.9547, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"EVN", name:"Zvartnots International Airport", city:"Yerevan", country:"Armenia", continent:"europe", lat:40.1473, lon:44.3959, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"GYD", name:"Heydar Aliyev International Airport", city:"Baku", country:"Azerbaijan", continent:"europe", lat:40.4675, lon:50.0467, size:"medium", difficulty:3, tags:["hub","international","capital","featured","cargo"] },
+
+  // Kazakhstan
+  { iata:"ALA", name:"Almaty International Airport", city:"Almaty", country:"Kazakhstan", continent:"asia", lat:43.3521, lon:77.0405, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"NQZ", name:"Nursultan Nazarbayev International Airport", city:"Nur-Sultan", country:"Kazakhstan", continent:"asia", lat:51.0222, lon:71.4669, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+
+  // Other Europe
+  { iata:"KEF", name:"Keflavík International Airport", city:"Reykjavík", country:"Iceland", continent:"europe", lat:63.9850, lon:-22.6056, size:"medium", difficulty:3, tags:["hub","international","capital","featured","remote","military-history"] },
+  { iata:"MLA", name:"Malta International Airport", city:"Valletta", country:"Malta", continent:"europe", lat:35.8574, lon:14.4775, size:"medium", difficulty:3, tags:["hub","international","capital","island","coastal","holiday"] },
+  { iata:"LCA", name:"Larnaca International Airport", city:"Larnaca", country:"Cyprus", continent:"europe", lat:34.8751, lon:33.6249, size:"medium", difficulty:3, tags:["hub","international","holiday","coastal"] },
+  { iata:"PFO", name:"Paphos Airport", city:"Paphos", country:"Cyprus", continent:"europe", lat:34.7180, lon:32.4857, size:"small", difficulty:4, tags:["international","holiday","coastal"] },
+  { iata:"LUX", name:"Luxembourg Airport", city:"Luxembourg City", country:"Luxembourg", continent:"europe", lat:49.6233, lon:6.2044, size:"small", difficulty:4, tags:["hub","international","capital","cargo"] },
+
+  // ── ASIA EXPANSION ────────────────────────────────────────────────────────────
+
+  // China (additional)
+  { iata:"SZX", name:"Shenzhen Bao'an International", city:"Shenzhen", country:"China", continent:"asia", lat:22.6393, lon:113.8107, size:"large", difficulty:2, tags:["hub","international","cargo","coastal"] },
+  { iata:"CKG", name:"Chongqing Jiangbei International", city:"Chongqing", country:"China", continent:"asia", lat:29.7192, lon:106.6417, size:"large", difficulty:3, tags:["hub","international","cargo"] },
+  { iata:"XIY", name:"Xi'an Xianyang International", city:"Xi'an", country:"China", continent:"asia", lat:34.4471, lon:108.7516, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"HAK", name:"Haikou Meilan International", city:"Haikou", country:"China", continent:"asia", lat:19.9349, lon:110.4589, size:"medium", difficulty:4, tags:["hub","international","island","coastal"] },
+  { iata:"SYX", name:"Sanya Phoenix International", city:"Sanya", country:"China", continent:"asia", lat:18.3029, lon:109.4122, size:"medium", difficulty:4, tags:["hub","international","island","coastal","holiday"] },
+  { iata:"TAO", name:"Qingdao Jiaodong International", city:"Qingdao", country:"China", continent:"asia", lat:36.3621, lon:120.0816, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"NKG", name:"Nanjing Lukou International", city:"Nanjing", country:"China", continent:"asia", lat:31.7420, lon:118.8620, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"HRB", name:"Harbin Taiping International", city:"Harbin", country:"China", continent:"asia", lat:45.6234, lon:126.2503, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"SHE", name:"Shenyang Taoxian International", city:"Shenyang", country:"China", continent:"asia", lat:41.6398, lon:123.4836, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"URC", name:"Ürümqi Diwopu International", city:"Ürümqi", country:"China", continent:"asia", lat:43.9071, lon:87.4742, size:"medium", difficulty:4, tags:["hub","international","remote"] },
+  { iata:"XMN", name:"Xiamen Gaoqi International", city:"Xiamen", country:"China", continent:"asia", lat:24.5440, lon:118.1277, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"CSX", name:"Changsha Huanghua International", city:"Changsha", country:"China", continent:"asia", lat:28.1892, lon:113.2196, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"WUH", name:"Wuhan Tianhe International", city:"Wuhan", country:"China", continent:"asia", lat:30.7838, lon:114.2081, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"NNG", name:"Nanning Wuxu International", city:"Nanning", country:"China", continent:"asia", lat:22.6083, lon:108.1723, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"ZUH", name:"Zhuhai Jinwan Airport", city:"Zhuhai", country:"China", continent:"asia", lat:22.0064, lon:113.3760, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"HET", name:"Hohhot Baita International", city:"Hohhot", country:"China", continent:"asia", lat:40.8514, lon:111.8240, size:"medium", difficulty:5, tags:["hub","international"] },
+  { iata:"LHW", name:"Lanzhou Zhongchuan International", city:"Lanzhou", country:"China", continent:"asia", lat:36.5153, lon:103.6203, size:"medium", difficulty:5, tags:["hub","international"] },
+  { iata:"SWA", name:"Jieyang Chaoshan International", city:"Shantou", country:"China", continent:"asia", lat:23.5520, lon:116.5033, size:"medium", difficulty:5, tags:["hub","international","coastal"] },
+
+  // Japan (additional)
+  { iata:"NGO", name:"Chubu Centrair International", city:"Nagoya", country:"Japan", continent:"asia", lat:34.8584, lon:136.8054, size:"large", difficulty:3, tags:["hub","international","coastal","featured","artificial-island"] },
+  { iata:"OKA", name:"Naha Airport", city:"Okinawa", country:"Japan", continent:"asia", lat:26.1958, lon:127.6464, size:"medium", difficulty:3, tags:["hub","international","island","coastal"] },
+  { iata:"CTS", name:"New Chitose Airport", city:"Sapporo", country:"Japan", continent:"asia", lat:42.7752, lon:141.6922, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"FUK", name:"Fukuoka Airport", city:"Fukuoka", country:"Japan", continent:"asia", lat:33.5859, lon:130.4508, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"HIJ", name:"Hiroshima Airport", city:"Hiroshima", country:"Japan", continent:"asia", lat:34.4361, lon:132.9194, size:"medium", difficulty:4, tags:["hub","international","military-history"] },
+  { iata:"SDJ", name:"Sendai Airport", city:"Sendai", country:"Japan", continent:"asia", lat:38.1397, lon:140.9170, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+
+  // South Korea (additional)
+  { iata:"PUS", name:"Gimhae International Airport", city:"Busan", country:"South Korea", continent:"asia", lat:35.1795, lon:128.9382, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"CJU", name:"Jeju International Airport", city:"Jeju", country:"South Korea", continent:"asia", lat:33.5113, lon:126.4930, size:"medium", difficulty:3, tags:["hub","international","island","coastal"] },
+  { iata:"TAE", name:"Daegu International Airport", city:"Daegu", country:"South Korea", continent:"asia", lat:35.8947, lon:128.6589, size:"medium", difficulty:4, tags:["hub","international","military-history"] },
+
+  // Southeast Asia
+  { iata:"HKT", name:"Phuket International Airport", city:"Phuket", country:"Thailand", continent:"asia", lat:8.1132, lon:98.3169, size:"large", difficulty:2, tags:["hub","international","holiday","island","coastal","featured"] },
+  { iata:"CNX", name:"Chiang Mai International", city:"Chiang Mai", country:"Thailand", continent:"asia", lat:18.7668, lon:98.9627, size:"medium", difficulty:3, tags:["hub","international"] },
+  { iata:"USM", name:"Samui Airport", city:"Ko Samui", country:"Thailand", continent:"asia", lat:9.5478, lon:100.0629, size:"small", difficulty:4, tags:["international","holiday","island","coastal"] },
+  { iata:"UPG", name:"Sultan Hasanuddin International", city:"Makassar", country:"Indonesia", continent:"asia", lat:-5.0616, lon:119.5540, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"PNH", name:"Phnom Penh International", city:"Phnom Penh", country:"Cambodia", continent:"asia", lat:11.5466, lon:104.8441, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"REP", name:"Siem Reap International", city:"Siem Reap", country:"Cambodia", continent:"asia", lat:13.4107, lon:103.8129, size:"small", difficulty:4, tags:["international","holiday"] },
+  { iata:"VTE", name:"Wattay International Airport", city:"Vientiane", country:"Laos", continent:"asia", lat:17.9883, lon:102.5633, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+
+  // India (additional)
+  { iata:"TRV", name:"Trivandrum International Airport", city:"Thiruvananthapuram", country:"India", continent:"asia", lat:8.4821, lon:76.9201, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"JAI", name:"Jaipur International Airport", city:"Jaipur", country:"India", continent:"asia", lat:26.8242, lon:75.8122, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"GAU", name:"Lokpriya Gopinath Bordoloi International", city:"Guwahati", country:"India", continent:"asia", lat:26.1061, lon:91.5859, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"IXC", name:"Chandigarh International Airport", city:"Chandigarh", country:"India", continent:"asia", lat:30.6735, lon:76.7885, size:"small", difficulty:4, tags:["international","military-history"] },
+  { iata:"BBI", name:"Biju Patnaik International", city:"Bhubaneswar", country:"India", continent:"asia", lat:20.2444, lon:85.8178, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"NAG", name:"Dr. Babasaheb Ambedkar International", city:"Nagpur", country:"India", continent:"asia", lat:21.0922, lon:79.0472, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"VNS", name:"Lal Bahadur Shastri International", city:"Varanasi", country:"India", continent:"asia", lat:25.4524, lon:82.8593, size:"small", difficulty:4, tags:["international"] },
+  { iata:"IXB", name:"Bagdogra Airport", city:"Siliguri", country:"India", continent:"asia", lat:26.6812, lon:88.3286, size:"small", difficulty:5, tags:["international","mountain"] },
+  { iata:"TRZ", name:"Tiruchirappalli International", city:"Tiruchirappalli", country:"India", continent:"asia", lat:10.7654, lon:78.7097, size:"small", difficulty:5, tags:["international"] },
+  { iata:"CJB", name:"Coimbatore International Airport", city:"Coimbatore", country:"India", continent:"asia", lat:11.0300, lon:77.0434, size:"small", difficulty:5, tags:["international"] },
+  { iata:"IXM", name:"Madurai Airport", city:"Madurai", country:"India", continent:"asia", lat:9.8345, lon:78.0934, size:"small", difficulty:5, tags:["international"] },
+
+  // Pakistan
+  { iata:"KHI", name:"Karachi Jinnah International", city:"Karachi", country:"Pakistan", continent:"asia", lat:24.9065, lon:67.1608, size:"large", difficulty:3, tags:["hub","international","cargo","coastal"] },
+  { iata:"LHE", name:"Allama Iqbal International", city:"Lahore", country:"Pakistan", continent:"asia", lat:31.5216, lon:74.4036, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"ISB", name:"Islamabad International Airport", city:"Islamabad", country:"Pakistan", continent:"asia", lat:33.5491, lon:72.8558, size:"large", difficulty:3, tags:["hub","international","capital"] },
+
+  // Central Asia
+  { iata:"TAS", name:"Islam Karimov Tashkent International", city:"Tashkent", country:"Uzbekistan", continent:"asia", lat:41.2579, lon:69.2812, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"FRU", name:"Manas International Airport", city:"Bishkek", country:"Kyrgyzstan", continent:"asia", lat:43.0613, lon:74.4777, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"ASB", name:"Ashgabat International Airport", city:"Ashgabat", country:"Turkmenistan", continent:"asia", lat:37.9868, lon:58.3610, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"DYU", name:"Dushanbe International Airport", city:"Dushanbe", country:"Tajikistan", continent:"asia", lat:38.5433, lon:68.8250, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+
+  // Middle East / Other Asia
+  { iata:"KBL", name:"Hamid Karzai International", city:"Kabul", country:"Afghanistan", continent:"asia", lat:34.5659, lon:69.2123, size:"medium", difficulty:5, tags:["hub","international","capital","difficult-approach","mountain"] },
+  { iata:"IKA", name:"Imam Khomeini International", city:"Tehran", country:"Iran", continent:"asia", lat:35.4161, lon:51.1522, size:"large", difficulty:3, tags:["hub","international","capital","cargo"] },
+  { iata:"MHD", name:"Mashhad International Airport", city:"Mashhad", country:"Iran", continent:"asia", lat:36.2352, lon:59.6410, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"SXR", name:"Sheikh ul-Alam International", city:"Srinagar", country:"India", continent:"asia", lat:34.0054, lon:74.7742, size:"small", difficulty:5, tags:["international","mountain","difficult-approach"] },
+
+  // ── NORTH AMERICA EXPANSION ────────────────────────────────────────────────
+
+  // Canada (additional)
+  { iata:"YOW", name:"Ottawa Macdonald-Cartier International", city:"Ottawa", country:"Canada", continent:"north_america", lat:45.3225, lon:-75.6692, size:"medium", difficulty:3, tags:["hub","international","capital"] },
+  { iata:"YHZ", name:"Halifax Stanfield International", city:"Halifax", country:"Canada", continent:"north_america", lat:44.8808, lon:-63.5086, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"YWG", name:"Winnipeg James Armstrong Richardson International", city:"Winnipeg", country:"Canada", continent:"north_america", lat:49.9100, lon:-97.2398, size:"medium", difficulty:4, tags:["hub","international"] },
+
+  // Mexico
+  { iata:"CUN", name:"Cancún International Airport", city:"Cancún", country:"Mexico", continent:"north_america", lat:21.0365, lon:-86.8771, size:"large", difficulty:2, tags:["hub","international","holiday","coastal","featured"] },
+  { iata:"SJD", name:"Los Cabos International Airport", city:"Los Cabos", country:"Mexico", continent:"north_america", lat:23.1518, lon:-109.7211, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"PVR", name:"Licenciado Gustavo Díaz Ordaz International", city:"Puerto Vallarta", country:"Mexico", continent:"north_america", lat:20.6801, lon:-105.2544, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"HMO", name:"General Ignacio Pesqueira García International", city:"Hermosillo", country:"Mexico", continent:"north_america", lat:29.0959, lon:-111.0479, size:"small", difficulty:5, tags:["hub","international"] },
+
+  // Caribbean
+  { iata:"SXM", name:"Princess Juliana International", city:"Sint Maarten", country:"Sint Maarten", continent:"north_america", lat:18.0410, lon:-63.1089, size:"medium", difficulty:3, tags:["hub","international","island","coastal","featured","difficult-approach"] },
+  { iata:"SDQ", name:"Las Américas International Airport", city:"Santo Domingo", country:"Dominican Republic", continent:"north_america", lat:18.4297, lon:-69.6689, size:"large", difficulty:3, tags:["hub","international","capital","coastal"] },
+  { iata:"PUJ", name:"Punta Cana International Airport", city:"Punta Cana", country:"Dominican Republic", continent:"north_america", lat:18.5674, lon:-68.3634, size:"large", difficulty:3, tags:["hub","international","holiday","coastal"] },
+  { iata:"GCM", name:"Owen Roberts International Airport", city:"George Town", country:"Cayman Islands", continent:"north_america", lat:19.2928, lon:-81.3577, size:"small", difficulty:4, tags:["international","island","coastal","holiday"] },
+  { iata:"BGI", name:"Grantley Adams International Airport", city:"Bridgetown", country:"Barbados", continent:"north_america", lat:13.0746, lon:-59.4925, size:"medium", difficulty:4, tags:["hub","international","island","coastal","capital"] },
+  { iata:"POS", name:"Piarco International Airport", city:"Port of Spain", country:"Trinidad and Tobago", continent:"north_america", lat:10.5954, lon:-61.3372, size:"medium", difficulty:4, tags:["hub","international","coastal","capital"] },
+  { iata:"CUR", name:"Hato International Airport", city:"Willemstad", country:"Curaçao", continent:"north_america", lat:12.1889, lon:-68.9598, size:"medium", difficulty:4, tags:["hub","international","island","coastal","capital"] },
+
+  // Central America
+  { iata:"TGU", name:"Toncontín International Airport", city:"Tegucigalpa", country:"Honduras", continent:"north_america", lat:14.0608, lon:-87.2172, size:"small", difficulty:5, tags:["hub","international","capital","difficult-approach","mountain","featured"] },
+  { iata:"SAP", name:"Ramón Villeda Morales International", city:"San Pedro Sula", country:"Honduras", continent:"north_america", lat:15.4526, lon:-87.9236, size:"medium", difficulty:5, tags:["hub","international"] },
+  { iata:"MGA", name:"Augusto C. Sandino International", city:"Managua", country:"Nicaragua", continent:"north_america", lat:12.1415, lon:-86.1682, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+
+  // ── SOUTH AMERICA EXPANSION ────────────────────────────────────────────────
+
+  // Brazil (additional)
+  { iata:"BEL", name:"Val de Cans International Airport", city:"Belém", country:"Brazil", continent:"south_america", lat:-1.3792, lon:-48.4763, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"MAO", name:"Eduardo Gomes International Airport", city:"Manaus", country:"Brazil", continent:"south_america", lat:-3.0386, lon:-60.0497, size:"medium", difficulty:3, tags:["hub","international","remote"] },
+  { iata:"POA", name:"Salgado Filho International Airport", city:"Porto Alegre", country:"Brazil", continent:"south_america", lat:-29.9944, lon:-51.1714, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"FLN", name:"Hercílio Luz International Airport", city:"Florianópolis", country:"Brazil", continent:"south_america", lat:-27.6703, lon:-48.5523, size:"medium", difficulty:4, tags:["hub","international","island","coastal"] },
+  { iata:"CWB", name:"Afonso Pena International Airport", city:"Curitiba", country:"Brazil", continent:"south_america", lat:-25.5285, lon:-49.1758, size:"large", difficulty:3, tags:["hub","international"] },
+  { iata:"NAT", name:"Governador Aluízio Alves International", city:"Natal", country:"Brazil", continent:"south_america", lat:-5.9114, lon:-35.2493, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"MCZ", name:"Zumbi dos Palmares International", city:"Maceió", country:"Brazil", continent:"south_america", lat:-9.5109, lon:-35.7917, size:"medium", difficulty:5, tags:["hub","international","coastal"] },
+
+  // Argentina (additional)
+  { iata:"MDZ", name:"Governor Francisco Gabrielli International", city:"Mendoza", country:"Argentina", continent:"south_america", lat:-32.8317, lon:-68.7929, size:"medium", difficulty:4, tags:["hub","international","mountain"] },
+  { iata:"COR", name:"Ingeniero Ambrosio Taravella International", city:"Córdoba", country:"Argentina", continent:"south_america", lat:-31.3236, lon:-64.2080, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"BRC", name:"San Carlos de Bariloche International", city:"Bariloche", country:"Argentina", continent:"south_america", lat:-41.1512, lon:-71.1575, size:"small", difficulty:4, tags:["hub","international","mountain","holiday"] },
+  { iata:"USH", name:"Malvinas Argentinas International", city:"Ushuaia", country:"Argentina", continent:"south_america", lat:-54.8433, lon:-68.2958, size:"small", difficulty:4, tags:["hub","international","remote","featured","difficult-approach"] },
+  { iata:"SLA", name:"Martín Miguel de Güemes International", city:"Salta", country:"Argentina", continent:"south_america", lat:-24.8560, lon:-65.4867, size:"small", difficulty:5, tags:["hub","international","mountain"] },
+  { iata:"NQN", name:"Presidente Perón International", city:"Neuquén", country:"Argentina", continent:"south_america", lat:-38.9490, lon:-68.1557, size:"small", difficulty:5, tags:["hub","international"] },
+
+  // Bolivia
+  { iata:"LPB", name:"El Alto International Airport", city:"La Paz", country:"Bolivia", continent:"south_america", lat:-16.5133, lon:-68.1922, size:"medium", difficulty:4, tags:["hub","international","capital","mountain","difficult-approach","featured"] },
+  { iata:"VVI", name:"Viru Viru International Airport", city:"Santa Cruz", country:"Bolivia", continent:"south_america", lat:-17.6448, lon:-63.1354, size:"medium", difficulty:4, tags:["hub","international"] },
+  { iata:"CBB", name:"Jorge Wilstermann International", city:"Cochabamba", country:"Bolivia", continent:"south_america", lat:-17.4211, lon:-66.1771, size:"small", difficulty:5, tags:["hub","international","mountain"] },
+
+  // Peru (additional)
+  { iata:"CUZ", name:"Alejandro Velasco Astete International", city:"Cusco", country:"Peru", continent:"south_america", lat:-13.5357, lon:-71.9388, size:"medium", difficulty:4, tags:["hub","international","mountain","difficult-approach","featured"] },
+  { iata:"AQP", name:"Rodríguez Ballón International Airport", city:"Arequipa", country:"Peru", continent:"south_america", lat:-16.3411, lon:-71.5830, size:"medium", difficulty:4, tags:["hub","international","mountain"] },
+
+  // Colombia (additional)
+  { iata:"CTG", name:"Rafael Núñez International Airport", city:"Cartagena", country:"Colombia", continent:"south_america", lat:10.4424, lon:-75.5130, size:"medium", difficulty:4, tags:["hub","international","coastal","holiday"] },
+
+  // Other South America
+  { iata:"ASU", name:"Silvio Pettirossi International Airport", city:"Asunción", country:"Paraguay", continent:"south_america", lat:-25.2400, lon:-57.5191, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"GPS", name:"Seymour Airport", city:"Baltra", country:"Ecuador", continent:"south_america", lat:-0.4538, lon:-90.2659, size:"small", difficulty:4, tags:["international","island","remote","featured"] },
+
+  // ── AFRICA EXPANSION ──────────────────────────────────────────────────────
+
+  // North Africa (additional)
+  { iata:"KRT", name:"Khartoum International Airport", city:"Khartoum", country:"Sudan", continent:"africa", lat:15.5895, lon:32.5532, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+
+  // Morocco (additional)
+  { iata:"RAK", name:"Marrakech Menara Airport", city:"Marrakech", country:"Morocco", continent:"africa", lat:31.6069, lon:-8.0363, size:"medium", difficulty:3, tags:["hub","international","holiday"] },
+  { iata:"AGA", name:"Al Massira Airport", city:"Agadir", country:"Morocco", continent:"africa", lat:30.3250, lon:-9.4130, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"FEZ", name:"Fès-Saïss Airport", city:"Fès", country:"Morocco", continent:"africa", lat:33.9273, lon:-4.9779, size:"small", difficulty:5, tags:["international"] },
+
+  // West Africa (additional)
+  { iata:"BKO", name:"Modibo Keïta International Airport", city:"Bamako", country:"Mali", continent:"africa", lat:12.5335, lon:-7.9499, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"OUA", name:"Ouagadougou Airport", city:"Ouagadougou", country:"Burkina Faso", continent:"africa", lat:12.3532, lon:-1.5124, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"LFW", name:"Lomé-Tokoin International Airport", city:"Lomé", country:"Togo", continent:"africa", lat:6.1657, lon:1.2545, size:"medium", difficulty:5, tags:["hub","international","capital","coastal"] },
+
+  // Nigeria (additional)
+  { iata:"ABV", name:"Nnamdi Azikiwe International Airport", city:"Abuja", country:"Nigeria", continent:"africa", lat:9.0068, lon:7.2632, size:"large", difficulty:3, tags:["hub","international","capital"] },
+
+  // East Africa (additional)
+  { iata:"MBA", name:"Moi International Airport", city:"Mombasa", country:"Kenya", continent:"africa", lat:-4.0348, lon:39.5942, size:"medium", difficulty:4, tags:["hub","international","coastal","holiday"] },
+  { iata:"DAR", name:"Julius Nyerere International Airport", city:"Dar es Salaam", country:"Tanzania", continent:"africa", lat:-6.8781, lon:39.2026, size:"medium", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"ZNZ", name:"Abeid Amani Karume International", city:"Zanzibar", country:"Tanzania", continent:"africa", lat:-6.2220, lon:39.2249, size:"medium", difficulty:4, tags:["hub","international","island","coastal","holiday"] },
+  { iata:"KGL", name:"Kigali International Airport", city:"Kigali", country:"Rwanda", continent:"africa", lat:-1.9686, lon:30.1395, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"EBB", name:"Entebbe International Airport", city:"Kampala", country:"Uganda", continent:"africa", lat:0.0424, lon:32.4433, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+
+  // Southern Africa (additional)
+  { iata:"DUR", name:"King Shaka International Airport", city:"Durban", country:"South Africa", continent:"africa", lat:-29.6144, lon:31.1197, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"PLZ", name:"Chief Dawid Stuurman International", city:"Port Elizabeth", country:"South Africa", continent:"africa", lat:-33.9849, lon:25.6173, size:"medium", difficulty:4, tags:["hub","international","coastal"] },
+  { iata:"LUN", name:"Kenneth Kaunda International Airport", city:"Lusaka", country:"Zambia", continent:"africa", lat:-15.3308, lon:28.4526, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"HRE", name:"Robert Gabriel Mugabe International", city:"Harare", country:"Zimbabwe", continent:"africa", lat:-17.9318, lon:31.0928, size:"medium", difficulty:4, tags:["hub","international","capital"] },
+  { iata:"MRU", name:"Sir Seewoosagur Ramgoolam International", city:"Port Louis", country:"Mauritius", continent:"africa", lat:-20.4302, lon:57.6836, size:"medium", difficulty:3, tags:["hub","international","island","coastal","holiday","remote","featured"] },
+  { iata:"SEZ", name:"Seychelles International Airport", city:"Victoria", country:"Seychelles", continent:"africa", lat:-4.6743, lon:55.5218, size:"medium", difficulty:4, tags:["hub","international","island","coastal","holiday","remote","capital"] },
+
+  // Central Africa
+  { iata:"DLA", name:"Douala International Airport", city:"Douala", country:"Cameroon", continent:"africa", lat:4.0061, lon:9.7195, size:"medium", difficulty:5, tags:["hub","international","coastal","cargo"] },
+  { iata:"NSI", name:"Yaoundé Nsimalen International", city:"Yaoundé", country:"Cameroon", continent:"africa", lat:3.7226, lon:11.5533, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"FIH", name:"N'djili International Airport", city:"Kinshasa", country:"DR Congo", continent:"africa", lat:-4.3858, lon:15.4446, size:"medium", difficulty:5, tags:["hub","international","capital"] },
+  { iata:"LBV", name:"Léon-M'ba International Airport", city:"Libreville", country:"Gabon", continent:"africa", lat:0.4586, lon:9.4123, size:"medium", difficulty:5, tags:["hub","international","capital","coastal"] },
+
+  // ── OCEANIA EXPANSION ─────────────────────────────────────────────────────
+
+  // Australia (additional)
+  { iata:"BNE", name:"Brisbane Airport", city:"Brisbane", country:"Australia", continent:"oceania", lat:-27.3842, lon:153.1175, size:"large", difficulty:2, tags:["hub","international","coastal","featured"] },
+  { iata:"PER", name:"Perth Airport", city:"Perth", country:"Australia", continent:"oceania", lat:-31.9403, lon:115.9669, size:"large", difficulty:2, tags:["hub","international","coastal"] },
+  { iata:"ADL", name:"Adelaide Airport", city:"Adelaide", country:"Australia", continent:"oceania", lat:-34.9457, lon:138.5303, size:"large", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"OOL", name:"Gold Coast Airport", city:"Gold Coast", country:"Australia", continent:"oceania", lat:-28.1644, lon:153.5043, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"CNS", name:"Cairns Airport", city:"Cairns", country:"Australia", continent:"oceania", lat:-16.8858, lon:145.7555, size:"medium", difficulty:4, tags:["hub","international","holiday","coastal"] },
+  { iata:"HBA", name:"Hobart International Airport", city:"Hobart", country:"Australia", continent:"oceania", lat:-42.8361, lon:147.5103, size:"medium", difficulty:5, tags:["hub","international","coastal"] },
+  { iata:"DRW", name:"Darwin International Airport", city:"Darwin", country:"Australia", continent:"oceania", lat:-12.4150, lon:130.8765, size:"medium", difficulty:4, tags:["hub","international","capital","coastal","military-history"] },
+  { iata:"TSV", name:"Townsville Airport", city:"Townsville", country:"Australia", continent:"oceania", lat:-19.2525, lon:146.7652, size:"small", difficulty:5, tags:["hub","domestic","coastal","military-history"] },
+  { iata:"MKY", name:"Mackay Airport", city:"Mackay", country:"Australia", continent:"oceania", lat:-21.1717, lon:149.1797, size:"small", difficulty:5, tags:["hub","domestic","coastal"] },
+  { iata:"ROK", name:"Rockhampton Airport", city:"Rockhampton", country:"Australia", continent:"oceania", lat:-23.3819, lon:150.4753, size:"small", difficulty:5, tags:["hub","domestic","coastal"] },
+
+  // New Zealand
+  { iata:"AKL", name:"Auckland Airport", city:"Auckland", country:"New Zealand", continent:"oceania", lat:-37.0082, lon:174.7917, size:"large", difficulty:2, tags:["hub","international","coastal","featured"] },
+  { iata:"CHC", name:"Christchurch International Airport", city:"Christchurch", country:"New Zealand", continent:"oceania", lat:-43.4894, lon:172.5322, size:"medium", difficulty:3, tags:["hub","international","coastal"] },
+  { iata:"WLG", name:"Wellington International Airport", city:"Wellington", country:"New Zealand", continent:"oceania", lat:-41.3272, lon:174.8050, size:"medium", difficulty:3, tags:["hub","international","capital","coastal","difficult-approach"] },
+  { iata:"ZQN", name:"Queenstown Airport", city:"Queenstown", country:"New Zealand", continent:"oceania", lat:-45.0211, lon:168.7392, size:"small", difficulty:4, tags:["hub","international","mountain","difficult-approach","holiday","featured"] },
+  { iata:"DUD", name:"Dunedin Airport", city:"Dunedin", country:"New Zealand", continent:"oceania", lat:-45.9281, lon:170.1983, size:"small", difficulty:5, tags:["hub","international","coastal"] },
+
+  // Pacific Islands
+  { iata:"GUM", name:"Antonio B. Won Pat International", city:"Hagåtña", country:"Guam", continent:"oceania", lat:13.4834, lon:144.7960, size:"medium", difficulty:3, tags:["hub","international","island","coastal","capital","military-history","remote"] },
+  { iata:"PPT", name:"Faa'a International Airport", city:"Papeete", country:"French Polynesia", continent:"oceania", lat:-17.5534, lon:-149.6063, size:"medium", difficulty:4, tags:["hub","international","island","coastal","capital","remote","holiday"] },
+  { iata:"NAN", name:"Nadi International Airport", city:"Nadi", country:"Fiji", continent:"oceania", lat:-17.7554, lon:177.4432, size:"medium", difficulty:3, tags:["hub","international","island","coastal","holiday","remote","featured"] },
+  { iata:"APW", name:"Faleolo International Airport", city:"Apia", country:"Samoa", continent:"oceania", lat:-13.8300, lon:-172.0081, size:"small", difficulty:4, tags:["hub","international","island","coastal","capital","remote"] },
+  { iata:"TBU", name:"Fua'amotu International Airport", city:"Nukualofa", country:"Tonga", continent:"oceania", lat:-21.2412, lon:-175.1497, size:"small", difficulty:5, tags:["hub","international","island","coastal","capital","remote"] },
+  { iata:"HIR", name:"Honiara International Airport", city:"Honiara", country:"Solomon Islands", continent:"oceania", lat:-9.4280, lon:160.0546, size:"small", difficulty:5, tags:["hub","international","island","coastal","capital","remote","military-history"] },
+  { iata:"INU", name:"Nauru International Airport", city:"Yaren", country:"Nauru", continent:"oceania", lat:-0.5478, lon:166.9192, size:"small", difficulty:5, tags:["hub","international","island","remote","coastal"] },
 ];
