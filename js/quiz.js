@@ -255,11 +255,11 @@ function loadQuestion() {
   if (q.mode === 'code') {
     card.innerHTML = `
       <div class="code-display">
-        <div class="iata-code">${esc(currentAirport[0])}</div>
+        <div class="iata-code">${esc(currentAirport.iata)}</div>
         <div class="hint">${esc(t('codeHint'))}</div>
       </div>`;
   } else {
-    const [, , , , lat, lon] = currentAirport;
+    const {lat, lon} = currentAirport;
     const zoom = getSatelliteZoom(currentAirport);
     const imgUrl = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},${zoom},0/${CONFIG.SATELLITE_SIZE}?access_token=${encodeURIComponent(CONFIG.MAPBOX_TOKEN)}`;
     card.innerHTML = `
@@ -317,9 +317,9 @@ function fuzzyMatch(input, target) {
 
 function isCorrect(input, airport) {
   const n = normalize(input);
-  const name = normalize(airport[1]);
-  const city = normalize(airport[2]);
-  const code = airport[0].toLowerCase();
+  const name = normalize(airport.name);
+  const city = normalize(airport.city);
+  const code = airport.iata.toLowerCase();
 
   if (selectedDifficulty === 'expert') return fuzzyMatch(n, name);
   if (selectedDifficulty === 'hard') return fuzzyMatch(n, city);
@@ -359,7 +359,7 @@ function showAirportDetail(airport, ok) {
   const panel = document.getElementById('airport-detail-panel');
   if (!panel) return;
 
-  const [iata, name, city, country, lat, lon] = airport;
+  const {iata, name, city, country, continent: continentId, lat, lon, size, tags} = airport;
   const isLast = (currentIdx + 1) >= quizQueue.length;
   const detail = (typeof AIRPORT_DETAILS !== 'undefined') ? AIRPORT_DETAILS[iata] : null;
 
@@ -405,25 +405,30 @@ function showAirportDetail(airport, ok) {
 
   // ── Chips: continent, size, special tags ─────────────────────────────────────
   const chips = [];
-  const continentId = typeof CONTINENT_MAP !== 'undefined' ? CONTINENT_MAP[country] : null;
   const continentLabel = continentId && _CONTINENT_KEYS[continentId] ? t(_CONTINENT_KEYS[continentId]) : '';
   if (continentLabel) chips.push(`<span class="ap-chip">${esc(continentLabel)}</span>`);
 
-  let sizeKey = 'detailSize_medium';
-  if (typeof AIRPORT_SIZE !== 'undefined') {
-    if (AIRPORT_SIZE.large.has(iata)) sizeKey = 'detailSize_large';
-    else if (AIRPORT_SIZE.small.has(iata)) sizeKey = 'detailSize_small';
-  }
+  const sizeKey = size === 'large' ? 'detailSize_large'
+                : size === 'small' ? 'detailSize_small'
+                : 'detailSize_medium';
   chips.push(`<span class="ap-chip ap-chip--size">${esc(t(sizeKey))}</span>`);
 
-  if (typeof CAPITAL_AIRPORTS !== 'undefined' && CAPITAL_AIRPORTS.has(iata))
-    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagCapital'))}</span>`);
-  if (typeof ISLAND_AIRPORTS !== 'undefined' && ISLAND_AIRPORTS.has(iata))
-    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagIsland'))}</span>`);
-  if (typeof HIGH_ALTITUDE_AIRPORTS !== 'undefined' && HIGH_ALTITUDE_AIRPORTS.has(iata))
-    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagHighAlt'))}</span>`);
-  if (typeof EXTREME_AIRPORTS !== 'undefined' && EXTREME_AIRPORTS.has(iata))
-    chips.push(`<span class="ap-chip ap-chip--tag">${esc(t('detailTagExtreme'))}</span>`);
+  const _TAG_CHIP_MAP = [
+    { tag: 'capital',           key: 'detailTagCapital' },
+    { tag: 'island',            key: 'detailTagIsland'  },
+    { tag: 'artificial-island', key: 'detailTagIsland'  },
+    { tag: 'mountain',          key: 'detailTagHighAlt' },
+    { tag: 'featured',          key: 'detailTagExtreme' },
+  ];
+  const _shownKeys = new Set();
+  if (tags) {
+    for (const {tag, key} of _TAG_CHIP_MAP) {
+      if (!_shownKeys.has(key) && tags.includes(tag)) {
+        chips.push(`<span class="ap-chip ap-chip--tag">${esc(t(key))}</span>`);
+        _shownKeys.add(key);
+      }
+    }
+  }
 
   // ── Extended sections (only when AIRPORT_DETAILS entry exists) ───────────────
   let sectionsHtml = '';
@@ -516,12 +521,12 @@ function _showToast(ok, given) {
   let html;
   if (ok) {
     html = `<div class="qt-label qt-correct">${esc(t('feedbackCorrect'))}</div>` +
-           `<div class="qt-name">${esc(currentAirport[1])}</div>`;
+           `<div class="qt-name">${esc(currentAirport.name)}</div>`;
   } else {
     const lbl = isSkipped ? t('feedbackSkipped') : t('feedbackWrong');
     html = `<div class="qt-label qt-wrong">${esc(lbl)}</div>` +
            `<div class="qt-answer">${esc(t('feedbackCorrectAnswer'))}:</div>` +
-           `<div class="qt-name">${esc(currentAirport[1])}</div>`;
+           `<div class="qt-name">${esc(currentAirport.name)}</div>`;
   }
   el.innerHTML = html;
   el.className = 'quiz-toast qt-in' + (ok ? ' qt-type-correct' : ' qt-type-wrong');
@@ -636,16 +641,16 @@ function onInputChange() {
   if (val.length < 2) { list.innerHTML = ''; return; }
 
   const matches = selectedPool.filter(ap => {
-    const name = ap[1].toLowerCase();
-    const city = ap[2].toLowerCase();
+    const name = ap.name.toLowerCase();
+    const city = ap.city.toLowerCase();
     if (currentQuestionMode === 'code') return name.includes(val) || city.includes(val);
-    return ap[0].toLowerCase().startsWith(val) || name.includes(val) || city.includes(val);
+    return ap.iata.toLowerCase().startsWith(val) || name.includes(val) || city.includes(val);
   }).slice(0, 8);
 
   list.innerHTML = matches.map(ap => `
-    <div class="ac-item" data-name="${esc(ap[1])}">
-      <span class="ac-name">${esc(ap[1])}</span>
-      <span class="ac-country">${esc(ap[2])}, ${esc(ap[3])}</span>
+    <div class="ac-item" data-name="${esc(ap.name)}">
+      <span class="ac-name">${esc(ap.name)}</span>
+      <span class="ac-country">${esc(ap.city)}, ${esc(ap.country)}</span>
     </div>`).join('');
 }
 
@@ -690,8 +695,8 @@ function showResults() {
   document.getElementById('history-list').innerHTML = history.map(h => `
     <div class="history-item ${h.correct ? 'correct-h' : 'wrong-h'}">
       <span class="hi-status ${h.correct ? 'hi-status--correct' : 'hi-status--wrong'}"></span>
-      <span class="hi-code">${esc(h.airport[0])}</span>
-      <span class="hi-name">${esc(h.airport[1])}</span>
+      <span class="hi-code">${esc(h.airport.iata)}</span>
+      <span class="hi-name">${esc(h.airport.name)}</span>
       <span class="hi-given">${esc(h.given)}</span>
     </div>`).join('');
 
