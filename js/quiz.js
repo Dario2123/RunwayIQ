@@ -643,8 +643,9 @@ function onInputChange() {
   const matches = selectedPool.filter(ap => {
     const name = ap.name.toLowerCase();
     const city = ap.city.toLowerCase();
-    if (currentQuestionMode === 'code') return name.includes(val) || city.includes(val);
-    return ap.iata.toLowerCase().startsWith(val) || name.includes(val) || city.includes(val);
+    const aliasHit = ap.aliases && ap.aliases.some(a => a.toLowerCase().includes(val));
+    if (currentQuestionMode === 'code') return name.includes(val) || city.includes(val) || aliasHit;
+    return ap.iata.toLowerCase().startsWith(val) || name.includes(val) || city.includes(val) || aliasHit;
   }).slice(0, 8);
 
   list.innerHTML = matches.map(ap => `
